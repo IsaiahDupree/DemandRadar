@@ -744,7 +744,12 @@ Top brands shown:
 |------|-------------|
 | `hookd-analyze-ads-click` | Creative Analyzer with paywall message |
 
-### Total Screenshots: 63+
+#### Brand Detail Page
+| File | Description |
+|------|-------------|
+| `hookd-brand-detail-page` | Individual brand page showing all ads from that brand |
+
+### Total Screenshots: 65+
 
 ---
 
