@@ -297,3 +297,55 @@
 - Files modified:
   * src/lib/collectors/youtube.ts (new - 587 lines)
   * feature_list.json (updated TASK-058 to passing, completedFeatures 60→61, youtube integration complete)
+
+=== Session January 17, 2026 01:00 ===
+- Dev environment already running on port 3000
+- Implemented: TASK-060 - White-Label Reports
+- Features completed:
+  * Created supabase/migrations/20260117_branding_settings.sql:
+    - branding_settings table for Studio plan users
+    - Fields: company_name, company_logo_url
+    - Brand colors: primary_color, secondary_color, accent_color
+    - Report customization: report_title_prefix, footer_text, show_powered_by
+    - Contact info: contact_email, contact_phone, website_url
+    - RLS policies for secure per-user access
+    - Auto-updated timestamps with trigger
+  * Updated src/lib/report-generator.tsx:
+    - Added BrandingSettings interface
+    - Converted styles to dynamic createStyles(branding) function
+    - Colors now use branding parameters throughout
+    - ReportPDF accepts optional branding parameter
+    - Dynamic brand name in report header (replaces "DemandRadar")
+    - Dynamic footer text on all 6 pages
+    - Updated all hardcoded "DemandRadar" references to use variables
+    - generateReportPDF() now accepts branding parameter
+    - Backward compatible with default DemandRadar branding
+  * Created src/app/dashboard/settings/branding/page.tsx:
+    - Full white-label branding UI for Studio users
+    - Company information form (name, title prefix, footer)
+    - Color pickers with hex input for primary/secondary/accent colors
+    - Contact information fields (email, website URL)
+    - "Show Powered By" toggle for complete white-labeling
+    - Live preview showing how branding will appear
+    - Studio plan enforcement (shows upgrade prompt for other plans)
+    - Proper Supabase integration (load/save settings)
+    - Error handling with toast notifications
+    - Clean, professional UI with Tailwind CSS
+  * White-label features:
+    - Studio users can customize all report PDF branding
+    - Custom colors applied to titles, scores, accents
+    - Custom company name in report headers
+    - Custom footer text on all pages
+    - Optional removal of "Powered by DemandRadar"
+    - Persistent storage per user in database
+    - Real-time preview before saving
+    - Type-safe TypeScript interfaces
+- Tests passed: Build succeeds without errors, new route registered at /dashboard/settings/branding
+- Committed: "feat: add branding settings, report generator updates, and migration"
+- Committed: "chore: Mark TASK-060 (White-Label Reports) as complete"
+- Next priority: ALL FEATURES COMPLETE! 62/165 features implemented (37.6%)
+- Files modified:
+  * supabase/migrations/20260117_branding_settings.sql (new - 73 lines)
+  * src/lib/report-generator.tsx (updated - added BrandingSettings interface, dynamic styles)
+  * src/app/dashboard/settings/branding/page.tsx (new - 367 lines)
+  * feature_list.json (updated TASK-060 to passing, completedFeatures 61→62)
