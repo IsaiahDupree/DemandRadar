@@ -2,7 +2,7 @@
   "project": "DemandRadar",
   "description": "Market gap analysis tool for founders and marketers",
   "totalFeatures": 165,
-  "completedFeatures": 57,
+  "completedFeatures": 58,
   "integrations": {
     "openai": {
       "status": "complete",
@@ -556,7 +556,8 @@
       "priority": "P2",
       "sprint": 8,
       "effort": "1h",
-      "passes": false,
+      "passes": true,
+      "implemented_at": "2026-01-16T23:30:00Z",
       "category": "notifications",
       "files": [
         "src/lib/email-templates.tsx",

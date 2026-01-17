@@ -1,8 +1,10 @@
-import { stripe, getPlanByPriceId, getRunsLimit } from '@/lib/stripe';
+import { stripe, getPlanByPriceId, getRunsLimit, PLANS } from '@/lib/stripe';
 import { createClient } from '@/lib/supabase/server';
 import { headers } from 'next/headers';
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
+import { sendEmail } from '@/lib/email';
+import { SubscriptionConfirmationEmail } from '@/lib/email-templates';
 
 export async function POST(request: Request) {
   const body = await request.text();
@@ -41,7 +43,7 @@ export async function POST(request: Request) {
         const plan = priceId ? getPlanByPriceId(priceId) : 'starter';
 
         // Update user's plan
-        await supabase
+        const { data: updatedUser } = await supabase
           .from('users')
           .update({
             plan: plan || 'starter',
@@ -49,7 +51,30 @@ export async function POST(request: Request) {
             runs_used: 0,
             stripe_customer_id: customerId,
           })
-          .eq('stripe_customer_id', customerId);
+          .eq('stripe_customer_id', customerId)
+          .select('email, name')
+          .single();
+
+        // Send subscription confirmation email
+        if (updatedUser?.email && plan) {
+          const planInfo = PLANS[plan];
+          try {
+            await sendEmail({
+              to: updatedUser.email,
+              subject: `Welcome to ${planInfo.name}! 🎉`,
+              react: SubscriptionConfirmationEmail({
+                userName: updatedUser.name,
+                planName: planInfo.name,
+                planPrice: `$${planInfo.price}/month`,
+                features: [...planInfo.features],
+                isUpgrade: false,
+              }),
+            });
+            console.log('✅ Subscription confirmation email sent to:', updatedUser.email);
+          } catch (error) {
+            console.error('⚠️ Failed to send subscription confirmation email:', error);
+          }
+        }
 
         break;
       }
@@ -61,13 +86,36 @@ export async function POST(request: Request) {
         const plan = priceId ? getPlanByPriceId(priceId) : null;
 
         if (plan) {
-          await supabase
+          const { data: updatedUser } = await supabase
             .from('users')
             .update({
               plan,
               runs_limit: getRunsLimit(plan),
             })
-            .eq('stripe_customer_id', customerId);
+            .eq('stripe_customer_id', customerId)
+            .select('email, name')
+            .single();
+
+          // Send upgrade/change confirmation email
+          if (updatedUser?.email) {
+            const planInfo = PLANS[plan];
+            try {
+              await sendEmail({
+                to: updatedUser.email,
+                subject: `Plan Updated to ${planInfo.name}! 🎉`,
+                react: SubscriptionConfirmationEmail({
+                  userName: updatedUser.name,
+                  planName: planInfo.name,
+                  planPrice: `$${planInfo.price}/month`,
+                  features: [...planInfo.features],
+                  isUpgrade: true,
+                }),
+              });
+              console.log('✅ Plan change confirmation email sent to:', updatedUser.email);
+            } catch (error) {
+              console.error('⚠️ Failed to send plan change email:', error);
+            }
+          }
         }
 
         break;
