@@ -1,0 +1,330 @@
+{
+  "api_name": "Instagram Scraper Stable API",
+  "host": "instagram-scraper-stable-api.p.rapidapi.com",
+  "base_url": "https://instagram-scraper-stable-api.p.rapidapi.com",
+  "provider": "RockSolid APIs (thetechguy32744)",
+  "rapidapi_url": "https://rapidapi.com/thetechguy32744/api/instagram-scraper-stable-api",
+  "content_type": "application/x-www-form-urlencoded",
+  "scraped_at": "2025-12-26T14:54:23.371062",
+  "endpoint_count": 27,
+  "endpoints": [
+    {
+      "name": "Search (Users + Hashtags)",
+      "method": "POST",
+      "path": "/search_ig.php",
+      "params": [
+        {
+          "name": "query",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "User Bio Links",
+      "method": "POST",
+      "path": "/get_ig_user_bio_links.php",
+      "params": [
+        {
+          "name": "username_or_url",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "User Stories",
+      "method": "POST",
+      "path": "/get_ig_user_stories.php",
+      "params": [
+        {
+          "name": "username_or_url",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "Basic User + Posts",
+      "method": "GET",
+      "path": "/get_ig_basic_user.php",
+      "params": [
+        {
+          "name": "username_or_url",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "Account Data",
+      "method": "POST",
+      "path": "/get_ig_account_data.php",
+      "params": [
+        {
+          "name": "username_or_url",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "Account Data V2",
+      "method": "POST",
+      "path": "/get_ig_account_data_v2.php",
+      "params": [
+        {
+          "name": "username_or_url",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "User About",
+      "method": "GET",
+      "path": "/get_ig_user_about.php",
+      "params": [
+        {
+          "name": "username_or_url",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "User Similar Accounts",
+      "method": "GET",
+      "path": "/get_ig_similar_accounts.php",
+      "params": [
+        {
+          "name": "username_or_url",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "Followers List v2",
+      "method": "POST",
+      "path": "/get_ig_followers_v2.php",
+      "params": [
+        {
+          "name": "username_or_url",
+          "required": true
+        },
+        {
+          "name": "amount",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "Followers List",
+      "method": "POST",
+      "path": "/get_ig_followers.php",
+      "params": [
+        {
+          "name": "username_or_url",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "Following List v2",
+      "method": "POST",
+      "path": "/get_ig_following_v2.php",
+      "params": [
+        {
+          "name": "username_or_url",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "Following List",
+      "method": "POST",
+      "path": "/get_ig_following.php",
+      "params": [
+        {
+          "name": "username_or_url",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "User Posts",
+      "method": "POST",
+      "path": "/get_ig_user_posts.php",
+      "params": [
+        {
+          "name": "username_or_url",
+          "required": true
+        },
+        {
+          "name": "amount",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "User Reels",
+      "method": "POST",
+      "path": "/get_ig_user_reels.php",
+      "params": [
+        {
+          "name": "username_or_url",
+          "required": true
+        },
+        {
+          "name": "amount",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "User Highlights",
+      "method": "POST",
+      "path": "/get_ig_user_highlights.php",
+      "params": [
+        {
+          "name": "username_or_url",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "User Highlight Stories",
+      "method": "POST",
+      "path": "/get_ig_highlight_stories.php",
+      "params": [
+        {
+          "name": "highlight_id",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "User Tagged Posts",
+      "method": "POST",
+      "path": "/get_ig_user_tagged.php",
+      "params": [
+        {
+          "name": "username_or_url",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "Detailed Media Data v2",
+      "method": "GET",
+      "path": "/get_media_data_v2.php",
+      "params": [
+        {
+          "name": "media_code",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "Get Post Likers V2",
+      "method": "GET",
+      "path": "/get_ig_post_likers_v2.php",
+      "params": [
+        {
+          "name": "media_code",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "GET Post Title/Description",
+      "method": "GET",
+      "path": "/get_ig_post_caption.php",
+      "params": [
+        {
+          "name": "media_code",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "Detailed Post Data",
+      "method": "GET",
+      "path": "/get_media_data.php",
+      "params": [
+        {
+          "name": "reel_post_code_or_url",
+          "required": true
+        },
+        {
+          "name": "type",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "Get Reel Title/Description",
+      "method": "GET",
+      "path": "/get_ig_reel_caption.php",
+      "params": [
+        {
+          "name": "media_code",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "Detailed Reel Data",
+      "method": "GET",
+      "path": "/get_media_data.php",
+      "params": [
+        {
+          "name": "reel_post_code_or_url",
+          "required": true
+        },
+        {
+          "name": "type",
+          "required": true,
+          "value": "reel"
+        }
+      ]
+    },
+    {
+      "name": "Get Post Comments",
+      "method": "GET",
+      "path": "/get_ig_post_comments.php",
+      "params": [
+        {
+          "name": "media_code",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "Get Comment Replies",
+      "method": "GET",
+      "path": "/get_ig_comment_replies.php",
+      "params": [
+        {
+          "name": "comment_id",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "Get Media Code or ID",
+      "method": "GET",
+      "path": "/get_ig_media_id.php",
+      "params": [
+        {
+          "name": "url",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "Posts & Reels V2 (Hashtag)",
+      "method": "GET",
+      "path": "/get_ig_hashtag_posts_v2.php",
+      "params": [
+        {
+          "name": "hashtag",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

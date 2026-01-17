@@ -1,0 +1,620 @@
+{
+  "metadata": {
+    "total_subscriptions": 58,
+    "last_updated": "2024-12-20",
+    "source": "RapidAPI Hub",
+    "verified_working": 12,
+    "verified_endpoints": {
+      "tiktok-scraper7": ["/user/info", "/user/posts", "/user/followers", "/user/following", "/music/info"],
+      "tiktok-video-feature-summary": ["/user/info", "/user/posts"],
+      "tiktok-video-no-watermark2": ["/"],
+      "instagram-looter2": ["/profile"],
+      "instagram-statistics-api": ["/community"],
+      "yt-api": ["/video/info", "/search", "/playlist", "/comments", "/trending", "/home"],
+      "youtube-mp36": ["/dl"],
+      "google-map-places": ["/maps/api/place/textsearch/json"],
+      "local-business-data": ["/search"],
+      "real-time-amazon-data": ["/search"]
+    }
+  },
+  "apis": {
+    "email": [
+      {
+        "name": "Validect - Email Verification",
+        "provider": "pmtech",
+        "url": "https://rapidapi.com/pmtech/api/validect-email-verification",
+        "host": "validect-email-verification.p.rapidapi.com",
+        "rating": 9.9,
+        "latency_ms": 916,
+        "success_rate": "100%",
+        "category": "Email"
+      },
+      {
+        "name": "Instagram Email Scraper",
+        "provider": "TaskAGI",
+        "url": "https://rapidapi.com/taskagi/api/instagram-email-scraper",
+        "host": "instagram-email-scraper.p.rapidapi.com",
+        "rating": 0.1,
+        "latency_ms": 726,
+        "success_rate": "100%",
+        "category": "Data"
+      },
+      {
+        "name": "Email Social Scraper Turbo",
+        "provider": "companies-databases",
+        "url": "https://rapidapi.com/companies-databases/api/email-social-scraper-turbo",
+        "host": "email-social-scraper-turbo.p.rapidapi.com",
+        "latency_ms": 188,
+        "category": "Email"
+      }
+    ],
+    "youtube": [
+      {
+        "name": "YouTube v3",
+        "provider": "Glavier",
+        "url": "https://rapidapi.com/glavier/api/youtube-v31",
+        "host": "youtube-v31.p.rapidapi.com",
+        "rating": 9.9,
+        "latency_ms": 485,
+        "success_rate": "100%",
+        "category": "Data"
+      },
+      {
+        "name": "YouTube",
+        "provider": "Glavier",
+        "url": "https://rapidapi.com/glavier/api/youtube",
+        "host": "youtube.p.rapidapi.com",
+        "rating": 9.9,
+        "latency_ms": 405,
+        "success_rate": "100%",
+        "category": "Data"
+      },
+      {
+        "name": "YT-API",
+        "provider": "ytjar",
+        "url": "https://rapidapi.com/ytjar/api/yt-api",
+        "host": "yt-api.p.rapidapi.com",
+        "rating": 9.9,
+        "latency_ms": 796,
+        "success_rate": "100%",
+        "category": "Data",
+        "status": "working",
+        "endpoints": ["/video/info", "/search", "/playlist", "/comments", "/trending"]
+      },
+      {
+        "name": "YouTube v3 Lite",
+        "provider": "genapi",
+        "url": "https://rapidapi.com/genapi/api/youtube-v3-lite",
+        "host": "youtube-v3-lite.p.rapidapi.com",
+        "rating": 9.9,
+        "latency_ms": 505,
+        "success_rate": "100%",
+        "category": "Data"
+      },
+      {
+        "name": "Better YouTube API",
+        "provider": "Cameron Sima",
+        "url": "https://rapidapi.com/cameron-sima/api/better-youtube-api",
+        "host": "better-youtube-api.p.rapidapi.com",
+        "category": "Social"
+      },
+      {
+        "name": "The Better YouTube Channel Details",
+        "provider": "dataocean",
+        "url": "https://rapidapi.com/dataocean/api/the-better-youtube-channel-details",
+        "host": "the-better-youtube-channel-details.p.rapidapi.com",
+        "rating": 9.9,
+        "latency_ms": 37,
+        "success_rate": "100%",
+        "category": "Social"
+      },
+      {
+        "name": "YouTube Media Downloader",
+        "provider": "DataFanatic",
+        "url": "https://rapidapi.com/datafanatic/api/youtube-media-downloader",
+        "host": "youtube-media-downloader.p.rapidapi.com",
+        "rating": 9.9,
+        "latency_ms": 1464,
+        "success_rate": "100%",
+        "category": "Data"
+      },
+      {
+        "name": "YouTubeTranscriptDownloader",
+        "provider": "DataFlow Lab",
+        "url": "https://rapidapi.com/dataflow-lab/api/youtubetranscriptdownloader",
+        "host": "youtubetranscriptdownloader.p.rapidapi.com",
+        "rating": 8.9,
+        "latency_ms": 1519,
+        "success_rate": "100%",
+        "category": "Video, Images"
+      },
+      {
+        "name": "YouTube Captions and Transcripts",
+        "provider": "illmagination",
+        "url": "https://rapidapi.com/illmagination/api/youtube-captions-and-transcripts",
+        "host": "youtube-captions-and-transcripts.p.rapidapi.com",
+        "rating": 9.5,
+        "latency_ms": 905,
+        "success_rate": "100%",
+        "category": "Data"
+      },
+      {
+        "name": "YouTube Transcripts",
+        "provider": "supadata",
+        "url": "https://rapidapi.com/supadata/api/youtube-transcripts",
+        "host": "youtube-transcripts.p.rapidapi.com",
+        "rating": 9.9,
+        "latency_ms": 3663,
+        "success_rate": "100%",
+        "category": "Video, Images"
+      },
+      {
+        "name": "Youtube transcriptor",
+        "provider": "veritoolz",
+        "url": "https://rapidapi.com/veritoolz/api/youtube-transcriptor",
+        "host": "youtube-transcriptor.p.rapidapi.com",
+        "rating": 9.9,
+        "latency_ms": 3043,
+        "success_rate": "100%",
+        "category": "Media"
+      },
+      {
+        "name": "YouTube MP3 (ytjar)",
+        "provider": "ytjar",
+        "url": "https://rapidapi.com/ytjar/api/youtube-mp3",
+        "host": "youtube-mp3.p.rapidapi.com",
+        "rating": 9.9,
+        "latency_ms": 840,
+        "success_rate": "100%",
+        "category": "Tools"
+      },
+      {
+        "name": "YouTube MP3 (Elis)",
+        "provider": "Elis",
+        "url": "https://rapidapi.com/elis/api/youtube-mp3",
+        "host": "youtube-mp32.p.rapidapi.com",
+        "rating": 9.8,
+        "latency_ms": 990,
+        "success_rate": "100%",
+        "category": "Other"
+      },
+      {
+        "name": "YouTube MP3 (ApiSop)",
+        "provider": "ApiSop",
+        "url": "https://rapidapi.com/apisop/api/youtube-mp3",
+        "host": "youtube-mp33.p.rapidapi.com",
+        "latency_ms": 632,
+        "category": "Tools"
+      },
+      {
+        "name": "YouTube Video to MP3",
+        "provider": "Pinto Studio",
+        "url": "https://rapidapi.com/pinto-studio/api/youtube-video-to-mp3",
+        "host": "youtube-video-to-mp3.p.rapidapi.com",
+        "latency_ms": 973,
+        "category": "Tools"
+      },
+      {
+        "name": "YouTube to mp3",
+        "provider": "Rapid87",
+        "url": "https://rapidapi.com/rapid87/api/youtube-to-mp3",
+        "host": "youtube-to-mp3.p.rapidapi.com",
+        "rating": 9.9,
+        "latency_ms": 372,
+        "success_rate": "100%",
+        "category": "Tools"
+      },
+      {
+        "name": "Youtube MP3 Download",
+        "provider": "ytjar",
+        "url": "https://rapidapi.com/ytjar/api/youtube-mp3-download",
+        "host": "youtube-mp3-download.p.rapidapi.com",
+        "category": "Tools"
+      },
+      {
+        "name": "YouTube Video FAST Downloader 24/7",
+        "provider": "Spicy-Laika",
+        "url": "https://rapidapi.com/spicy-laika/api/youtube-video-fast-downloader-24-7",
+        "host": "youtube-video-fast-downloader.p.rapidapi.com",
+        "rating": 9.9,
+        "latency_ms": 13088,
+        "success_rate": "100%",
+        "category": "Video, Images"
+      }
+    ],
+    "tiktok": [
+      {
+        "name": "TikTok Scraper (JoTucker)",
+        "provider": "JoTucker",
+        "url": "https://rapidapi.com/jotucker/api/tiktok-scraper7",
+        "host": "tiktok-scraper7.p.rapidapi.com",
+        "rating": 9.9,
+        "latency_ms": 3130,
+        "success_rate": "100%",
+        "category": "Social",
+        "status": "working",
+        "endpoints": ["/user/info", "/user/posts", "/user/followers", "/user/following"]
+      },
+      {
+        "name": "TikTok Data API",
+        "provider": "nusantaracode.com",
+        "url": "https://rapidapi.com/nusantaracode/api/tiktok-data-api",
+        "host": "tiktok-data-api.p.rapidapi.com",
+        "rating": 2.3,
+        "latency_ms": 1079,
+        "success_rate": "30%",
+        "category": "Data"
+      },
+      {
+        "name": "TikTok API (Omar)",
+        "provider": "Omar M'Haimdat",
+        "url": "https://rapidapi.com/omarmhaimdat/api/tiktok-api",
+        "host": "tiktok-api.p.rapidapi.com",
+        "rating": 9.9,
+        "latency_ms": 3273,
+        "success_rate": "100%",
+        "category": "Social"
+      },
+      {
+        "name": "TikTok API (apibox)",
+        "provider": "apibox",
+        "url": "https://rapidapi.com/apibox/api/tiktok-api",
+        "host": "tiktok-api2.p.rapidapi.com",
+        "rating": 9.9,
+        "latency_ms": 1127,
+        "success_rate": "100%",
+        "category": "Social"
+      },
+      {
+        "name": "TikTok Scraper (TIKWM)",
+        "provider": "TIKWM",
+        "url": "https://rapidapi.com/tikwm/api/tiktok-scraper",
+        "host": "tiktok-scraper.p.rapidapi.com",
+        "rating": 10,
+        "latency_ms": 791,
+        "success_rate": "100%",
+        "category": "Social"
+      },
+      {
+        "name": "TikTok Video No Watermark",
+        "provider": "yi005",
+        "url": "https://rapidapi.com/yi005/api/tiktok-video-no-watermark",
+        "host": "tiktok-video-no-watermark.p.rapidapi.com",
+        "rating": 9.9,
+        "latency_ms": 934,
+        "success_rate": "100%",
+        "category": "Social"
+      },
+      {
+        "name": "TikTok Video Feature Summary",
+        "provider": "voyagel",
+        "url": "https://rapidapi.com/voyagel/api/tiktok-video-feature-summary",
+        "host": "tiktok-video-feature-summary.p.rapidapi.com",
+        "rating": 9.9,
+        "latency_ms": 999,
+        "success_rate": "100%",
+        "category": "Social",
+        "status": "working",
+        "endpoints": ["/user/info", "/user/posts"]
+      },
+      {
+        "name": "TikTok Shop API",
+        "provider": "apibox",
+        "url": "https://rapidapi.com/apibox/api/tiktok-shop-api",
+        "host": "tiktok-shop-api.p.rapidapi.com",
+        "category": "Social"
+      },
+      {
+        "name": "TikTok Captcha Solver (CapService)",
+        "provider": "CapService",
+        "url": "https://rapidapi.com/capservice/api/tiktok-captcha-solver",
+        "host": "tiktok-captcha-solver.p.rapidapi.com",
+        "rating": 9.8,
+        "latency_ms": 327,
+        "success_rate": "100%",
+        "category": "Social"
+      },
+      {
+        "name": "TikTok Captcha Solver (API-Box)",
+        "provider": "API-Box",
+        "url": "https://rapidapi.com/api-box/api/tiktok-captcha-solver",
+        "host": "tiktok-captcha-solver2.p.rapidapi.com",
+        "rating": 9.8,
+        "latency_ms": 583,
+        "success_rate": "100%",
+        "category": "Social"
+      }
+    ],
+    "instagram": [
+      {
+        "name": "Instagram Scraper (JoTucker)",
+        "provider": "JoTucker",
+        "url": "https://rapidapi.com/jotucker/api/instagram-scraper",
+        "host": "instagram-scraper.p.rapidapi.com",
+        "rating": 9.9,
+        "latency_ms": 14383,
+        "success_rate": "100%",
+        "category": "Social"
+      },
+      {
+        "name": "Instagram Scraper API",
+        "provider": "Social API",
+        "url": "https://rapidapi.com/social-api1-instagram/api/instagram-scraper-api2",
+        "host": "instagram-scraper-api2.p.rapidapi.com",
+        "category": "Social",
+        "status": "blocked"
+      },
+      {
+        "name": "Instagram Premium API 2023",
+        "provider": "NikitusLLP",
+        "url": "https://rapidapi.com/nikitusllp/api/instagram-premium-api-2023",
+        "host": "instagram-premium-api-2023.p.rapidapi.com",
+        "category": "Social",
+        "note": "Deprecated - use social-media-data-api1"
+      },
+      {
+        "name": "Instagram Looter",
+        "provider": "IRROR Systems",
+        "url": "https://rapidapi.com/irror-systems/api/instagram-looter",
+        "host": "instagram-looter2.p.rapidapi.com",
+        "rating": 9.9,
+        "latency_ms": 1798,
+        "success_rate": "99%",
+        "category": "Social",
+        "status": "working",
+        "endpoints": ["/profile", "/post"]
+      },
+      {
+        "name": "Instagram Statistics API",
+        "provider": "Artem Lipko",
+        "url": "https://rapidapi.com/starter-llp-starter-llp-default/api/instagram-statistics-api",
+        "host": "instagram-statistics-api.p.rapidapi.com",
+        "rating": 9.9,
+        "latency_ms": 812,
+        "success_rate": "100%",
+        "category": "Social",
+        "status": "working",
+        "endpoints": ["/community", "/posts"]
+      }
+    ],
+    "threads": [
+      {
+        "name": "Threads API",
+        "provider": "apibox",
+        "url": "https://rapidapi.com/apibox/api/threads-api",
+        "host": "threads-api4.p.rapidapi.com",
+        "rating": 9.9,
+        "latency_ms": 2136,
+        "success_rate": "100%",
+        "category": "Social"
+      }
+    ],
+    "snapchat": [
+      {
+        "name": "Snapchat",
+        "provider": "social miner",
+        "url": "https://rapidapi.com/social-miner/api/snapchat",
+        "host": "snapchat.p.rapidapi.com",
+        "rating": 9.9,
+        "latency_ms": 1601,
+        "success_rate": "100%",
+        "category": "Social"
+      }
+    ],
+    "twitter": [
+      {
+        "name": "The Old Bird",
+        "provider": "Data Hungry Beast",
+        "url": "https://rapidapi.com/data-hungry-beast/api/the-old-bird",
+        "host": "twitter-api45.p.rapidapi.com",
+        "rating": 9.9,
+        "latency_ms": 3590,
+        "success_rate": "100%",
+        "category": "Data"
+      }
+    ],
+    "linkedin": [
+      {
+        "name": "Real-Time LinkedIn Scraper API",
+        "provider": "RockApis",
+        "url": "https://rapidapi.com/rockapis/api/real-time-linkedin-scraper-api",
+        "host": "linkedin-data-scraper.p.rapidapi.com",
+        "rating": 9.9,
+        "latency_ms": 934,
+        "success_rate": "100%",
+        "category": "Data"
+      },
+      {
+        "name": "Fresh LinkedIn Scraper API",
+        "provider": "SaleLeads",
+        "url": "https://rapidapi.com/saleleads/api/fresh-linkedin-scraper-api",
+        "host": "fresh-linkedin-scraper-api.p.rapidapi.com",
+        "rating": 9.9,
+        "latency_ms": 825,
+        "success_rate": "100%",
+        "category": "Data"
+      }
+    ],
+    "soundcloud": [
+      {
+        "name": "SoundCloud API (Patrick)",
+        "provider": "Patrick",
+        "url": "https://rapidapi.com/patrick/api/soundcloud-api",
+        "host": "soundcloud-api.p.rapidapi.com",
+        "rating": 9.6,
+        "latency_ms": 323,
+        "success_rate": "100%",
+        "category": "Music"
+      },
+      {
+        "name": "SoundCloud API (apibox)",
+        "provider": "apibox",
+        "url": "https://rapidapi.com/apibox/api/soundcloud-api",
+        "host": "soundcloud-api2.p.rapidapi.com",
+        "rating": 9.7,
+        "latency_ms": 879,
+        "success_rate": "100%",
+        "category": "Music"
+      },
+      {
+        "name": "SoundCloud MP3 Downloader API",
+        "provider": "EaseApi2",
+        "url": "https://rapidapi.com/easeapi2/api/soundcloud-mp3-downloader-api",
+        "host": "soundcloud-mp3-downloader-api.p.rapidapi.com",
+        "rating": 9.4,
+        "latency_ms": 2024,
+        "success_rate": "72%",
+        "category": "Tools"
+      },
+      {
+        "name": "SoundCloud Scraper",
+        "provider": "DataFanatic",
+        "url": "https://rapidapi.com/datafanatic/api/soundcloud-scraper",
+        "host": "soundcloud-scraper.p.rapidapi.com",
+        "rating": 9.9,
+        "latency_ms": 1292,
+        "success_rate": "100%",
+        "category": "Music"
+      }
+    ],
+    "google_maps": [
+      {
+        "name": "Google Map Scraper",
+        "provider": "Premium API",
+        "url": "https://rapidapi.com/premium-api/api/google-map-scraper",
+        "host": "google-map-scraper.p.rapidapi.com",
+        "rating": 9.8,
+        "latency_ms": 1136,
+        "success_rate": "100%",
+        "category": "Data"
+      },
+      {
+        "name": "Google Map Places",
+        "provider": "Gmap Platform",
+        "url": "https://rapidapi.com/gmap-platform/api/google-map-places",
+        "host": "google-map-places.p.rapidapi.com",
+        "rating": 9.9,
+        "latency_ms": 120,
+        "success_rate": "100%",
+        "category": "Location"
+      },
+      {
+        "name": "Google Map Places (New V2)",
+        "provider": "Gmap Platform",
+        "url": "https://rapidapi.com/gmap-platform/api/google-map-places-new-v2",
+        "host": "google-map-places-new-v2.p.rapidapi.com",
+        "rating": 9.9,
+        "latency_ms": 150,
+        "success_rate": "100%",
+        "category": "Location"
+      },
+      {
+        "name": "Local Business Data",
+        "provider": "OpenWeb Ninja",
+        "url": "https://rapidapi.com/openweb-ninja/api/local-business-data",
+        "host": "local-business-data.p.rapidapi.com",
+        "rating": 9.9,
+        "latency_ms": 1508,
+        "success_rate": "100%",
+        "category": "Data"
+      },
+      {
+        "name": "Maps Data",
+        "provider": "Alexander Vikhorev",
+        "url": "https://rapidapi.com/alexander-vikhorev/api/maps-data",
+        "host": "maps-data.p.rapidapi.com",
+        "rating": 9.9,
+        "latency_ms": 2759,
+        "success_rate": "100%",
+        "category": "Data"
+      }
+    ],
+    "amazon": [
+      {
+        "name": "Amazon Data Scraper",
+        "provider": "Adrian Cardoza",
+        "url": "https://rapidapi.com/adrian-cardoza/api/amazon-data-scraper",
+        "host": "amazon-data-scraper.p.rapidapi.com",
+        "rating": 9.5,
+        "latency_ms": 32205,
+        "success_rate": "97%",
+        "category": "eCommerce"
+      },
+      {
+        "name": "Real-Time Amazon Data",
+        "provider": "OpenWeb Ninja",
+        "url": "https://rapidapi.com/openweb-ninja/api/real-time-amazon-data",
+        "host": "real-time-amazon-data.p.rapidapi.com",
+        "rating": 9.9,
+        "latency_ms": 2604,
+        "success_rate": "95%",
+        "category": "eCommerce"
+      }
+    ],
+    "etsy": [
+      {
+        "name": "Etsy API",
+        "provider": "Pinto Studio",
+        "url": "https://rapidapi.com/pinto-studio/api/etsy-api",
+        "host": "etsy-api.p.rapidapi.com",
+        "rating": 9.7,
+        "latency_ms": 15497,
+        "success_rate": "79%",
+        "category": "eCommerce"
+      }
+    ],
+    "jobs": [
+      {
+        "name": "Upwork Jobs API",
+        "provider": "Fantastic.Jobs",
+        "url": "https://rapidapi.com/fantastic-jobs/api/upwork-jobs-api",
+        "host": "upwork-jobs-api.p.rapidapi.com",
+        "category": "Jobs"
+      }
+    ],
+    "search": [
+      {
+        "name": "Social Links Search",
+        "provider": "OpenWeb Ninja",
+        "url": "https://rapidapi.com/openweb-ninja/api/social-links-search",
+        "host": "social-links-search.p.rapidapi.com",
+        "rating": 9.9,
+        "latency_ms": 1414,
+        "success_rate": "100%",
+        "category": "Data"
+      },
+      {
+        "name": "Keyword Traffic",
+        "provider": "Green Hut",
+        "url": "https://rapidapi.com/green-hut/api/keyword-traffic",
+        "host": "keyword-traffic.p.rapidapi.com",
+        "rating": 9.6,
+        "latency_ms": 2717,
+        "success_rate": "100%",
+        "category": "Advertising"
+      }
+    ],
+    "ai": [
+      {
+        "name": "Perplexity API",
+        "provider": "Winbay Tech",
+        "url": "https://rapidapi.com/winbay-tech/api/perplexity-api",
+        "host": "perplexity-api.p.rapidapi.com",
+        "rating": 9.1,
+        "latency_ms": 51727,
+        "success_rate": "50%",
+        "category": "AI/ML"
+      },
+      {
+        "name": "Perplexity X Google Search",
+        "provider": "Winbay Tech",
+        "url": "https://rapidapi.com/winbay-tech/api/perplexity",
+        "host": "perplexity.p.rapidapi.com",
+        "rating": 9.8,
+        "latency_ms": 15346,
+        "success_rate": "100%",
+        "category": "AI/ML"
+      }
+    ]
+  }
+}

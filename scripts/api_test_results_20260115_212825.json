@@ -1,0 +1,43 @@
+{
+  "timestamp": "2026-01-15T21:28:25.388002",
+  "results": {
+    "meta_ads_library": {
+      "status": "FAILED",
+      "token_valid": false,
+      "ads_archive_accessible": false,
+      "timestamp": "2026-01-15T21:28:20.263676"
+    },
+    "tiktok_scraper7": {
+      "status": "OK",
+      "status_code": 200,
+      "sample_data": "{'code': 0, 'msg': 'success', 'processed_time': 0.7278, 'data': {'user': {'id': '107955', 'uniqueId': 'tiktok', 'nickname': 'TikTok', 'avatarThumb': 'https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0"
+    },
+    "instagram_looter2": {
+      "status": "OK",
+      "status_code": 200,
+      "sample_data": "{'status': True, 'ai_agent_owner_username': None, 'biography': \"Discover what's new on Instagram \ud83d\udd0e\u2728\", 'bio_links': [{'title': '', 'lynx_url': 'https://l.instagram.com/?u=http%3A%2F%2Fhelp.instagram.co"
+    },
+    "yt_api": {
+      "status": "OK",
+      "status_code": 200,
+      "sample_data": "{'data': [{'type': 'video', 'videoId': 'XelMqi0jlvk', 'title': 'Christmas Songs Playlist\ud83c\udf84Top 2 Hour Christmas Songs \ud83c\udf85 Best Christmas Music 2026', 'channelTitle': 'Christmas Songs and Carols - Love to "
+    },
+    "reddit13": {
+      "status": "FORBIDDEN",
+      "status_code": 403,
+      "message": "Not subscribed to this API"
+    },
+    "app_store": {
+      "ios_app_store": {
+        "status": "FAILED",
+        "status_code": 404,
+        "error": "{\"message\":\"API doesn't exists\"}"
+      },
+      "google_play": {
+        "status": "FORBIDDEN",
+        "status_code": 403,
+        "message": "Not subscribed to this API"
+      }
+    }
+  }
+}

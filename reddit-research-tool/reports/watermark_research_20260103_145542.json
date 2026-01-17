@@ -1,0 +1,73 @@
+{
+  "niche": "Watermark Remover SaaS",
+  "timestamp": "2026-01-03T14:55:42.884895",
+  "subreddits_checked": [
+    "PhotoshopRequest",
+    "graphic_design",
+    "VideoEditing",
+    "Piracy",
+    "photoshop",
+    "AfterEffects",
+    "Filmmakers",
+    "editors",
+    "shutterstock",
+    "ContentCreators",
+    "NewTubers",
+    "socialmedia",
+    "DigitalArt",
+    "freelance"
+  ],
+  "total_posts": 0,
+  "relevant_posts": 0,
+  "top_relevant_posts": [],
+  "insights": {
+    "pain_points": [],
+    "questions": [],
+    "requests": [],
+    "solutions": [],
+    "beliefs": []
+  },
+  "ad_targeting": {
+    "primary_audiences": [
+      "Graphic designers needing stock photos without watermarks",
+      "Video editors working with stock footage",
+      "Content creators on tight budgets",
+      "Social media managers creating content",
+      "Small business owners making marketing materials",
+      "Freelancers doing client work",
+      "YouTubers/TikTokers needing b-roll footage"
+    ],
+    "pain_points_to_address": [
+      "Stock photo subscriptions are expensive ($29-299/mo)",
+      "Watermarks ruin preview images for client presentations",
+      "Manual removal in Photoshop is time-consuming",
+      "Need quick turnaround for client deadlines",
+      "Looking for alternatives to expensive stock sites",
+      "One-time use doesn't justify subscription cost"
+    ],
+    "ad_messaging_angles": [
+      "\ud83d\udcb0 \"Remove watermarks instantly - No subscription needed\"",
+      "\u26a1 \"Clean up stock photos in seconds with AI\"",
+      "\ud83c\udfaf \"Professional results without Photoshop skills\"",
+      "\ud83d\udcb5 \"Save hundreds on stock photo subscriptions\"",
+      "\ud83d\ude80 \"From watermarked to professional in one click\"",
+      "\u23f0 \"Stop wasting hours on manual editing\""
+    ],
+    "target_subreddits_for_ads": [
+      "r/graphic_design - 3M+ members",
+      "r/PhotoshopRequest - 500K+ members",
+      "r/VideoEditing - 200K+ members",
+      "r/Filmmakers - 800K+ members",
+      "r/freelance - 400K+ members",
+      "r/ContentCreators - 100K+ members",
+      "r/NewTubers - 500K+ members"
+    ],
+    "competitor_tools_mentioned": [
+      "Photoshop (complex, expensive)",
+      "GIMP (free but complex)",
+      "Remove.bg (background only)",
+      "Inpaint (general object removal)",
+      "Various online tools"
+    ]
+  }
+}

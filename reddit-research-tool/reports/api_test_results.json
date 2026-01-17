@@ -1,0 +1,26 @@
+{
+  "search": {
+    "status": "SUCCESS",
+    "count": 0
+  },
+  "posts": {
+    "status": "SUCCESS",
+    "count": 0
+  },
+  "popular_subreddits": {
+    "status": "SUCCESS",
+    "count": 0
+  },
+  "new_subreddits": {
+    "status": "SUCCESS",
+    "count": 0
+  },
+  "subreddit_comments": {
+    "status": "SUCCESS",
+    "count": 0
+  },
+  "user_data": {
+    "status": "SUCCESS",
+    "user": "N/A"
+  }
+}
