@@ -135,3 +135,29 @@
   * src/app/api/runs/[id]/execute/route.ts (updated)
   * src/lib/email.ts (updated)
   * feature_list.json (updated TASK-071 to passing, completedFeatures 55→56)
+
+=== Session January 16, 2026 23:00 ===
+- Dev environment already running on port 3000
+- Implemented: TASK-072 - Welcome Email
+- Features completed:
+  * Updated src/app/auth/callback/route.ts:
+    - Added welcome email sending when new user signs up
+    - Triggers after user record and default project creation
+    - Sends WelcomeEmail template with user's name and email
+    - Includes onboarding tips and getting started guide
+    - Graceful error handling (email failures don't fail signup)
+    - Console logging for success/failure tracking
+  * Welcome email features:
+    - Personalized greeting with user's name
+    - Overview of GapRadar capabilities
+    - List of key features (market analysis, reports, insights)
+    - Direct link to dashboard to get started
+    - Help documentation link
+  * Only sends to new users (when !existingUser check passes)
+  * Uses existing WelcomeEmail template from TASK-070
+- Tests passed: Build succeeds without errors, auth callback route registered
+- Committed: "feat: Add Welcome Email on User Signup (TASK-072)"
+- Next priority: TASK-073 - Subscription Confirmation Email
+- Files modified:
+  * src/app/auth/callback/route.ts (updated)
+  * feature_list.json (updated TASK-072 to passing, completedFeatures 56→57)
