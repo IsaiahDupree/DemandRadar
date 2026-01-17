@@ -161,3 +161,31 @@
 - Files modified:
   * src/app/auth/callback/route.ts (updated)
   * feature_list.json (updated TASK-072 to passing, completedFeatures 56→57)
+
+=== Session January 16, 2026 23:30 ===
+- Dev environment already running on port 3000
+- Implemented: TASK-073 - Subscription Confirmation Email
+- Features completed:
+  * Updated src/app/api/webhooks/stripe/route.ts:
+    - Added email notification on checkout.session.completed (new subscriptions)
+    - Added email notification on customer.subscription.updated (plan changes/upgrades)
+    - Sends SubscriptionConfirmationEmail template with plan details
+    - Includes plan name, pricing, and feature list from PLANS config
+    - User data retrieved via .select() to get email and name
+    - Fixed TypeScript error by spreading readonly features array
+    - Graceful error handling (email failures don't fail webhooks)
+    - Console logging for success/failure tracking
+  * Subscription emails include:
+    - Personalized greeting with user's name
+    - Plan name and monthly price
+    - Complete list of plan features
+    - Different subject/content for new vs upgrade (isUpgrade flag)
+    - Direct link to dashboard
+    - Link to billing settings
+  * Uses existing SubscriptionConfirmationEmail template from TASK-070
+- Tests passed: Build succeeds without errors, webhook route registered
+- Committed: "feat: Add Subscription Confirmation Emails (TASK-073)"
+- Next priority: TASK-074 - Usage Limit Warning Email
+- Files modified:
+  * src/app/api/webhooks/stripe/route.ts (updated)
+  * feature_list.json (updated TASK-073 to passing, completedFeatures 57→58)
