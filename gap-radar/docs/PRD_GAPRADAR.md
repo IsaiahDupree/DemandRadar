@@ -105,7 +105,7 @@ The landing page is the primary top-of-funnel entry point. It must:
   - Related terms (chips)
 - Cards are clickable:
   - Clicking a topic pre-fills the NLP search input.
-  - Optionally triggers a “See how DemandRadar analyzes this” flow.
+  - Optionally triggers a "See how DemandRadar analyzes this" flow.
 
 ### Data Requirements: Live Trends
 
@@ -151,7 +151,7 @@ The landing page is the primary top-of-funnel entry point. It must:
 
 #### Endpoint
 
-- `GET /api/trends`
+- `GET /api/trends` 
 
 #### Response Shape
 

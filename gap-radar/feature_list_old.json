@@ -1,0 +1,921 @@
+{
+  "project": "DemandRadar",
+  "description": "Market gap analysis tool for founders and marketers",
+  "totalFeatures": 165,
+  "completedFeatures": 62,
+  "integrations": {
+    "openai": {
+      "status": "complete",
+      "purpose": "AI processing",
+      "env": "OPENAI_API_KEY"
+    },
+    "supabase": {
+      "status": "complete",
+      "purpose": "Database + Auth",
+      "env": "NEXT_PUBLIC_SUPABASE_*"
+    },
+    "supabase_realtime": {
+      "status": "complete",
+      "purpose": "Real-time updates",
+      "env": "NEXT_PUBLIC_SUPABASE_*"
+    },
+    "stripe": {
+      "status": "partial",
+      "purpose": "Payments/Billing",
+      "env": "STRIPE_*"
+    },
+    "rapidapi": {
+      "status": "complete",
+      "purpose": "TikTok/Instagram UGC",
+      "env": "RAPIDAPI_KEY"
+    },
+    "serpapi": {
+      "status": "partial",
+      "purpose": "Google Ads/Play Store",
+      "env": "SERPAPI_KEY"
+    },
+    "itunes": {
+      "status": "complete",
+      "purpose": "iOS App Store",
+      "env": null
+    },
+    "puppeteer": {
+      "status": "complete",
+      "purpose": "Ad Library scraping",
+      "env": null
+    },
+    "sentry": {
+      "status": "missing",
+      "purpose": "Error tracking",
+      "env": "SENTRY_DSN"
+    },
+    "resend": {
+      "status": "complete",
+      "purpose": "Email notifications",
+      "env": "RESEND_API_KEY"
+    },
+    "youtube": {
+      "status": "complete",
+      "purpose": "Video data",
+      "env": "YOUTUBE_API_KEY"
+    }
+  },
+  "features": [
+    {
+      "id": "TASK-001",
+      "name": "Report Detail Page Structure",
+      "description": "Create report detail page with navigation and header components",
+      "priority": "P0",
+      "sprint": 1,
+      "effort": "4h",
+      "passes": true,
+      "files": [
+        "src/app/dashboard/reports/[id]/page.tsx",
+        "src/app/dashboard/reports/[id]/loading.tsx",
+        "src/app/dashboard/reports/[id]/components/ReportNav.tsx",
+        "src/app/dashboard/reports/[id]/components/ReportHeader.tsx"
+      ]
+    },
+    {
+      "id": "TASK-002",
+      "name": "Executive Summary Component",
+      "description": "Build Executive Summary section showing key scores and top gaps",
+      "priority": "P0",
+      "sprint": 1,
+      "effort": "3h",
+      "passes": true,
+      "files": [
+        "src/app/dashboard/reports/[id]/components/ExecutiveSummary.tsx"
+      ]
+    },
+    {
+      "id": "TASK-003",
+      "name": "Market Snapshot Component",
+      "description": "Build Paid Market Snapshot showing top advertisers and angles",
+      "priority": "P0",
+      "sprint": 1,
+      "effort": "3h",
+      "passes": true,
+      "files": [
+        "src/app/dashboard/reports/[id]/components/MarketSnapshot.tsx"
+      ]
+    },
+    {
+      "id": "TASK-004",
+      "name": "Pain Map Component",
+      "description": "Build User Pain Map visualizing Reddit objections and sentiment",
+      "priority": "P0",
+      "sprint": 1,
+      "effort": "3h",
+      "passes": true,
+      "files": [
+        "src/app/dashboard/reports/[id]/components/PainMap.tsx"
+      ]
+    },
+    {
+      "id": "TASK-005",
+      "name": "Platform Gap Component",
+      "description": "Build Platform Existence Gap showing iOS/Android/Web presence",
+      "priority": "P0",
+      "sprint": 1,
+      "effort": "2h",
+      "passes": true,
+      "files": [
+        "src/app/dashboard/reports/[id]/components/PlatformGap.tsx"
+      ]
+    },
+    {
+      "id": "TASK-006",
+      "name": "Gap Opportunities Component",
+      "description": "Build ranked list of market gap opportunities with evidence",
+      "priority": "P0",
+      "sprint": 1,
+      "effort": "3h",
+      "passes": true,
+      "files": [
+        "src/app/dashboard/reports/[id]/components/GapOpportunities.tsx"
+      ]
+    },
+    {
+      "id": "TASK-007",
+      "name": "Economics Component",
+      "description": "Build Modeled Economics section with CPC/CAC/TAM estimates",
+      "priority": "P1",
+      "sprint": 1,
+      "effort": "2h",
+      "passes": true,
+      "files": [
+        "src/app/dashboard/reports/[id]/components/Economics.tsx"
+      ]
+    },
+    {
+      "id": "TASK-008",
+      "name": "Buildability Component",
+      "description": "Build Buildability Assessment with difficulty scores",
+      "priority": "P1",
+      "sprint": 1,
+      "effort": "2h",
+      "passes": true,
+      "files": [
+        "src/app/dashboard/reports/[id]/components/Buildability.tsx"
+      ]
+    },
+    {
+      "id": "TASK-009",
+      "name": "UGC Pack Component",
+      "description": "Build UGC Winners Pack with hooks, scripts, shot lists",
+      "priority": "P1",
+      "sprint": 1,
+      "effort": "3h",
+      "passes": true,
+      "files": [
+        "src/app/dashboard/reports/[id]/components/UGCPack.tsx"
+      ]
+    },
+    {
+      "id": "TASK-010",
+      "name": "Action Plan Component",
+      "description": "Build Action Plan section with 7-day and 30-day plans",
+      "priority": "P2",
+      "sprint": 1,
+      "effort": "3h",
+      "passes": true,
+      "files": [
+        "src/app/dashboard/reports/[id]/components/ActionPlan.tsx"
+      ]
+    },
+    {
+      "id": "TASK-011",
+      "name": "PDF Export",
+      "description": "Implement PDF report generation with @react-pdf/renderer",
+      "priority": "P0",
+      "sprint": 1,
+      "effort": "6h",
+      "passes": true,
+      "files": [
+        "src/lib/report-generator.tsx",
+        "src/app/api/reports/[runId]/pdf/route.ts"
+      ]
+    },
+    {
+      "id": "TASK-012",
+      "name": "Android Play Store Collector",
+      "description": "Extend app store collector to support Android via SerpAPI",
+      "priority": "P1",
+      "sprint": 2,
+      "effort": "4h",
+      "passes": true,
+      "files": [
+        "src/lib/collectors/appstore.ts"
+      ]
+    },
+    {
+      "id": "TASK-013",
+      "name": "Google Ads Pipeline Integration",
+      "description": "Integrate Google Ads collector into main execution pipeline",
+      "priority": "P1",
+      "sprint": 2,
+      "effort": "2h",
+      "passes": true,
+      "files": [
+        "src/app/api/runs/[id]/execute/route.ts"
+      ]
+    },
+    {
+      "id": "TASK-014",
+      "name": "UGC Pipeline Integration",
+      "description": "Integrate TikTok/Instagram collectors into pipeline",
+      "priority": "P1",
+      "sprint": 2,
+      "effort": "3h",
+      "passes": true,
+      "files": [
+        "src/app/api/runs/[id]/execute/route.ts"
+      ]
+    },
+    {
+      "id": "TASK-020",
+      "name": "Action Plan Generator",
+      "description": "Create AI module to generate 7-day and 30-day action plans",
+      "priority": "P2",
+      "sprint": 3,
+      "effort": "4h",
+      "passes": true,
+      "files": [
+        "src/lib/ai/action-plan.ts"
+      ]
+    },
+    {
+      "id": "TASK-021",
+      "name": "Build-to-Profit Score",
+      "description": "Complete Build-to-Profit score implementation per PRD",
+      "priority": "P2",
+      "sprint": 3,
+      "effort": "2h",
+      "passes": true,
+      "files": [
+        "src/lib/scoring.ts"
+      ]
+    },
+    {
+      "id": "TASK-030",
+      "name": "Collector Unit Tests",
+      "description": "Write unit tests for all data collectors",
+      "priority": "P0",
+      "sprint": 4,
+      "effort": "4h",
+      "passes": true,
+      "files": [
+        "__tests__/lib/collectors/reddit.test.ts",
+        "__tests__/lib/collectors/meta.test.ts",
+        "__tests__/lib/collectors/google.test.ts",
+        "__tests__/lib/collectors/appstore.test.ts"
+      ]
+    },
+    {
+      "id": "TASK-031",
+      "name": "AI Module Unit Tests",
+      "description": "Write unit tests for AI processing modules",
+      "priority": "P1",
+      "sprint": 4,
+      "effort": "4h",
+      "passes": true,
+      "files": [
+        "__tests__/lib/ai/extractor.test.ts",
+        "__tests__/lib/ai/gap-generator.test.ts",
+        "__tests__/lib/ai/concept-generator.test.ts",
+        "__tests__/lib/ai/ugc-generator.test.ts"
+      ]
+    },
+    {
+      "id": "TASK-032",
+      "name": "API Integration Tests",
+      "description": "Write integration tests for API routes",
+      "priority": "P1",
+      "sprint": 4,
+      "effort": "4h",
+      "passes": true,
+      "files": [
+        "__tests__/integration/api/runs.test.ts",
+        "__tests__/integration/api/reports.test.ts"
+      ]
+    },
+    {
+      "id": "TASK-033",
+      "name": "E2E Tests Setup",
+      "description": "Set up Playwright and write E2E tests",
+      "priority": "P2",
+      "sprint": 4,
+      "effort": "4h",
+      "passes": true,
+      "files": [
+        "playwright.config.ts",
+        "e2e/auth.spec.ts",
+        "e2e/new-run.spec.ts",
+        "e2e/report.spec.ts"
+      ]
+    },
+    {
+      "id": "TASK-040",
+      "name": "Run Progress UI",
+      "description": "Add real-time progress indicator for running analyses",
+      "priority": "P1",
+      "sprint": 5,
+      "effort": "4h",
+      "passes": true,
+      "files": [
+        "src/components/RunProgress.tsx",
+        "src/hooks/use-run-status.ts"
+      ]
+    },
+    {
+      "id": "TASK-041",
+      "name": "Mobile Responsive Polish",
+      "description": "Ensure all dashboard pages work on mobile devices",
+      "priority": "P2",
+      "sprint": 5,
+      "effort": "4h",
+      "passes": true,
+      "files": [
+        "src/app/dashboard/*/page.tsx",
+        "src/app/dashboard/layout.tsx"
+      ]
+    },
+    {
+      "id": "TASK-050",
+      "name": "Supabase Realtime Progress",
+      "description": "Implement real-time run progress updates using Supabase Realtime subscriptions",
+      "priority": "P1",
+      "sprint": 5,
+      "effort": "3h",
+      "passes": true,
+      "category": "infrastructure",
+      "files": [
+        "src/hooks/use-run-status.ts",
+        "src/components/RunProgress.tsx"
+      ]
+    },
+    {
+      "id": "TASK-051",
+      "name": "Stripe Webhook Testing",
+      "description": "Test and verify Stripe webhook handling for subscription events",
+      "priority": "P1",
+      "sprint": 6,
+      "effort": "2h",
+      "passes": true,
+      "category": "payments",
+      "files": [
+        "src/app/api/webhooks/stripe/route.ts",
+        "__tests__/integration/webhooks/stripe.test.ts"
+      ]
+    },
+    {
+      "id": "TASK-052",
+      "name": "Stripe Subscription Management",
+      "description": "Add subscription upgrade/downgrade and cancellation flows",
+      "priority": "P1",
+      "sprint": 6,
+      "effort": "4h",
+      "passes": true,
+      "category": "payments",
+      "files": [
+        "src/app/dashboard/settings/page.tsx",
+        "src/app/api/subscriptions/route.ts"
+      ]
+    },
+    {
+      "id": "TASK-053",
+      "name": "Stripe Invoice History",
+      "description": "Display billing history and invoices in settings",
+      "priority": "P2",
+      "sprint": 6,
+      "effort": "3h",
+      "passes": true,
+      "category": "payments",
+      "files": [
+        "src/app/dashboard/settings/billing/page.tsx",
+        "src/app/api/subscriptions/invoices/route.ts"
+      ]
+    },
+    {
+      "id": "TASK-054",
+      "name": "Sentry Error Tracking",
+      "description": "Integrate Sentry for error monitoring and alerting",
+      "priority": "P1",
+      "sprint": 6,
+      "effort": "2h",
+      "passes": true,
+      "category": "infrastructure",
+      "files": [
+        "sentry.client.config.ts",
+        "sentry.server.config.ts",
+        "sentry.edge.config.ts",
+        "instrumentation.ts",
+        "next.config.ts",
+        "docs/SENTRY_SETUP.md"
+      ]
+    },
+    {
+      "id": "TASK-055",
+      "name": "Production Supabase Setup",
+      "description": "Create production Supabase project and run migrations",
+      "priority": "P0",
+      "sprint": 6,
+      "effort": "2h",
+      "passes": true,
+      "category": "infrastructure",
+      "files": [
+        "docs/PRODUCTION_SUPABASE_SETUP.md"
+      ]
+    },
+    {
+      "id": "TASK-056",
+      "name": "Vercel Deployment",
+      "description": "Deploy to Vercel with environment variables and domain",
+      "priority": "P0",
+      "sprint": 6,
+      "effort": "2h",
+      "passes": true,
+      "category": "infrastructure",
+      "files": [
+        "docs/VERCEL_DEPLOYMENT.md"
+      ]
+    },
+    {
+      "id": "TASK-057",
+      "name": "Share Links Feature",
+      "description": "Generate shareable report URLs with optional password protection",
+      "priority": "P2",
+      "sprint": 7,
+      "effort": "4h",
+      "passes": true,
+      "category": "reports",
+      "files": [
+        "src/app/api/share/route.ts",
+        "src/app/share/[token]/page.tsx"
+      ],
+      "implemented_at": "2026-01-16T21:15:00Z"
+    },
+    {
+      "id": "TASK-058",
+      "name": "YouTube Data Collector",
+      "description": "Add YouTube API integration for video and channel data",
+      "priority": "P3",
+      "sprint": 7,
+      "effort": "4h",
+      "passes": true,
+      "category": "data_collection",
+      "files": [
+        "src/lib/collectors/youtube.ts"
+      ],
+      "implemented_at": "2026-01-17T00:30:00.000Z"
+    },
+    {
+      "id": "TASK-059",
+      "name": "Public API for Agency+ Plans",
+      "description": "Create public API endpoints for Agency and Studio plan users",
+      "priority": "P2",
+      "sprint": 7,
+      "effort": "6h",
+      "passes": true,
+      "category": "api",
+      "files": [
+        "src/app/api/v1/runs/route.ts",
+        "src/app/api/v1/reports/route.ts",
+        "src/app/api/v1/reports/[id]/route.ts",
+        "src/app/api/api-keys/route.ts",
+        "src/app/api/api-keys/[id]/route.ts",
+        "src/lib/api-keys.ts",
+        "src/lib/api-auth.ts",
+        "supabase/migrations/20260117_api_keys.sql"
+      ],
+      "implemented_at": "2026-01-16T22:30:00Z"
+    },
+    {
+      "id": "TASK-060",
+      "name": "White-Label Reports",
+      "description": "Allow Studio plan users to customize report branding",
+      "priority": "P3",
+      "sprint": 7,
+      "effort": "4h",
+      "passes": true,
+      "category": "reports",
+      "files": [
+        "src/lib/report-generator.ts",
+        "src/app/dashboard/settings/branding/page.tsx"
+      ],
+      "implemented_at": "2026-01-17T01:00:00.000Z"
+    },
+    {
+      "id": "TASK-070",
+      "name": "Resend Email Integration",
+      "description": "Set up Resend SDK and email client with templates",
+      "priority": "P2",
+      "sprint": 8,
+      "effort": "2h",
+      "passes": true,
+      "implemented_at": "2026-01-16T21:40:00.000Z",
+      "category": "notifications",
+      "files": [
+        "src/lib/email.ts",
+        "src/lib/email-templates.tsx"
+      ]
+    },
+    {
+      "id": "TASK-071",
+      "name": "Report Complete Email",
+      "description": "Send email notification when analysis run completes",
+      "priority": "P2",
+      "sprint": 8,
+      "effort": "2h",
+      "passes": true,
+      "implemented_at": "2026-01-16T22:00:00.000Z",
+      "category": "notifications",
+      "files": [
+        "src/lib/email-templates.tsx",
+        "src/app/api/runs/[id]/execute/route.ts"
+      ]
+    },
+    {
+      "id": "TASK-072",
+      "name": "Welcome Email",
+      "description": "Send welcome email on user signup with onboarding tips",
+      "priority": "P2",
+      "sprint": 8,
+      "effort": "1h",
+      "passes": true,
+      "implemented_at": "2026-01-16T22:30:00Z",
+      "category": "notifications",
+      "files": [
+        "src/lib/email-templates.tsx",
+        "src/app/auth/callback/route.ts"
+      ]
+    },
+    {
+      "id": "TASK-073",
+      "name": "Subscription Confirmation Email",
+      "description": "Send email when user subscribes or upgrades plan",
+      "priority": "P2",
+      "sprint": 8,
+      "effort": "1h",
+      "passes": true,
+      "implemented_at": "2026-01-16T23:30:00Z",
+      "category": "notifications",
+      "files": [
+        "src/lib/email-templates.tsx",
+        "src/app/api/webhooks/stripe/route.ts"
+      ]
+    },
+    {
+      "id": "TASK-074",
+      "name": "Usage Limit Warning Email",
+      "description": "Send email when user approaches monthly run limit",
+      "priority": "P3",
+      "sprint": 8,
+      "effort": "2h",
+      "passes": true,
+      "implemented_at": "2026-01-17T00:00:00Z",
+      "category": "notifications",
+      "files": [
+        "src/lib/email-templates.tsx",
+        "src/lib/usage-tracker.ts",
+        "src/app/api/runs/route.ts",
+        "supabase/migrations/20260117_usage_warnings.sql"
+      ]
+    },
+    {
+      "id": "TASK-075",
+      "name": "Report Share Email",
+      "description": "Send email when someone shares a report with user",
+      "priority": "P3",
+      "sprint": 8,
+      "effort": "1h",
+      "passes": true,
+      "implemented_at": "2026-01-17T00:15:00Z",
+      "category": "notifications",
+      "files": [
+        "src/lib/email-templates.tsx",
+        "src/app/api/share/route.ts"
+      ]
+    },
+    {
+      "id": "TASK-100",
+      "name": "Build Verification Tests",
+      "description": "Create tests that verify the app builds successfully with no errors",
+      "priority": "P0",
+      "sprint": 9,
+      "effort": "2h",
+      "passes": true,
+      "category": "testing",
+      "files": [
+        "scripts/verify-build.ts",
+        "package.json"
+      ]
+    },
+    {
+      "id": "TASK-101",
+      "name": "Page 404 Tests",
+      "description": "E2E tests verifying all routes return 200, no 404s on valid pages",
+      "priority": "P0",
+      "sprint": 9,
+      "effort": "3h",
+      "passes": true,
+      "category": "testing",
+      "files": [
+        "e2e/pages.spec.ts"
+      ]
+    },
+    {
+      "id": "TASK-102",
+      "name": "Button Interaction Tests",
+      "description": "Test all buttons on every page are clickable and trigger correct actions",
+      "priority": "P0",
+      "sprint": 9,
+      "effort": "4h",
+      "passes": true,
+      "category": "testing",
+      "files": [
+        "e2e/buttons.spec.ts"
+      ]
+    },
+    {
+      "id": "TASK-103",
+      "name": "Full Workflow E2E Tests",
+      "description": "Test complete user flows: signup → create run → view report → export",
+      "priority": "P0",
+      "sprint": 9,
+      "effort": "6h",
+      "passes": true,
+      "category": "testing",
+      "files": [
+        "e2e/workflows/signup-to-report.spec.ts",
+        "e2e/workflows/run-analysis.spec.ts"
+      ]
+    },
+    {
+      "id": "TASK-104",
+      "name": "Data Hydration Tests",
+      "description": "Verify all pages load with correct data, no empty states when data exists",
+      "priority": "P0",
+      "sprint": 9,
+      "effort": "4h",
+      "passes": true,
+      "category": "testing",
+      "files": [
+        "e2e/data-hydration.spec.ts",
+        "__tests__/integration/data-loading.test.ts"
+      ]
+    },
+    {
+      "id": "TASK-105",
+      "name": "Page Functionality Audit",
+      "description": "Verify each dashboard page has working functionality, not just UI",
+      "priority": "P0",
+      "sprint": 9,
+      "effort": "4h",
+      "passes": true,
+      "category": "testing",
+      "files": [
+        "e2e/functionality-audit.spec.ts"
+      ]
+    },
+    {
+      "id": "TASK-106",
+      "name": "Accessibility E2E Tests (Axe)",
+      "description": "Add Playwright accessibility scans (axe-core) for key public + dashboard pages and fail on WCAG violations",
+      "priority": "P1",
+      "sprint": 9,
+      "effort": "3h",
+      "passes": true,
+      "category": "testing",
+      "files": [
+        "e2e/accessibility.spec.ts",
+        "package.json"
+      ]
+    },
+    {
+      "id": "TASK-107",
+      "name": "Production Smoke Diagnostics",
+      "description": "Playwright tests that can run against production to detect 404/500 issues, missing API routes, and console errors",
+      "priority": "P1",
+      "sprint": 9,
+      "effort": "4h",
+      "passes": true,
+      "category": "testing",
+      "files": [
+        "e2e/production-diagnostics.spec.ts",
+        "playwright.config.ts",
+        ".env.e2e.example"
+      ]
+    },
+    {
+      "id": "TASK-108",
+      "name": "Resilience & Error Handling E2E",
+      "description": "Add offline-mode, API failure simulation, and friendly 404/error-boundary verification tests",
+      "priority": "P1",
+      "sprint": 9,
+      "effort": "4h",
+      "passes": true,
+      "category": "testing",
+      "files": [
+        "e2e/error-handling.spec.ts"
+      ]
+    },
+    {
+      "id": "TASK-109",
+      "name": "Cross-Browser + Mobile E2E Matrix",
+      "description": "Run critical E2E flows across chromium/firefox/webkit + mobile profiles; collect traces/screenshots on failure",
+      "priority": "P2",
+      "sprint": 9,
+      "effort": "3h",
+      "passes": true,
+      "category": "testing",
+      "files": [
+        "playwright.config.ts",
+        "e2e/smoke-matrix.spec.ts"
+      ]
+    },
+    {
+      "id": "TASK-110",
+      "name": "Demand Brief - Onboarding Flow",
+      "description": "Create onboarding page where user inputs their offering and we auto-extract niche data",
+      "priority": "P0",
+      "sprint": 10,
+      "effort": "6h",
+      "passes": true,
+      "category": "demand_brief",
+      "files": [
+        "src/app/onboarding/page.tsx",
+        "src/app/onboarding/components/OfferingInput.tsx",
+        "src/app/onboarding/components/NichePreview.tsx"
+      ]
+    },
+    {
+      "id": "TASK-111",
+      "name": "Demand Brief - Niche Config Schema",
+      "description": "Create database tables for user_niches and demand_snapshots",
+      "priority": "P0",
+      "sprint": 10,
+      "effort": "2h",
+      "passes": true,
+      "category": "demand_brief",
+      "files": [
+        "supabase/migrations/20260116_demand_brief_tables.sql"
+      ]
+    },
+    {
+      "id": "TASK-112",
+      "name": "Demand Brief - Niche API Routes",
+      "description": "Create CRUD API routes for managing user niches",
+      "priority": "P0",
+      "sprint": 10,
+      "effort": "3h",
+      "passes": true,
+      "category": "demand_brief",
+      "files": [
+        "src/app/api/niches/route.ts",
+        "src/app/api/niches/[id]/route.ts",
+        "src/app/api/niches/extract/route.ts"
+      ]
+    },
+    {
+      "id": "TASK-113",
+      "name": "Demand Brief - My Niches Dashboard",
+      "description": "Dashboard page to view and manage tracked niches",
+      "priority": "P0",
+      "sprint": 10,
+      "effort": "4h",
+      "passes": true,
+      "category": "demand_brief",
+      "files": [
+        "src/app/dashboard/niches/page.tsx",
+        "src/app/dashboard/niches/[id]/page.tsx"
+      ]
+    },
+    {
+      "id": "TASK-114",
+      "name": "Demand Brief - Demand Score Calculator",
+      "description": "Implement demand score formula: ads(30%) + intent(25%) + velocity(20%) + pain(15%) + heat(10%)",
+      "priority": "P0",
+      "sprint": 10,
+      "effort": "4h",
+      "passes": true,
+      "category": "demand_brief",
+      "files": [
+        "src/lib/scoring/demand-score.ts"
+      ]
+    },
+    {
+      "id": "TASK-115",
+      "name": "Demand Brief - Weekly Signal Collection",
+      "description": "Pipeline to collect weekly signals from all sources for each niche",
+      "priority": "P0",
+      "sprint": 10,
+      "effort": "6h",
+      "passes": true,
+      "category": "demand_brief",
+      "files": [
+        "src/lib/pipeline/weekly-signals.ts",
+        "src/app/api/cron/weekly-briefs/route.ts"
+      ]
+    },
+    {
+      "id": "TASK-116",
+      "name": "Demand Brief - AI Content Generation",
+      "description": "Generate 3 plays, ad hooks, subject lines, and landing copy using AI",
+      "priority": "P0",
+      "sprint": 10,
+      "effort": "4h",
+      "passes": true,
+      "category": "demand_brief",
+      "files": [
+        "src/lib/ai/brief-generator.ts"
+      ]
+    },
+    {
+      "id": "TASK-117",
+      "name": "Demand Brief - Email Template",
+      "description": "Create React email template for weekly Demand Brief",
+      "priority": "P0",
+      "sprint": 10,
+      "effort": "4h",
+      "passes": true,
+      "category": "demand_brief",
+      "files": [
+        "src/lib/email/templates/demand-brief.tsx",
+        "src/lib/email/send-brief.ts"
+      ]
+    },
+    {
+      "id": "TASK-118",
+      "name": "Demand Brief - Web View",
+      "description": "Web version of the Demand Brief email for dashboard viewing",
+      "priority": "P1",
+      "sprint": 10,
+      "effort": "3h",
+      "passes": true,
+      "category": "demand_brief",
+      "files": [
+        "src/app/dashboard/briefs/[id]/page.tsx",
+        "src/app/api/briefs/[id]/route.ts"
+      ]
+    },
+    {
+      "id": "TASK-119",
+      "name": "Demand Brief - Alert System",
+      "description": "Between-brief alerts for competitor changes, trend spikes, new angles",
+      "priority": "P1",
+      "sprint": 11,
+      "effort": "4h",
+      "passes": true,
+      "category": "demand_brief",
+      "files": [
+        "src/lib/alerts/detector.ts",
+        "src/app/api/alerts/route.ts",
+        "src/app/dashboard/alerts/page.tsx"
+      ]
+    },
+    {
+      "id": "TASK-120",
+      "name": "Demand Brief - Progress Tracking",
+      "description": "Show niche score evolution over time with charts",
+      "priority": "P1",
+      "sprint": 11,
+      "effort": "3h",
+      "passes": true,
+      "category": "demand_brief",
+      "files": [
+        "src/app/dashboard/niches/[id]/components/ProgressChart.tsx"
+      ]
+    },
+    {
+      "id": "TASK-121",
+      "name": "Demand Brief - Experiment Loop",
+      "description": "Weekly experiment suggestions and results tracking",
+      "priority": "P2",
+      "sprint": 11,
+      "effort": "4h",
+      "passes": true,
+      "category": "demand_brief",
+      "files": [
+        "src/lib/experiments/suggestions.ts",
+        "src/app/dashboard/experiments/page.tsx"
+      ]
+    },
+    {
+      "id": "TASK-122",
+      "name": "Demand Brief - Subscription Tier Enforcement",
+      "description": "Enforce niche limits based on subscription tier (1/3/10-25)",
+      "priority": "P1",
+      "sprint": 11,
+      "effort": "3h",
+      "passes": true,
+      "category": "demand_brief",
+      "files": [
+        "src/lib/subscription/tier-limits.ts",
+        "src/lib/subscription/permissions.ts",
+        "src/app/api/runs/route.ts"
+      ]
+    }
+  ]
+}

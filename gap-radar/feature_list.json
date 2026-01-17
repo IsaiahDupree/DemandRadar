@@ -1,921 +1,3061 @@
 {
-  "project": "DemandRadar",
-  "description": "Market gap analysis tool for founders and marketers",
-  "totalFeatures": 165,
-  "completedFeatures": 62,
-  "integrations": {
-    "openai": {
-      "status": "complete",
-      "purpose": "AI processing",
-      "env": "OPENAI_API_KEY"
-    },
-    "supabase": {
-      "status": "complete",
-      "purpose": "Database + Auth",
-      "env": "NEXT_PUBLIC_SUPABASE_*"
-    },
-    "supabase_realtime": {
-      "status": "complete",
-      "purpose": "Real-time updates",
-      "env": "NEXT_PUBLIC_SUPABASE_*"
-    },
-    "stripe": {
-      "status": "partial",
-      "purpose": "Payments/Billing",
-      "env": "STRIPE_*"
-    },
-    "rapidapi": {
-      "status": "complete",
-      "purpose": "TikTok/Instagram UGC",
-      "env": "RAPIDAPI_KEY"
-    },
-    "serpapi": {
-      "status": "partial",
-      "purpose": "Google Ads/Play Store",
-      "env": "SERPAPI_KEY"
-    },
-    "itunes": {
-      "status": "complete",
-      "purpose": "iOS App Store",
-      "env": null
-    },
-    "puppeteer": {
-      "status": "complete",
-      "purpose": "Ad Library scraping",
-      "env": null
-    },
-    "sentry": {
-      "status": "missing",
-      "purpose": "Error tracking",
-      "env": "SENTRY_DSN"
-    },
-    "resend": {
-      "status": "complete",
-      "purpose": "Email notifications",
-      "env": "RESEND_API_KEY"
-    },
-    "youtube": {
-      "status": "complete",
-      "purpose": "Video data",
-      "env": "YOUTUBE_API_KEY"
-    }
+  "project": "DemandRadar (GapRadar)",
+  "description": "Market gap analysis platform - enter a niche, get ranked market gaps backed by Meta/Google ads, Reddit sentiment, app store data, and UGC patterns with actionable recommendations",
+  "version": "3.0",
+  "totalFeatures": 195,
+  "completedFeatures": 17,
+  "phases": {
+    "phase1_landing": "Landing page with NLP search and live trends",
+    "phase2_collectors": "Data collectors (Meta, Reddit, Google, App Stores, TikTok, Instagram)",
+    "phase3_analysis": "LLM extraction, clustering, scoring, and gap detection",
+    "phase4_reports": "Report generation, PDF export, and share links",
+    "phase5_ugc": "UGC Winners Pack (hooks, scripts, patterns)",
+    "phase6_billing": "Pricing, subscriptions, credits, and invoicing",
+    "phase7_testing": "Unit tests, integration tests, E2E tests",
+    "phase8_infrastructure": "Deployment, monitoring, logging, error tracking"
   },
   "features": [
     {
-      "id": "TASK-001",
-      "name": "Report Detail Page Structure",
-      "description": "Create report detail page with navigation and header components",
+      "id": "LAND-001",
+      "name": "Landing Page Hero Section",
+      "description": "Hero with value prop, headline, and short explanation of GapRadar",
       "priority": "P0",
-      "sprint": 1,
-      "effort": "4h",
-      "passes": true,
-      "files": [
-        "src/app/dashboard/reports/[id]/page.tsx",
-        "src/app/dashboard/reports/[id]/loading.tsx",
-        "src/app/dashboard/reports/[id]/components/ReportNav.tsx",
-        "src/app/dashboard/reports/[id]/components/ReportHeader.tsx"
-      ]
-    },
-    {
-      "id": "TASK-002",
-      "name": "Executive Summary Component",
-      "description": "Build Executive Summary section showing key scores and top gaps",
-      "priority": "P0",
-      "sprint": 1,
-      "effort": "3h",
-      "passes": true,
-      "files": [
-        "src/app/dashboard/reports/[id]/components/ExecutiveSummary.tsx"
-      ]
-    },
-    {
-      "id": "TASK-003",
-      "name": "Market Snapshot Component",
-      "description": "Build Paid Market Snapshot showing top advertisers and angles",
-      "priority": "P0",
-      "sprint": 1,
-      "effort": "3h",
-      "passes": true,
-      "files": [
-        "src/app/dashboard/reports/[id]/components/MarketSnapshot.tsx"
-      ]
-    },
-    {
-      "id": "TASK-004",
-      "name": "Pain Map Component",
-      "description": "Build User Pain Map visualizing Reddit objections and sentiment",
-      "priority": "P0",
-      "sprint": 1,
-      "effort": "3h",
-      "passes": true,
-      "files": [
-        "src/app/dashboard/reports/[id]/components/PainMap.tsx"
-      ]
-    },
-    {
-      "id": "TASK-005",
-      "name": "Platform Gap Component",
-      "description": "Build Platform Existence Gap showing iOS/Android/Web presence",
-      "priority": "P0",
-      "sprint": 1,
+      "phase": 1,
       "effort": "2h",
       "passes": true,
+      "category": "landing",
       "files": [
-        "src/app/dashboard/reports/[id]/components/PlatformGap.tsx"
-      ]
-    },
-    {
-      "id": "TASK-006",
-      "name": "Gap Opportunities Component",
-      "description": "Build ranked list of market gap opportunities with evidence",
-      "priority": "P0",
-      "sprint": 1,
-      "effort": "3h",
-      "passes": true,
-      "files": [
-        "src/app/dashboard/reports/[id]/components/GapOpportunities.tsx"
-      ]
-    },
-    {
-      "id": "TASK-007",
-      "name": "Economics Component",
-      "description": "Build Modeled Economics section with CPC/CAC/TAM estimates",
-      "priority": "P1",
-      "sprint": 1,
-      "effort": "2h",
-      "passes": true,
-      "files": [
-        "src/app/dashboard/reports/[id]/components/Economics.tsx"
-      ]
-    },
-    {
-      "id": "TASK-008",
-      "name": "Buildability Component",
-      "description": "Build Buildability Assessment with difficulty scores",
-      "priority": "P1",
-      "sprint": 1,
-      "effort": "2h",
-      "passes": true,
-      "files": [
-        "src/app/dashboard/reports/[id]/components/Buildability.tsx"
-      ]
-    },
-    {
-      "id": "TASK-009",
-      "name": "UGC Pack Component",
-      "description": "Build UGC Winners Pack with hooks, scripts, shot lists",
-      "priority": "P1",
-      "sprint": 1,
-      "effort": "3h",
-      "passes": true,
-      "files": [
-        "src/app/dashboard/reports/[id]/components/UGCPack.tsx"
-      ]
-    },
-    {
-      "id": "TASK-010",
-      "name": "Action Plan Component",
-      "description": "Build Action Plan section with 7-day and 30-day plans",
-      "priority": "P2",
-      "sprint": 1,
-      "effort": "3h",
-      "passes": true,
-      "files": [
-        "src/app/dashboard/reports/[id]/components/ActionPlan.tsx"
-      ]
-    },
-    {
-      "id": "TASK-011",
-      "name": "PDF Export",
-      "description": "Implement PDF report generation with @react-pdf/renderer",
-      "priority": "P0",
-      "sprint": 1,
-      "effort": "6h",
-      "passes": true,
-      "files": [
-        "src/lib/report-generator.tsx",
-        "src/app/api/reports/[runId]/pdf/route.ts"
-      ]
-    },
-    {
-      "id": "TASK-012",
-      "name": "Android Play Store Collector",
-      "description": "Extend app store collector to support Android via SerpAPI",
-      "priority": "P1",
-      "sprint": 2,
-      "effort": "4h",
-      "passes": true,
-      "files": [
-        "src/lib/collectors/appstore.ts"
-      ]
-    },
-    {
-      "id": "TASK-013",
-      "name": "Google Ads Pipeline Integration",
-      "description": "Integrate Google Ads collector into main execution pipeline",
-      "priority": "P1",
-      "sprint": 2,
-      "effort": "2h",
-      "passes": true,
-      "files": [
-        "src/app/api/runs/[id]/execute/route.ts"
-      ]
-    },
-    {
-      "id": "TASK-014",
-      "name": "UGC Pipeline Integration",
-      "description": "Integrate TikTok/Instagram collectors into pipeline",
-      "priority": "P1",
-      "sprint": 2,
-      "effort": "3h",
-      "passes": true,
-      "files": [
-        "src/app/api/runs/[id]/execute/route.ts"
-      ]
-    },
-    {
-      "id": "TASK-020",
-      "name": "Action Plan Generator",
-      "description": "Create AI module to generate 7-day and 30-day action plans",
-      "priority": "P2",
-      "sprint": 3,
-      "effort": "4h",
-      "passes": true,
-      "files": [
-        "src/lib/ai/action-plan.ts"
-      ]
-    },
-    {
-      "id": "TASK-021",
-      "name": "Build-to-Profit Score",
-      "description": "Complete Build-to-Profit score implementation per PRD",
-      "priority": "P2",
-      "sprint": 3,
-      "effort": "2h",
-      "passes": true,
-      "files": [
-        "src/lib/scoring.ts"
-      ]
-    },
-    {
-      "id": "TASK-030",
-      "name": "Collector Unit Tests",
-      "description": "Write unit tests for all data collectors",
-      "priority": "P0",
-      "sprint": 4,
-      "effort": "4h",
-      "passes": true,
-      "files": [
-        "__tests__/lib/collectors/reddit.test.ts",
-        "__tests__/lib/collectors/meta.test.ts",
-        "__tests__/lib/collectors/google.test.ts",
-        "__tests__/lib/collectors/appstore.test.ts"
-      ]
-    },
-    {
-      "id": "TASK-031",
-      "name": "AI Module Unit Tests",
-      "description": "Write unit tests for AI processing modules",
-      "priority": "P1",
-      "sprint": 4,
-      "effort": "4h",
-      "passes": true,
-      "files": [
-        "__tests__/lib/ai/extractor.test.ts",
-        "__tests__/lib/ai/gap-generator.test.ts",
-        "__tests__/lib/ai/concept-generator.test.ts",
-        "__tests__/lib/ai/ugc-generator.test.ts"
-      ]
-    },
-    {
-      "id": "TASK-032",
-      "name": "API Integration Tests",
-      "description": "Write integration tests for API routes",
-      "priority": "P1",
-      "sprint": 4,
-      "effort": "4h",
-      "passes": true,
-      "files": [
-        "__tests__/integration/api/runs.test.ts",
-        "__tests__/integration/api/reports.test.ts"
-      ]
-    },
-    {
-      "id": "TASK-033",
-      "name": "E2E Tests Setup",
-      "description": "Set up Playwright and write E2E tests",
-      "priority": "P2",
-      "sprint": 4,
-      "effort": "4h",
-      "passes": true,
-      "files": [
-        "playwright.config.ts",
-        "e2e/auth.spec.ts",
-        "e2e/new-run.spec.ts",
-        "e2e/report.spec.ts"
-      ]
-    },
-    {
-      "id": "TASK-040",
-      "name": "Run Progress UI",
-      "description": "Add real-time progress indicator for running analyses",
-      "priority": "P1",
-      "sprint": 5,
-      "effort": "4h",
-      "passes": true,
-      "files": [
-        "src/components/RunProgress.tsx",
-        "src/hooks/use-run-status.ts"
-      ]
-    },
-    {
-      "id": "TASK-041",
-      "name": "Mobile Responsive Polish",
-      "description": "Ensure all dashboard pages work on mobile devices",
-      "priority": "P2",
-      "sprint": 5,
-      "effort": "4h",
-      "passes": true,
-      "files": [
-        "src/app/dashboard/*/page.tsx",
-        "src/app/dashboard/layout.tsx"
-      ]
-    },
-    {
-      "id": "TASK-050",
-      "name": "Supabase Realtime Progress",
-      "description": "Implement real-time run progress updates using Supabase Realtime subscriptions",
-      "priority": "P1",
-      "sprint": 5,
-      "effort": "3h",
-      "passes": true,
-      "category": "infrastructure",
-      "files": [
-        "src/hooks/use-run-status.ts",
-        "src/components/RunProgress.tsx"
-      ]
-    },
-    {
-      "id": "TASK-051",
-      "name": "Stripe Webhook Testing",
-      "description": "Test and verify Stripe webhook handling for subscription events",
-      "priority": "P1",
-      "sprint": 6,
-      "effort": "2h",
-      "passes": true,
-      "category": "payments",
-      "files": [
-        "src/app/api/webhooks/stripe/route.ts",
-        "__tests__/integration/webhooks/stripe.test.ts"
-      ]
-    },
-    {
-      "id": "TASK-052",
-      "name": "Stripe Subscription Management",
-      "description": "Add subscription upgrade/downgrade and cancellation flows",
-      "priority": "P1",
-      "sprint": 6,
-      "effort": "4h",
-      "passes": true,
-      "category": "payments",
-      "files": [
-        "src/app/dashboard/settings/page.tsx",
-        "src/app/api/subscriptions/route.ts"
-      ]
-    },
-    {
-      "id": "TASK-053",
-      "name": "Stripe Invoice History",
-      "description": "Display billing history and invoices in settings",
-      "priority": "P2",
-      "sprint": 6,
-      "effort": "3h",
-      "passes": true,
-      "category": "payments",
-      "files": [
-        "src/app/dashboard/settings/billing/page.tsx",
-        "src/app/api/subscriptions/invoices/route.ts"
-      ]
-    },
-    {
-      "id": "TASK-054",
-      "name": "Sentry Error Tracking",
-      "description": "Integrate Sentry for error monitoring and alerting",
-      "priority": "P1",
-      "sprint": 6,
-      "effort": "2h",
-      "passes": true,
-      "category": "infrastructure",
-      "files": [
-        "sentry.client.config.ts",
-        "sentry.server.config.ts",
-        "sentry.edge.config.ts",
-        "instrumentation.ts",
-        "next.config.ts",
-        "docs/SENTRY_SETUP.md"
-      ]
-    },
-    {
-      "id": "TASK-055",
-      "name": "Production Supabase Setup",
-      "description": "Create production Supabase project and run migrations",
-      "priority": "P0",
-      "sprint": 6,
-      "effort": "2h",
-      "passes": true,
-      "category": "infrastructure",
-      "files": [
-        "docs/PRODUCTION_SUPABASE_SETUP.md"
-      ]
-    },
-    {
-      "id": "TASK-056",
-      "name": "Vercel Deployment",
-      "description": "Deploy to Vercel with environment variables and domain",
-      "priority": "P0",
-      "sprint": 6,
-      "effort": "2h",
-      "passes": true,
-      "category": "infrastructure",
-      "files": [
-        "docs/VERCEL_DEPLOYMENT.md"
-      ]
-    },
-    {
-      "id": "TASK-057",
-      "name": "Share Links Feature",
-      "description": "Generate shareable report URLs with optional password protection",
-      "priority": "P2",
-      "sprint": 7,
-      "effort": "4h",
-      "passes": true,
-      "category": "reports",
-      "files": [
-        "src/app/api/share/route.ts",
-        "src/app/share/[token]/page.tsx"
+        "src/app/page.tsx",
+        "src/components/landing/Hero.tsx"
       ],
-      "implemented_at": "2026-01-16T21:15:00Z"
+      "acceptance": [
+        "Hero renders with headline and value prop",
+        "CTA buttons visible"
+      ]
     },
     {
-      "id": "TASK-058",
-      "name": "YouTube Data Collector",
-      "description": "Add YouTube API integration for video and channel data",
-      "priority": "P3",
-      "sprint": 7,
+      "id": "LAND-002",
+      "name": "NLP Search Input Component",
+      "description": "Natural language input that accepts niche, competitor, or pain statement",
+      "priority": "P0",
+      "phase": 1,
       "effort": "4h",
       "passes": true,
-      "category": "data_collection",
+      "category": "landing",
       "files": [
-        "src/lib/collectors/youtube.ts"
+        "src/components/landing/NLPSearchInput.tsx",
+        "src/lib/nlp/suggestions.ts"
       ],
-      "implemented_at": "2026-01-17T00:30:00.000Z"
+      "acceptance": [
+        "Input accepts text",
+        "Shows suggestions within 300ms",
+        "Keyboard navigable"
+      ]
     },
     {
-      "id": "TASK-059",
-      "name": "Public API for Agency+ Plans",
-      "description": "Create public API endpoints for Agency and Studio plan users",
-      "priority": "P2",
-      "sprint": 7,
+      "id": "LAND-003",
+      "name": "NLP Client-Side Suggestions",
+      "description": "Category inference, query refinements, confidence indicator - all client-side heuristics",
+      "priority": "P0",
+      "phase": 1,
+      "effort": "4h",
+      "passes": true,
+      "category": "landing",
+      "files": [
+        "src/lib/nlp/heuristics.ts",
+        "src/lib/nlp/categories.ts"
+      ],
+      "acceptance": [
+        "Suggestions appear as user types",
+        "Category inference works",
+        "Confidence 0-100 shown"
+      ]
+    },
+    {
+      "id": "LAND-004",
+      "name": "Trending Topics API",
+      "description": "GET /api/trends endpoint with caching and rate limiting",
+      "priority": "P0",
+      "phase": 1,
       "effort": "6h",
       "passes": true,
       "category": "api",
       "files": [
-        "src/app/api/v1/runs/route.ts",
-        "src/app/api/v1/reports/route.ts",
-        "src/app/api/v1/reports/[id]/route.ts",
-        "src/app/api/api-keys/route.ts",
-        "src/app/api/api-keys/[id]/route.ts",
-        "src/lib/api-keys.ts",
-        "src/lib/api-auth.ts",
-        "supabase/migrations/20260117_api_keys.sql"
+        "src/app/api/trends/route.ts",
+        "src/lib/trends/fetch.ts",
+        "src/lib/trends/cache.ts"
       ],
-      "implemented_at": "2026-01-16T22:30:00Z"
+      "acceptance": [
+        "Returns 9-12 trends within 1s",
+        "5-minute cache TTL",
+        "Fallback on error"
+      ]
     },
     {
-      "id": "TASK-060",
-      "name": "White-Label Reports",
-      "description": "Allow Studio plan users to customize report branding",
-      "priority": "P3",
-      "sprint": 7,
+      "id": "LAND-005",
+      "name": "Reddit Trends Fetcher",
+      "description": "Fetch hot posts from r/entrepreneur, r/startups, r/SaaS, r/smallbusiness",
+      "priority": "P0",
+      "phase": 1,
       "effort": "4h",
       "passes": true,
+      "category": "collectors",
+      "files": [
+        "src/lib/trends/reddit.ts"
+      ],
+      "acceptance": [
+        "Fetches from 4 subreddits",
+        "Rate limited",
+        "Extracts topics from titles"
+      ]
+    },
+    {
+      "id": "LAND-006",
+      "name": "Topic Extraction from Reddit",
+      "description": "Extract topic candidates from post titles using NLP heuristics, dedupe",
+      "priority": "P0",
+      "phase": 1,
+      "effort": "3h",
+      "passes": true,
+      "category": "nlp",
+      "files": [
+        "src/lib/trends/extract-topics.ts"
+      ],
+      "acceptance": [
+        "Topics extracted from titles",
+        "Deduped by normalized string"
+      ]
+    },
+    {
+      "id": "LAND-007",
+      "name": "Trending Topics Grid",
+      "description": "9-12 card grid showing topic, category, opportunity score, growth, sentiment, sources",
+      "priority": "P0",
+      "phase": 1,
+      "effort": "4h",
+      "passes": true,
+      "category": "landing",
+      "files": [
+        "src/components/landing/TrendingTopics.tsx",
+        "src/components/landing/TrendCard.tsx"
+      ],
+      "acceptance": [
+        "Shows 9-12 cards",
+        "Each card has all required fields",
+        "Cards clickable"
+      ]
+    },
+    {
+      "id": "LAND-008",
+      "name": "Trend Card Click → Prefill Search",
+      "description": "Clicking a trend card prefills the NLP search input",
+      "priority": "P1",
+      "phase": 1,
+      "effort": "1h",
+      "passes": true,
+      "category": "landing",
+      "files": [
+        "src/components/landing/TrendingTopics.tsx"
+      ],
+      "acceptance": [
+        "Click prefills search",
+        "Focus moves to input"
+      ]
+    },
+    {
+      "id": "LAND-009",
+      "name": "Curated Fallback Trends",
+      "description": "Static fallback trends when Reddit is unavailable",
+      "priority": "P0",
+      "phase": 1,
+      "effort": "2h",
+      "passes": true,
+      "category": "landing",
+      "files": [
+        "src/lib/trends/fallback.ts"
+      ],
+      "acceptance": [
+        "Fallback returns valid trends",
+        "UI still renders on API error"
+      ]
+    },
+    {
+      "id": "LAND-010",
+      "name": "Landing Page Features Section",
+      "description": "Feature highlights explaining how the product works",
+      "priority": "P1",
+      "phase": 1,
+      "effort": "2h",
+      "passes": true,
+      "category": "landing",
+      "files": [
+        "src/components/landing/Features.tsx"
+      ],
+      "acceptance": [
+        "Features section renders",
+        "Clear explanation of product"
+      ]
+    },
+    {
+      "id": "LAND-011",
+      "name": "Landing Page CTA Footer",
+      "description": "Final CTA section with signup prompt",
+      "priority": "P1",
+      "phase": 1,
+      "effort": "1h",
+      "passes": true,
+      "category": "landing",
+      "files": [
+        "src/components/landing/CTAFooter.tsx"
+      ],
+      "acceptance": [
+        "CTA footer renders",
+        "Links to signup"
+      ]
+    },
+    {
+      "id": "LAND-012",
+      "name": "SEO Meta Tags",
+      "description": "Title, description, OpenGraph, Twitter cards",
+      "priority": "P1",
+      "phase": 1,
+      "effort": "1h",
+      "passes": true,
+      "category": "seo",
+      "files": [
+        "src/app/layout.tsx",
+        "src/app/page.tsx"
+      ],
+      "acceptance": [
+        "Meta tags present",
+        "OG image configured"
+      ]
+    },
+    {
+      "id": "LAND-013",
+      "name": "Updated At Timestamp",
+      "description": "Display 'Updated at' timestamp on trends section",
+      "priority": "P0",
+      "phase": 1,
+      "effort": "1h",
+      "passes": true,
+      "category": "landing",
+      "files": [
+        "src/components/landing/TrendingTopics.tsx"
+      ],
+      "acceptance": [
+        "Timestamp visible",
+        "Updates with API response"
+      ]
+    },
+    {
+      "id": "LAND-014",
+      "name": "Landing Analytics Tracking",
+      "description": "Track landing views, CTA clicks, search submits, trend clicks",
+      "priority": "P1",
+      "phase": 1,
+      "effort": "2h",
+      "passes": true,
+      "category": "analytics",
+      "files": [
+        "src/lib/analytics/landing.ts"
+      ],
+      "acceptance": [
+        "Events fire on interactions",
+        "Logged to analytics"
+      ]
+    },
+    {
+      "id": "LAND-015",
+      "name": "NLP Search Submit Flow",
+      "description": "On submit: route to signup (if not auth) or create run (if auth), preserve query",
+      "priority": "P0",
+      "phase": 1,
+      "effort": "3h",
+      "passes": true,
+      "category": "landing",
+      "files": [
+        "src/components/landing/NLPSearchInput.tsx",
+        "src/lib/auth/redirect.ts"
+      ],
+      "acceptance": [
+        "Query preserved in URL/storage",
+        "Correct routing based on auth"
+      ]
+    },
+    {
+      "id": "DB-001",
+      "name": "Projects Table Migration",
+      "description": "Create projects table with owner_id, name, created_at",
+      "priority": "P0",
+      "phase": 2,
+      "effort": "1h",
+      "passes": false,
+      "category": "database",
+      "files": [
+        "supabase/migrations/projects.sql",
+        "src/types/project.ts"
+      ],
+      "acceptance": [
+        "Table created with RLS",
+        "Types generated"
+      ]
+    },
+    {
+      "id": "DB-002",
+      "name": "Runs Table Migration",
+      "description": "Create runs table for analysis jobs with status tracking",
+      "priority": "P0",
+      "phase": 2,
+      "effort": "1h",
+      "passes": false,
+      "category": "database",
+      "files": [
+        "supabase/migrations/runs.sql",
+        "src/types/run.ts"
+      ],
+      "acceptance": [
+        "Table created",
+        "Status enum works"
+      ]
+    },
+    {
+      "id": "DB-003",
+      "name": "Ad Creatives Table Migration",
+      "description": "Create ad_creatives table for Meta + Google ads",
+      "priority": "P0",
+      "phase": 2,
+      "effort": "1h",
+      "passes": false,
+      "category": "database",
+      "files": [
+        "supabase/migrations/ad_creatives.sql",
+        "src/types/ad-creative.ts"
+      ],
+      "acceptance": [
+        "Table created",
+        "Source enum (meta, google)"
+      ]
+    },
+    {
+      "id": "DB-004",
+      "name": "Reddit Mentions Table Migration",
+      "description": "Create reddit_mentions table for posts and comments",
+      "priority": "P0",
+      "phase": 2,
+      "effort": "1h",
+      "passes": false,
+      "category": "database",
+      "files": [
+        "supabase/migrations/reddit_mentions.sql",
+        "src/types/reddit-mention.ts"
+      ],
+      "acceptance": [
+        "Table created",
+        "Type enum (post, comment)"
+      ]
+    },
+    {
+      "id": "DB-005",
+      "name": "Extractions Table Migration",
+      "description": "Create extractions table for LLM-extracted offers, claims, objections",
+      "priority": "P0",
+      "phase": 2,
+      "effort": "1h",
+      "passes": false,
+      "category": "database",
+      "files": [
+        "supabase/migrations/extractions.sql",
+        "src/types/extraction.ts"
+      ],
+      "acceptance": [
+        "Table created",
+        "JSONB fields work"
+      ]
+    },
+    {
+      "id": "DB-006",
+      "name": "Clusters Table Migration",
+      "description": "Create clusters table for angle, objection, feature, offer clusters",
+      "priority": "P0",
+      "phase": 2,
+      "effort": "1h",
+      "passes": false,
+      "category": "database",
+      "files": [
+        "supabase/migrations/clusters.sql",
+        "src/types/cluster.ts"
+      ],
+      "acceptance": [
+        "Table created",
+        "Cluster types defined"
+      ]
+    },
+    {
+      "id": "DB-007",
+      "name": "Gap Opportunities Table Migration",
+      "description": "Create gap_opportunities table for ranked gaps",
+      "priority": "P0",
+      "phase": 2,
+      "effort": "1h",
+      "passes": false,
+      "category": "database",
+      "files": [
+        "supabase/migrations/gap_opportunities.sql",
+        "src/types/gap.ts"
+      ],
+      "acceptance": [
+        "Table created",
+        "Gap types defined"
+      ]
+    },
+    {
+      "id": "DB-008",
+      "name": "App Store Results Table Migration",
+      "description": "Create app_store_results table for iOS/Android apps",
+      "priority": "P0",
+      "phase": 2,
+      "effort": "1h",
+      "passes": false,
+      "category": "database",
+      "files": [
+        "supabase/migrations/app_store_results.sql",
+        "src/types/app-store.ts"
+      ],
+      "acceptance": [
+        "Table created",
+        "Platform enum works"
+      ]
+    },
+    {
+      "id": "DB-009",
+      "name": "Concept Ideas Table Migration",
+      "description": "Create concept_ideas table for vetted product ideas",
+      "priority": "P0",
+      "phase": 2,
+      "effort": "1h",
+      "passes": false,
+      "category": "database",
+      "files": [
+        "supabase/migrations/concept_ideas.sql",
+        "src/types/concept.ts"
+      ],
+      "acceptance": [
+        "Table created",
+        "Platform/business model enums work"
+      ]
+    },
+    {
+      "id": "DB-010",
+      "name": "Concept Metrics Table Migration",
+      "description": "Create concept_metrics table for CPC/CAC/TAM estimates",
+      "priority": "P0",
+      "phase": 2,
+      "effort": "1h",
+      "passes": false,
+      "category": "database",
+      "files": [
+        "supabase/migrations/concept_metrics.sql",
+        "src/types/concept-metrics.ts"
+      ],
+      "acceptance": [
+        "Table created",
+        "Numeric fields work"
+      ]
+    },
+    {
+      "id": "DB-011",
+      "name": "UGC Tables Migration",
+      "description": "Create ugc_assets, ugc_metrics, ugc_patterns, ugc_recommendations tables",
+      "priority": "P1",
+      "phase": 2,
+      "effort": "2h",
+      "passes": false,
+      "category": "database",
+      "files": [
+        "supabase/migrations/ugc.sql",
+        "src/types/ugc.ts"
+      ],
+      "acceptance": [
+        "All UGC tables created",
+        "Source enums work"
+      ]
+    },
+    {
+      "id": "DB-012",
+      "name": "Reports Table Migration",
+      "description": "Create reports table for generated report URLs",
+      "priority": "P0",
+      "phase": 2,
+      "effort": "1h",
+      "passes": false,
+      "category": "database",
+      "files": [
+        "supabase/migrations/reports.sql",
+        "src/types/report.ts"
+      ],
+      "acceptance": [
+        "Table created",
+        "URL fields work"
+      ]
+    },
+    {
+      "id": "COLL-001",
+      "name": "Meta Ads Library Collector",
+      "description": "Fetch ads from Meta Ads Library API with pagination and rate limiting",
+      "priority": "P0",
+      "phase": 2,
+      "effort": "8h",
+      "passes": false,
+      "category": "collectors",
+      "files": [
+        "src/lib/collectors/meta.ts",
+        "src/lib/collectors/meta-types.ts"
+      ],
+      "acceptance": [
+        "Fetches ads by keyword",
+        "Handles pagination",
+        "Rate limited"
+      ]
+    },
+    {
+      "id": "COLL-002",
+      "name": "Meta Ads Normalizer",
+      "description": "Normalize Meta ads to ad_creatives schema",
+      "priority": "P0",
+      "phase": 2,
+      "effort": "2h",
+      "passes": false,
+      "category": "collectors",
+      "files": [
+        "src/lib/collectors/normalize-meta.ts"
+      ],
+      "acceptance": [
+        "Raw payloads normalized",
+        "All fields mapped"
+      ]
+    },
+    {
+      "id": "COLL-003",
+      "name": "Reddit Data API Collector",
+      "description": "Fetch posts and comments from Reddit Data API with OAuth",
+      "priority": "P0",
+      "phase": 2,
+      "effort": "6h",
+      "passes": false,
+      "category": "collectors",
+      "files": [
+        "src/lib/collectors/reddit.ts",
+        "src/lib/collectors/reddit-auth.ts"
+      ],
+      "acceptance": [
+        "OAuth working",
+        "Fetches posts/comments",
+        "100 QPM limit respected"
+      ]
+    },
+    {
+      "id": "COLL-004",
+      "name": "Reddit Mentions Normalizer",
+      "description": "Normalize Reddit data to reddit_mentions schema",
+      "priority": "P0",
+      "phase": 2,
+      "effort": "2h",
+      "passes": false,
+      "category": "collectors",
+      "files": [
+        "src/lib/collectors/normalize-reddit.ts"
+      ],
+      "acceptance": [
+        "Posts and comments normalized",
+        "Permalinks stored"
+      ]
+    },
+    {
+      "id": "COLL-005",
+      "name": "Google Ads Transparency Collector",
+      "description": "Fetch Google ads via SerpApi or similar 3P API",
+      "priority": "P1",
+      "phase": 2,
+      "effort": "6h",
+      "passes": false,
+      "category": "collectors",
+      "files": [
+        "src/lib/collectors/google-ads.ts"
+      ],
+      "acceptance": [
+        "Fetches ads by keyword",
+        "Rate limited",
+        "Normalized to schema"
+      ]
+    },
+    {
+      "id": "COLL-006",
+      "name": "iOS App Store Collector",
+      "description": "Fetch iOS apps from iTunes Search API",
+      "priority": "P0",
+      "phase": 2,
+      "effort": "4h",
+      "passes": false,
+      "category": "collectors",
+      "files": [
+        "src/lib/collectors/ios-appstore.ts"
+      ],
+      "acceptance": [
+        "Fetches apps by keyword",
+        "No auth required",
+        "Normalized"
+      ]
+    },
+    {
+      "id": "COLL-007",
+      "name": "Android Play Store Collector",
+      "description": "Fetch Android apps via SerpApi or scraping API",
+      "priority": "P1",
+      "phase": 2,
+      "effort": "4h",
+      "passes": false,
+      "category": "collectors",
+      "files": [
+        "src/lib/collectors/android-playstore.ts"
+      ],
+      "acceptance": [
+        "Fetches apps by keyword",
+        "Rate limited",
+        "Normalized"
+      ]
+    },
+    {
+      "id": "COLL-008",
+      "name": "Collector Orchestrator",
+      "description": "Orchestrate all collectors for a run with parallel execution",
+      "priority": "P0",
+      "phase": 2,
+      "effort": "4h",
+      "passes": false,
+      "category": "collectors",
+      "files": [
+        "src/lib/collectors/orchestrator.ts"
+      ],
+      "acceptance": [
+        "Runs all collectors",
+        "Handles errors gracefully",
+        "Saves to DB"
+      ]
+    },
+    {
+      "id": "RUN-001",
+      "name": "Create Run API",
+      "description": "POST /api/runs to create a new analysis run",
+      "priority": "P0",
+      "phase": 2,
+      "effort": "3h",
+      "passes": false,
+      "category": "api",
+      "files": [
+        "src/app/api/runs/route.ts"
+      ],
+      "acceptance": [
+        "Creates run in DB",
+        "Returns run ID",
+        "Validates input"
+      ]
+    },
+    {
+      "id": "RUN-002",
+      "name": "Run Status API",
+      "description": "GET /api/runs/[id] to check run status",
+      "priority": "P0",
+      "phase": 2,
+      "effort": "2h",
+      "passes": false,
+      "category": "api",
+      "files": [
+        "src/app/api/runs/[id]/route.ts"
+      ],
+      "acceptance": [
+        "Returns run status",
+        "Includes progress info"
+      ]
+    },
+    {
+      "id": "RUN-003",
+      "name": "Run Execution Worker",
+      "description": "Background worker to execute runs (collectors → extraction → scoring)",
+      "priority": "P0",
+      "phase": 2,
+      "effort": "6h",
+      "passes": false,
+      "category": "workers",
+      "files": [
+        "src/lib/workers/run-executor.ts"
+      ],
+      "acceptance": [
+        "Executes full pipeline",
+        "Updates status",
+        "Handles errors"
+      ]
+    },
+    {
+      "id": "RUN-004",
+      "name": "Create Run UI",
+      "description": "Dashboard page to create new run with niche input",
+      "priority": "P0",
+      "phase": 2,
+      "effort": "4h",
+      "passes": false,
+      "category": "dashboard",
+      "files": [
+        "src/app/dashboard/new-run/page.tsx"
+      ],
+      "acceptance": [
+        "Form accepts niche",
+        "Submits to API",
+        "Shows progress"
+      ]
+    },
+    {
+      "id": "RUN-005",
+      "name": "Run History UI",
+      "description": "Dashboard page showing list of past runs",
+      "priority": "P1",
+      "phase": 2,
+      "effort": "3h",
+      "passes": false,
+      "category": "dashboard",
+      "files": [
+        "src/app/dashboard/runs/page.tsx"
+      ],
+      "acceptance": [
+        "Lists runs",
+        "Shows status",
+        "Links to reports"
+      ]
+    },
+    {
+      "id": "AI-001",
+      "name": "LLM Extraction Service",
+      "description": "Extract offers, claims, angles, objections from ads and Reddit",
+      "priority": "P0",
+      "phase": 3,
+      "effort": "8h",
+      "passes": false,
+      "category": "ai",
+      "files": [
+        "src/lib/ai/extraction.ts",
+        "src/lib/ai/prompts/extraction.ts"
+      ],
+      "acceptance": [
+        "Extracts all entity types",
+        "Stores in extractions table"
+      ]
+    },
+    {
+      "id": "AI-002",
+      "name": "Ad Extraction Prompts",
+      "description": "Prompts for extracting offers, claims, angles from ad creatives",
+      "priority": "P0",
+      "phase": 3,
+      "effort": "2h",
+      "passes": false,
+      "category": "ai",
+      "files": [
+        "src/lib/ai/prompts/ad-extraction.ts"
+      ],
+      "acceptance": [
+        "Prompts extract all fields",
+        "JSON output validated"
+      ]
+    },
+    {
+      "id": "AI-003",
+      "name": "Reddit Extraction Prompts",
+      "description": "Prompts for extracting objections, features, sentiment from Reddit",
+      "priority": "P0",
+      "phase": 3,
+      "effort": "2h",
+      "passes": false,
+      "category": "ai",
+      "files": [
+        "src/lib/ai/prompts/reddit-extraction.ts"
+      ],
+      "acceptance": [
+        "Prompts extract all fields",
+        "Sentiment scored"
+      ]
+    },
+    {
+      "id": "AI-004",
+      "name": "Naive Clustering Service",
+      "description": "Cluster similar angles, objections, features, offers",
+      "priority": "P0",
+      "phase": 3,
+      "effort": "6h",
+      "passes": false,
+      "category": "ai",
+      "files": [
+        "src/lib/ai/clustering.ts"
+      ],
+      "acceptance": [
+        "Creates meaningful clusters",
+        "Stores in clusters table"
+      ]
+    },
+    {
+      "id": "SCORE-001",
+      "name": "Ad Saturation Score",
+      "description": "Implement saturation = 100 * sigmoid(0.6*log1p(A) + 0.3*log1p(C) + 0.8*R)",
+      "priority": "P0",
+      "phase": 3,
+      "effort": "2h",
+      "passes": false,
+      "category": "scoring",
+      "files": [
+        "src/lib/scoring/saturation.ts"
+      ],
+      "acceptance": [
+        "Returns 0-100 score",
+        "Formula implemented correctly"
+      ]
+    },
+    {
+      "id": "SCORE-002",
+      "name": "Longevity Signal Score",
+      "description": "Implement longevity = clamp(100 * log1p(days_running) / log1p(180), 0, 100)",
+      "priority": "P0",
+      "phase": 3,
+      "effort": "1h",
+      "passes": false,
+      "category": "scoring",
+      "files": [
+        "src/lib/scoring/longevity.ts"
+      ],
+      "acceptance": [
+        "Returns 0-100 score",
+        "180-day normalization"
+      ]
+    },
+    {
+      "id": "SCORE-003",
+      "name": "Reddit Dissatisfaction Score",
+      "description": "Implement dissatisfaction = 100 * sigmoid(0.5*log1p(F) + 0.7*I + 0.6*S + 0.2*log1p(W))",
+      "priority": "P0",
+      "phase": 3,
+      "effort": "2h",
+      "passes": false,
+      "category": "scoring",
+      "files": [
+        "src/lib/scoring/dissatisfaction.ts"
+      ],
+      "acceptance": [
+        "Returns 0-100 score",
+        "All factors included"
+      ]
+    },
+    {
+      "id": "SCORE-004",
+      "name": "Misalignment Score",
+      "description": "Implement misalignment = 100 * (0.5*(1 - P) + 0.3*M + 0.2*T)",
+      "priority": "P0",
+      "phase": 3,
+      "effort": "2h",
+      "passes": false,
+      "category": "scoring",
+      "files": [
+        "src/lib/scoring/misalignment.ts"
+      ],
+      "acceptance": [
+        "Returns 0-100 score",
+        "Compares ads vs Reddit"
+      ]
+    },
+    {
+      "id": "SCORE-005",
+      "name": "Opportunity Score",
+      "description": "Implement opportunity = 0.35*longevity + 0.35*dissatisfaction + 0.30*misalignment - 0.15*saturation",
+      "priority": "P0",
+      "phase": 3,
+      "effort": "2h",
+      "passes": false,
+      "category": "scoring",
+      "files": [
+        "src/lib/scoring/opportunity.ts"
+      ],
+      "acceptance": [
+        "Returns 0-100 score",
+        "All factors combined"
+      ]
+    },
+    {
+      "id": "SCORE-006",
+      "name": "Confidence Score",
+      "description": "Implement confidence = clamp(0.4*data_sufficiency + 0.4*cross_source_alignment + 0.2*recency, 0, 1)",
+      "priority": "P0",
+      "phase": 3,
+      "effort": "2h",
+      "passes": false,
+      "category": "scoring",
+      "files": [
+        "src/lib/scoring/confidence.ts"
+      ],
+      "acceptance": [
+        "Returns 0-1 score",
+        "Data quality factored"
+      ]
+    },
+    {
+      "id": "SCORE-007",
+      "name": "Build-to-Profit Score",
+      "description": "Implement Score = (Opportunity × TAM × Margin × TimeToValue) / (CAC × Complexity × Touch)",
+      "priority": "P1",
+      "phase": 3,
+      "effort": "3h",
+      "passes": false,
+      "category": "scoring",
+      "files": [
+        "src/lib/scoring/build-to-profit.ts"
+      ],
+      "acceptance": [
+        "Returns ranked score",
+        "All factors included"
+      ]
+    },
+    {
+      "id": "GAP-001",
+      "name": "Gap Detection Engine",
+      "description": "Identify gaps where ads promise A but users complain B",
+      "priority": "P0",
+      "phase": 3,
+      "effort": "6h",
+      "passes": false,
+      "category": "analysis",
+      "files": [
+        "src/lib/analysis/gap-detection.ts"
+      ],
+      "acceptance": [
+        "Finds mismatches",
+        "Ranks by opportunity",
+        "Stores in DB"
+      ]
+    },
+    {
+      "id": "GAP-002",
+      "name": "Platform Existence Gap",
+      "description": "Identify gaps where demand exists but platform coverage is weak",
+      "priority": "P0",
+      "phase": 3,
+      "effort": "4h",
+      "passes": false,
+      "category": "analysis",
+      "files": [
+        "src/lib/analysis/platform-gap.ts"
+      ],
+      "acceptance": [
+        "Compares iOS/Android/Web",
+        "Recommends platform"
+      ]
+    },
+    {
+      "id": "GAP-003",
+      "name": "3% Better Plan Generator",
+      "description": "Generate tiny product/offer changes that neutralize top objections",
+      "priority": "P0",
+      "phase": 3,
+      "effort": "4h",
+      "passes": false,
+      "category": "ai",
+      "files": [
+        "src/lib/ai/three-percent-better.ts"
+      ],
+      "acceptance": [
+        "Generates actionable recommendations",
+        "Tied to evidence"
+      ]
+    },
+    {
+      "id": "CONCEPT-001",
+      "name": "Concept Idea Generator",
+      "description": "Generate vetted product ideas with platform rec, ICP, business model",
+      "priority": "P0",
+      "phase": 3,
+      "effort": "6h",
+      "passes": false,
+      "category": "ai",
+      "files": [
+        "src/lib/ai/concept-generator.ts"
+      ],
+      "acceptance": [
+        "Generates 3+ ideas",
+        "All fields populated"
+      ]
+    },
+    {
+      "id": "CONCEPT-002",
+      "name": "Concept Metrics Estimator",
+      "description": "Estimate CPC/CAC/TAM ranges for concepts",
+      "priority": "P1",
+      "phase": 3,
+      "effort": "4h",
+      "passes": false,
+      "category": "ai",
+      "files": [
+        "src/lib/ai/metrics-estimator.ts"
+      ],
+      "acceptance": [
+        "Low/expected/high ranges",
+        "Clearly modeled estimates"
+      ]
+    },
+    {
+      "id": "REPORT-001",
+      "name": "Report Data Aggregator",
+      "description": "Aggregate all run data for report generation",
+      "priority": "P0",
+      "phase": 4,
+      "effort": "4h",
+      "passes": false,
       "category": "reports",
       "files": [
-        "src/lib/report-generator.ts",
-        "src/app/dashboard/settings/branding/page.tsx"
+        "src/lib/reports/aggregator.ts"
       ],
-      "implemented_at": "2026-01-17T01:00:00.000Z"
-    },
-    {
-      "id": "TASK-070",
-      "name": "Resend Email Integration",
-      "description": "Set up Resend SDK and email client with templates",
-      "priority": "P2",
-      "sprint": 8,
-      "effort": "2h",
-      "passes": true,
-      "implemented_at": "2026-01-16T21:40:00.000Z",
-      "category": "notifications",
-      "files": [
-        "src/lib/email.ts",
-        "src/lib/email-templates.tsx"
+      "acceptance": [
+        "Collects all data",
+        "Formats for report"
       ]
     },
     {
-      "id": "TASK-071",
-      "name": "Report Complete Email",
-      "description": "Send email notification when analysis run completes",
-      "priority": "P2",
-      "sprint": 8,
-      "effort": "2h",
-      "passes": true,
-      "implemented_at": "2026-01-16T22:00:00.000Z",
-      "category": "notifications",
-      "files": [
-        "src/lib/email-templates.tsx",
-        "src/app/api/runs/[id]/execute/route.ts"
-      ]
-    },
-    {
-      "id": "TASK-072",
-      "name": "Welcome Email",
-      "description": "Send welcome email on user signup with onboarding tips",
-      "priority": "P2",
-      "sprint": 8,
-      "effort": "1h",
-      "passes": true,
-      "implemented_at": "2026-01-16T22:30:00Z",
-      "category": "notifications",
-      "files": [
-        "src/lib/email-templates.tsx",
-        "src/app/auth/callback/route.ts"
-      ]
-    },
-    {
-      "id": "TASK-073",
-      "name": "Subscription Confirmation Email",
-      "description": "Send email when user subscribes or upgrades plan",
-      "priority": "P2",
-      "sprint": 8,
-      "effort": "1h",
-      "passes": true,
-      "implemented_at": "2026-01-16T23:30:00Z",
-      "category": "notifications",
-      "files": [
-        "src/lib/email-templates.tsx",
-        "src/app/api/webhooks/stripe/route.ts"
-      ]
-    },
-    {
-      "id": "TASK-074",
-      "name": "Usage Limit Warning Email",
-      "description": "Send email when user approaches monthly run limit",
-      "priority": "P3",
-      "sprint": 8,
-      "effort": "2h",
-      "passes": true,
-      "implemented_at": "2026-01-17T00:00:00Z",
-      "category": "notifications",
-      "files": [
-        "src/lib/email-templates.tsx",
-        "src/lib/usage-tracker.ts",
-        "src/app/api/runs/route.ts",
-        "supabase/migrations/20260117_usage_warnings.sql"
-      ]
-    },
-    {
-      "id": "TASK-075",
-      "name": "Report Share Email",
-      "description": "Send email when someone shares a report with user",
-      "priority": "P3",
-      "sprint": 8,
-      "effort": "1h",
-      "passes": true,
-      "implemented_at": "2026-01-17T00:15:00Z",
-      "category": "notifications",
-      "files": [
-        "src/lib/email-templates.tsx",
-        "src/app/api/share/route.ts"
-      ]
-    },
-    {
-      "id": "TASK-100",
-      "name": "Build Verification Tests",
-      "description": "Create tests that verify the app builds successfully with no errors",
+      "id": "REPORT-002",
+      "name": "Executive Summary Section",
+      "description": "Page 1: Niche, Opportunity Score, Top 3 gaps, Platform rec",
       "priority": "P0",
-      "sprint": 9,
-      "effort": "2h",
-      "passes": true,
-      "category": "testing",
-      "files": [
-        "scripts/verify-build.ts",
-        "package.json"
-      ]
-    },
-    {
-      "id": "TASK-101",
-      "name": "Page 404 Tests",
-      "description": "E2E tests verifying all routes return 200, no 404s on valid pages",
-      "priority": "P0",
-      "sprint": 9,
+      "phase": 4,
       "effort": "3h",
-      "passes": true,
-      "category": "testing",
+      "passes": false,
+      "category": "reports",
       "files": [
-        "e2e/pages.spec.ts"
+        "src/components/reports/ExecutiveSummary.tsx"
+      ],
+      "acceptance": [
+        "All fields displayed",
+        "Score visualization"
       ]
     },
     {
-      "id": "TASK-102",
-      "name": "Button Interaction Tests",
-      "description": "Test all buttons on every page are clickable and trigger correct actions",
+      "id": "REPORT-003",
+      "name": "Paid Market Snapshot Section",
+      "description": "Page 2: Top advertisers, angles, longest-running creatives, offer patterns",
       "priority": "P0",
-      "sprint": 9,
+      "phase": 4,
       "effort": "4h",
-      "passes": true,
-      "category": "testing",
+      "passes": false,
+      "category": "reports",
       "files": [
-        "e2e/buttons.spec.ts"
+        "src/components/reports/PaidMarketSnapshot.tsx"
+      ],
+      "acceptance": [
+        "Advertiser table",
+        "Angle examples",
+        "Longevity signals"
       ]
     },
     {
-      "id": "TASK-103",
-      "name": "Full Workflow E2E Tests",
-      "description": "Test complete user flows: signup → create run → view report → export",
+      "id": "REPORT-004",
+      "name": "Customer Voice Section",
+      "description": "Page 3: Top objections, features, pricing friction, switching triggers",
       "priority": "P0",
-      "sprint": 9,
+      "phase": 4,
+      "effort": "4h",
+      "passes": false,
+      "category": "reports",
+      "files": [
+        "src/components/reports/CustomerVoice.tsx"
+      ],
+      "acceptance": [
+        "Ranked lists",
+        "Quote snippets",
+        "Source attribution"
+      ]
+    },
+    {
+      "id": "REPORT-005",
+      "name": "Platform Gap Section",
+      "description": "Page 4: iOS/Android/Web saturation, top apps, platform recommendation",
+      "priority": "P0",
+      "phase": 4,
+      "effort": "3h",
+      "passes": false,
+      "category": "reports",
+      "files": [
+        "src/components/reports/PlatformGap.tsx"
+      ],
+      "acceptance": [
+        "Saturation scores",
+        "Top apps listed",
+        "Recommendation with rationale"
+      ]
+    },
+    {
+      "id": "REPORT-006",
+      "name": "Gap Opportunities Section",
+      "description": "Page 5: Ranked gaps with evidence and recommendations",
+      "priority": "P0",
+      "phase": 4,
+      "effort": "4h",
+      "passes": false,
+      "category": "reports",
+      "files": [
+        "src/components/reports/GapOpportunities.tsx"
+      ],
+      "acceptance": [
+        "5+ gaps ranked",
+        "Evidence from ads + Reddit",
+        "3% better rec"
+      ]
+    },
+    {
+      "id": "REPORT-007",
+      "name": "Modeled Economics Section",
+      "description": "Page 6: CPC/CAC/TAM ranges, budget scenarios, sensitivity",
+      "priority": "P1",
+      "phase": 4,
+      "effort": "4h",
+      "passes": false,
+      "category": "reports",
+      "files": [
+        "src/components/reports/ModeledEconomics.tsx"
+      ],
+      "acceptance": [
+        "Range displays",
+        "Budget scenarios",
+        "Disclaimers shown"
+      ]
+    },
+    {
+      "id": "REPORT-008",
+      "name": "Buildability Assessment Section",
+      "description": "Page 7: Implementation difficulty, time-to-MVP, human touch, risk flags",
+      "priority": "P1",
+      "phase": 4,
+      "effort": "3h",
+      "passes": false,
+      "category": "reports",
+      "files": [
+        "src/components/reports/Buildability.tsx"
+      ],
+      "acceptance": [
+        "Scores displayed",
+        "Risk flags listed"
+      ]
+    },
+    {
+      "id": "REPORT-009",
+      "name": "Action Plan Section",
+      "description": "Page 9: 7-day quick wins, 30-day roadmap, ad concepts, keywords",
+      "priority": "P0",
+      "phase": 4,
+      "effort": "4h",
+      "passes": false,
+      "category": "reports",
+      "files": [
+        "src/components/reports/ActionPlan.tsx"
+      ],
+      "acceptance": [
+        "Actionable items",
+        "Timeline clear"
+      ]
+    },
+    {
+      "id": "REPORT-010",
+      "name": "Report Page Layout",
+      "description": "Full report page combining all sections",
+      "priority": "P0",
+      "phase": 4,
+      "effort": "3h",
+      "passes": false,
+      "category": "reports",
+      "files": [
+        "src/app/dashboard/reports/[id]/page.tsx"
+      ],
+      "acceptance": [
+        "All sections render",
+        "Navigation works"
+      ]
+    },
+    {
+      "id": "REPORT-011",
+      "name": "PDF Export",
+      "description": "Generate PDF version of report",
+      "priority": "P0",
+      "phase": 4,
       "effort": "6h",
-      "passes": true,
-      "category": "testing",
+      "passes": false,
+      "category": "reports",
       "files": [
-        "e2e/workflows/signup-to-report.spec.ts",
-        "e2e/workflows/run-analysis.spec.ts"
+        "src/lib/reports/pdf-generator.ts",
+        "src/app/api/reports/[id]/pdf/route.ts"
+      ],
+      "acceptance": [
+        "PDF generates",
+        "All sections included",
+        "Downloadable"
       ]
     },
     {
-      "id": "TASK-104",
-      "name": "Data Hydration Tests",
-      "description": "Verify all pages load with correct data, no empty states when data exists",
+      "id": "REPORT-012",
+      "name": "CSV/JSON Export",
+      "description": "Export raw data as CSV and JSON",
       "priority": "P0",
-      "sprint": 9,
-      "effort": "4h",
-      "passes": true,
-      "category": "testing",
-      "files": [
-        "e2e/data-hydration.spec.ts",
-        "__tests__/integration/data-loading.test.ts"
-      ]
-    },
-    {
-      "id": "TASK-105",
-      "name": "Page Functionality Audit",
-      "description": "Verify each dashboard page has working functionality, not just UI",
-      "priority": "P0",
-      "sprint": 9,
-      "effort": "4h",
-      "passes": true,
-      "category": "testing",
-      "files": [
-        "e2e/functionality-audit.spec.ts"
-      ]
-    },
-    {
-      "id": "TASK-106",
-      "name": "Accessibility E2E Tests (Axe)",
-      "description": "Add Playwright accessibility scans (axe-core) for key public + dashboard pages and fail on WCAG violations",
-      "priority": "P1",
-      "sprint": 9,
+      "phase": 4,
       "effort": "3h",
-      "passes": true,
-      "category": "testing",
+      "passes": false,
+      "category": "reports",
       "files": [
-        "e2e/accessibility.spec.ts",
-        "package.json"
+        "src/app/api/reports/[id]/export/route.ts"
+      ],
+      "acceptance": [
+        "CSV and JSON available",
+        "All data included"
       ]
     },
     {
-      "id": "TASK-107",
-      "name": "Production Smoke Diagnostics",
-      "description": "Playwright tests that can run against production to detect 404/500 issues, missing API routes, and console errors",
-      "priority": "P1",
-      "sprint": 9,
-      "effort": "4h",
-      "passes": true,
-      "category": "testing",
-      "files": [
-        "e2e/production-diagnostics.spec.ts",
-        "playwright.config.ts",
-        ".env.e2e.example"
-      ]
-    },
-    {
-      "id": "TASK-108",
-      "name": "Resilience & Error Handling E2E",
-      "description": "Add offline-mode, API failure simulation, and friendly 404/error-boundary verification tests",
-      "priority": "P1",
-      "sprint": 9,
-      "effort": "4h",
-      "passes": true,
-      "category": "testing",
-      "files": [
-        "e2e/error-handling.spec.ts"
-      ]
-    },
-    {
-      "id": "TASK-109",
-      "name": "Cross-Browser + Mobile E2E Matrix",
-      "description": "Run critical E2E flows across chromium/firefox/webkit + mobile profiles; collect traces/screenshots on failure",
+      "id": "UGC-001",
+      "name": "TikTok Creative Center Collector",
+      "description": "Fetch top ads from TikTok Creative Center",
       "priority": "P2",
-      "sprint": 9,
-      "effort": "3h",
-      "passes": true,
-      "category": "testing",
+      "phase": 5,
+      "effort": "6h",
+      "passes": false,
+      "category": "collectors",
       "files": [
-        "playwright.config.ts",
-        "e2e/smoke-matrix.spec.ts"
+        "src/lib/collectors/tiktok-creative.ts"
+      ],
+      "acceptance": [
+        "Fetches top ads",
+        "Rate limited"
       ]
     },
     {
-      "id": "TASK-110",
-      "name": "Demand Brief - Onboarding Flow",
-      "description": "Create onboarding page where user inputs their offering and we auto-extract niche data",
-      "priority": "P0",
-      "sprint": 10,
+      "id": "UGC-002",
+      "name": "TikTok Trend Discovery",
+      "description": "Fetch trending hashtags and sounds from TikTok",
+      "priority": "P2",
+      "phase": 5,
+      "effort": "4h",
+      "passes": false,
+      "category": "collectors",
+      "files": [
+        "src/lib/collectors/tiktok-trends.ts"
+      ],
+      "acceptance": [
+        "Fetches trends",
+        "Relevance to niche scored"
+      ]
+    },
+    {
+      "id": "UGC-003",
+      "name": "UGC Pattern Extractor",
+      "description": "Extract hook types, formats, proof types, CTAs from UGC",
+      "priority": "P2",
+      "phase": 5,
+      "effort": "4h",
+      "passes": false,
+      "category": "ai",
+      "files": [
+        "src/lib/ai/ugc-patterns.ts"
+      ],
+      "acceptance": [
+        "Patterns extracted",
+        "Stored in ugc_patterns"
+      ]
+    },
+    {
+      "id": "UGC-004",
+      "name": "UGC Scoring",
+      "description": "Implement UGC scoring formulas (ad-tested, trend, connected)",
+      "priority": "P2",
+      "phase": 5,
+      "effort": "3h",
+      "passes": false,
+      "category": "scoring",
+      "files": [
+        "src/lib/scoring/ugc.ts"
+      ],
+      "acceptance": [
+        "Scores calculated",
+        "Ranking works"
+      ]
+    },
+    {
+      "id": "UGC-005",
+      "name": "UGC Recommendations Generator",
+      "description": "Generate 10 hooks + 5 scripts + shot list",
+      "priority": "P2",
+      "phase": 5,
+      "effort": "4h",
+      "passes": false,
+      "category": "ai",
+      "files": [
+        "src/lib/ai/ugc-recommendations.ts"
+      ],
+      "acceptance": [
+        "Hooks generated",
+        "Scripts written",
+        "Shot list created"
+      ]
+    },
+    {
+      "id": "UGC-006",
+      "name": "UGC Winners Pack Section",
+      "description": "Page 8: Top UGC creatives, trends, patterns, hooks, scripts",
+      "priority": "P2",
+      "phase": 5,
+      "effort": "4h",
+      "passes": false,
+      "category": "reports",
+      "files": [
+        "src/components/reports/UGCWinnersPack.tsx"
+      ],
+      "acceptance": [
+        "All UGC data displayed",
+        "Hooks and scripts listed"
+      ]
+    },
+    {
+      "id": "BILL-001",
+      "name": "Stripe Integration",
+      "description": "Stripe checkout and subscription management",
+      "priority": "P1",
+      "phase": 6,
       "effort": "6h",
-      "passes": true,
-      "category": "demand_brief",
+      "passes": false,
+      "category": "billing",
+      "files": [
+        "src/lib/stripe/checkout.ts",
+        "src/lib/stripe/subscriptions.ts"
+      ],
+      "acceptance": [
+        "Checkout works",
+        "Subscriptions managed"
+      ]
+    },
+    {
+      "id": "BILL-002",
+      "name": "Pricing Page",
+      "description": "Pricing page with Starter/Builder/Agency/Studio plans",
+      "priority": "P1",
+      "phase": 6,
+      "effort": "3h",
+      "passes": false,
+      "category": "billing",
+      "files": [
+        "src/app/pricing/page.tsx"
+      ],
+      "acceptance": [
+        "All plans displayed",
+        "Checkout links work"
+      ]
+    },
+    {
+      "id": "BILL-003",
+      "name": "Credits System",
+      "description": "Track and deduct credits per run based on plan",
+      "priority": "P1",
+      "phase": 6,
+      "effort": "4h",
+      "passes": false,
+      "category": "billing",
+      "files": [
+        "src/lib/billing/credits.ts",
+        "supabase/migrations/credits.sql"
+      ],
+      "acceptance": [
+        "Credits tracked",
+        "Deducted on run",
+        "Limits enforced"
+      ]
+    },
+    {
+      "id": "BILL-004",
+      "name": "One-off Report Purchase",
+      "description": "Allow purchasing single reports without subscription",
+      "priority": "P2",
+      "phase": 6,
+      "effort": "3h",
+      "passes": false,
+      "category": "billing",
+      "files": [
+        "src/lib/billing/one-off.ts"
+      ],
+      "acceptance": [
+        "Single purchase works",
+        "Report unlocked"
+      ]
+    },
+    {
+      "id": "BILL-005",
+      "name": "Invoice History",
+      "description": "View past invoices and payment history in dashboard",
+      "priority": "P2",
+      "phase": 6,
+      "effort": "4h",
+      "passes": false,
+      "category": "billing",
+      "files": [
+        "src/app/dashboard/billing/page.tsx",
+        "src/app/api/billing/invoices/route.ts"
+      ],
+      "acceptance": [
+        "Invoice list displays",
+        "Download links work"
+      ]
+    },
+    {
+      "id": "BILL-006",
+      "name": "Usage Tracking Dashboard",
+      "description": "Display runs used, remaining, and usage trends",
+      "priority": "P1",
+      "phase": 6,
+      "effort": "3h",
+      "passes": false,
+      "category": "billing",
+      "files": [
+        "src/components/billing/UsageTracker.tsx"
+      ],
+      "acceptance": [
+        "Usage displayed accurately",
+        "Refresh on run completion"
+      ]
+    },
+    {
+      "id": "COLL-009",
+      "name": "Android Play Store Collector",
+      "description": "Fetch Android apps via SerpAPI for platform gap analysis",
+      "priority": "P1",
+      "phase": 2,
+      "effort": "4h",
+      "passes": false,
+      "category": "collectors",
+      "files": [
+        "src/lib/collectors/android-playstore.ts"
+      ],
+      "acceptance": [
+        "Fetches apps by keyword",
+        "Normalized to schema",
+        "Rate limited"
+      ]
+    },
+    {
+      "id": "COLL-010",
+      "name": "YouTube Collector",
+      "description": "Fetch YouTube videos and channels for UGC analysis",
+      "priority": "P2",
+      "phase": 2,
+      "effort": "6h",
+      "passes": false,
+      "category": "collectors",
+      "files": [
+        "src/lib/collectors/youtube.ts"
+      ],
+      "acceptance": [
+        "Video search works",
+        "Channel analysis works",
+        "Metrics extracted"
+      ]
+    },
+    {
+      "id": "COLL-011",
+      "name": "Cross-Platform Deduplication",
+      "description": "Deduplicate apps/products found across iOS, Android, and web",
+      "priority": "P1",
+      "phase": 2,
+      "effort": "3h",
+      "passes": false,
+      "category": "collectors",
+      "files": [
+        "src/lib/collectors/dedup.ts"
+      ],
+      "acceptance": [
+        "Same app recognized across platforms",
+        "Merged into single entry"
+      ]
+    },
+    {
+      "id": "AI-005",
+      "name": "Action Plan Generator",
+      "description": "Generate 7-day quick wins and 30-day roadmap from gap analysis",
+      "priority": "P1",
+      "phase": 3,
+      "effort": "4h",
+      "passes": false,
+      "category": "ai",
+      "files": [
+        "src/lib/ai/action-plan.ts"
+      ],
+      "acceptance": [
+        "7-day plan generated",
+        "30-day roadmap generated",
+        "Tied to gaps"
+      ]
+    },
+    {
+      "id": "AI-006",
+      "name": "Ad Concept Generator",
+      "description": "Generate 3 ad test concepts based on gap opportunities",
+      "priority": "P1",
+      "phase": 3,
+      "effort": "3h",
+      "passes": false,
+      "category": "ai",
+      "files": [
+        "src/lib/ai/ad-concepts.ts"
+      ],
+      "acceptance": [
+        "3 concepts generated",
+        "Headlines and copy included",
+        "Tied to evidence"
+      ]
+    },
+    {
+      "id": "AI-007",
+      "name": "Landing Page Structure Generator",
+      "description": "Generate recommended landing page structure from market insights",
+      "priority": "P2",
+      "phase": 3,
+      "effort": "3h",
+      "passes": false,
+      "category": "ai",
+      "files": [
+        "src/lib/ai/landing-page.ts"
+      ],
+      "acceptance": [
+        "Section recommendations",
+        "Copy suggestions",
+        "Objection handling"
+      ]
+    },
+    {
+      "id": "AI-008",
+      "name": "Keyword Recommendations",
+      "description": "Generate top keywords to target based on gap analysis",
+      "priority": "P1",
+      "phase": 3,
+      "effort": "2h",
+      "passes": false,
+      "category": "ai",
+      "files": [
+        "src/lib/ai/keywords.ts"
+      ],
+      "acceptance": [
+        "Keywords ranked",
+        "Intent classified",
+        "Competition noted"
+      ]
+    },
+    {
+      "id": "REPORT-013",
+      "name": "Report Detail Page Layout",
+      "description": "Full report page with navigation between sections",
+      "priority": "P0",
+      "phase": 4,
+      "effort": "4h",
+      "passes": false,
+      "category": "reports",
+      "files": [
+        "src/app/dashboard/reports/[id]/page.tsx",
+        "src/app/dashboard/reports/[id]/components/ReportNav.tsx"
+      ],
+      "acceptance": [
+        "All sections accessible",
+        "Navigation works",
+        "Loading states"
+      ]
+    },
+    {
+      "id": "REPORT-014",
+      "name": "Report Header Component",
+      "description": "Report header with niche name, date, export buttons",
+      "priority": "P0",
+      "phase": 4,
+      "effort": "2h",
+      "passes": false,
+      "category": "reports",
+      "files": [
+        "src/app/dashboard/reports/[id]/components/ReportHeader.tsx"
+      ],
+      "acceptance": [
+        "Niche displayed",
+        "Export buttons work",
+        "Date shown"
+      ]
+    },
+    {
+      "id": "REPORT-015",
+      "name": "Pain Map Component",
+      "description": "Heatmap of objection clusters and feature requests from Reddit",
+      "priority": "P0",
+      "phase": 4,
+      "effort": "4h",
+      "passes": false,
+      "category": "reports",
+      "files": [
+        "src/app/dashboard/reports/[id]/components/PainMap.tsx"
+      ],
+      "acceptance": [
+        "Objections visualized",
+        "Intensity shown",
+        "Source quotes"
+      ]
+    },
+    {
+      "id": "REPORT-016",
+      "name": "Market Snapshot Component",
+      "description": "Table of top advertisers and chart of common angles",
+      "priority": "P0",
+      "phase": 4,
+      "effort": "4h",
+      "passes": false,
+      "category": "reports",
+      "files": [
+        "src/app/dashboard/reports/[id]/components/MarketSnapshot.tsx"
+      ],
+      "acceptance": [
+        "Top 10 advertisers",
+        "Angle frequency chart",
+        "Longevity signals"
+      ]
+    },
+    {
+      "id": "REPORT-017",
+      "name": "Share Link Generation",
+      "description": "Generate public shareable URLs for reports",
+      "priority": "P2",
+      "phase": 4,
+      "effort": "3h",
+      "passes": false,
+      "category": "reports",
+      "files": [
+        "src/app/api/reports/[id]/share/route.ts",
+        "src/app/share/[token]/page.tsx"
+      ],
+      "acceptance": [
+        "Token generated",
+        "Public access works",
+        "No auth required"
+      ]
+    },
+    {
+      "id": "REPORT-018",
+      "name": "Share Link Password Protection",
+      "description": "Optional password protection for shared report links",
+      "priority": "P3",
+      "phase": 4,
+      "effort": "2h",
+      "passes": false,
+      "category": "reports",
+      "files": [
+        "src/app/share/[token]/password/page.tsx"
+      ],
+      "acceptance": [
+        "Password prompt shown",
+        "Access granted on correct password"
+      ]
+    },
+    {
+      "id": "REPORT-019",
+      "name": "Share Link Expiration",
+      "description": "Set expiration dates for shared report links",
+      "priority": "P3",
+      "phase": 4,
+      "effort": "2h",
+      "passes": false,
+      "category": "reports",
+      "files": [
+        "src/lib/reports/share.ts"
+      ],
+      "acceptance": [
+        "Expiration enforced",
+        "Expired links show message"
+      ]
+    },
+    {
+      "id": "REPORT-020",
+      "name": "Report Caching Layer",
+      "description": "Cache aggregated report data for faster loading",
+      "priority": "P1",
+      "phase": 4,
+      "effort": "3h",
+      "passes": false,
+      "category": "reports",
+      "files": [
+        "src/lib/reports/cache.ts"
+      ],
+      "acceptance": [
+        "Cache hit improves load time",
+        "Invalidation on data change"
+      ]
+    },
+    {
+      "id": "UI-001",
+      "name": "Run Progress Real-time UI",
+      "description": "Real-time progress indicator during run execution",
+      "priority": "P1",
+      "phase": 4,
+      "effort": "4h",
+      "passes": false,
+      "category": "dashboard",
+      "files": [
+        "src/components/runs/RunProgress.tsx"
+      ],
+      "acceptance": [
+        "Stage progress shown",
+        "Updates in real-time",
+        "Error states handled"
+      ]
+    },
+    {
+      "id": "UI-002",
+      "name": "Comparison View",
+      "description": "Compare multiple runs or niches side by side",
+      "priority": "P2",
+      "phase": 4,
+      "effort": "6h",
+      "passes": false,
+      "category": "dashboard",
+      "files": [
+        "src/app/dashboard/compare/page.tsx"
+      ],
+      "acceptance": [
+        "Select multiple runs",
+        "Side-by-side display",
+        "Key metrics compared"
+      ]
+    },
+    {
+      "id": "UI-003",
+      "name": "Mobile Responsive Polish",
+      "description": "Ensure all dashboard pages work well on mobile devices",
+      "priority": "P2",
+      "phase": 4,
+      "effort": "6h",
+      "passes": false,
+      "category": "dashboard",
+      "files": [
+        "src/app/dashboard/layout.tsx"
+      ],
+      "acceptance": [
+        "Touch-friendly",
+        "Readable on small screens",
+        "Navigation works"
+      ]
+    },
+    {
+      "id": "API-001",
+      "name": "PDF Export Endpoint",
+      "description": "Generate PDF version of report via API",
+      "priority": "P0",
+      "phase": 4,
+      "effort": "6h",
+      "passes": false,
+      "category": "api",
+      "files": [
+        "src/app/api/reports/[id]/pdf/route.ts",
+        "src/lib/reports/pdf-generator.ts"
+      ],
+      "acceptance": [
+        "PDF generates",
+        "All sections included",
+        "Downloadable"
+      ]
+    },
+    {
+      "id": "API-002",
+      "name": "Direct Google Ads Endpoint",
+      "description": "Dedicated endpoint for Google ads data",
+      "priority": "P1",
+      "phase": 2,
+      "effort": "3h",
+      "passes": false,
+      "category": "api",
+      "files": [
+        "src/app/api/google-ads/route.ts"
+      ],
+      "acceptance": [
+        "Returns ads data",
+        "Rate limited",
+        "Error handling"
+      ]
+    },
+    {
+      "id": "API-003",
+      "name": "Direct TikTok UGC Endpoint",
+      "description": "Dedicated endpoint for TikTok UGC data",
+      "priority": "P1",
+      "phase": 5,
+      "effort": "3h",
+      "passes": false,
+      "category": "api",
+      "files": [
+        "src/app/api/ugc/tiktok/route.ts"
+      ],
+      "acceptance": [
+        "Returns TikTok data",
+        "Rate limited",
+        "Pattern extraction"
+      ]
+    },
+    {
+      "id": "TEST-001",
+      "name": "Mock Utilities",
+      "description": "Reusable mock data generators for testing",
+      "priority": "P1",
+      "phase": 7,
+      "effort": "4h",
+      "passes": false,
+      "category": "testing",
+      "files": [
+        "src/lib/test/mocks.ts"
+      ],
+      "acceptance": [
+        "Mocks for all collectors",
+        "Consistent test data"
+      ]
+    },
+    {
+      "id": "TEST-002",
+      "name": "Reddit Collector Unit Tests",
+      "description": "Unit tests for Reddit data collector",
+      "priority": "P0",
+      "phase": 7,
+      "effort": "3h",
+      "passes": false,
+      "category": "testing",
+      "files": [
+        "src/lib/collectors/__tests__/reddit.test.ts"
+      ],
+      "acceptance": [
+        "API mocked",
+        "Edge cases covered",
+        "Error handling tested"
+      ]
+    },
+    {
+      "id": "TEST-003",
+      "name": "Meta Collector Unit Tests",
+      "description": "Unit tests for Meta ads collector",
+      "priority": "P0",
+      "phase": 7,
+      "effort": "3h",
+      "passes": false,
+      "category": "testing",
+      "files": [
+        "src/lib/collectors/__tests__/meta.test.ts"
+      ],
+      "acceptance": [
+        "API mocked",
+        "Normalization tested",
+        "Error handling tested"
+      ]
+    },
+    {
+      "id": "TEST-004",
+      "name": "App Store Collector Unit Tests",
+      "description": "Unit tests for iOS/Android app store collectors",
+      "priority": "P1",
+      "phase": 7,
+      "effort": "3h",
+      "passes": false,
+      "category": "testing",
+      "files": [
+        "src/lib/collectors/__tests__/appstore.test.ts"
+      ],
+      "acceptance": [
+        "Both platforms tested",
+        "Dedup tested"
+      ]
+    },
+    {
+      "id": "TEST-005",
+      "name": "AI Extractor Unit Tests",
+      "description": "Unit tests for LLM extraction service",
+      "priority": "P1",
+      "phase": 7,
+      "effort": "3h",
+      "passes": false,
+      "category": "testing",
+      "files": [
+        "src/lib/ai/__tests__/extractor.test.ts"
+      ],
+      "acceptance": [
+        "Prompts tested",
+        "JSON output validated",
+        "Fallback tested"
+      ]
+    },
+    {
+      "id": "TEST-006",
+      "name": "Gap Generator Unit Tests",
+      "description": "Unit tests for gap detection engine",
+      "priority": "P1",
+      "phase": 7,
+      "effort": "3h",
+      "passes": false,
+      "category": "testing",
+      "files": [
+        "src/lib/ai/__tests__/gap-generator.test.ts"
+      ],
+      "acceptance": [
+        "Gap types tested",
+        "Evidence linking tested",
+        "Scoring tested"
+      ]
+    },
+    {
+      "id": "TEST-007",
+      "name": "API Route Integration Tests",
+      "description": "Integration tests for all API routes",
+      "priority": "P1",
+      "phase": 7,
+      "effort": "6h",
+      "passes": false,
+      "category": "testing",
+      "files": [
+        "src/app/api/__tests__/integration.test.ts"
+      ],
+      "acceptance": [
+        "All routes tested",
+        "Auth tested",
+        "Error responses tested"
+      ]
+    },
+    {
+      "id": "TEST-008",
+      "name": "Full Pipeline Integration Test",
+      "description": "End-to-end test of complete analysis pipeline",
+      "priority": "P1",
+      "phase": 7,
+      "effort": "4h",
+      "passes": false,
+      "category": "testing",
+      "files": [
+        "src/lib/__tests__/pipeline.test.ts"
+      ],
+      "acceptance": [
+        "Full run executes",
+        "All stages complete",
+        "Report generated"
+      ]
+    },
+    {
+      "id": "TEST-009",
+      "name": "Auth Flow E2E Tests",
+      "description": "End-to-end tests for authentication flows",
+      "priority": "P2",
+      "phase": 7,
+      "effort": "4h",
+      "passes": false,
+      "category": "testing",
+      "files": [
+        "e2e/auth.spec.ts"
+      ],
+      "acceptance": [
+        "Signup tested",
+        "Login tested",
+        "Logout tested"
+      ]
+    },
+    {
+      "id": "TEST-010",
+      "name": "New Run Flow E2E Tests",
+      "description": "End-to-end tests for creating and executing runs",
+      "priority": "P2",
+      "phase": 7,
+      "effort": "4h",
+      "passes": false,
+      "category": "testing",
+      "files": [
+        "e2e/runs.spec.ts"
+      ],
+      "acceptance": [
+        "Form submission tested",
+        "Progress tracked",
+        "Report accessible"
+      ]
+    },
+    {
+      "id": "TEST-011",
+      "name": "CI/CD Integration",
+      "description": "Automated testing in CI/CD pipeline",
+      "priority": "P1",
+      "phase": 7,
+      "effort": "4h",
+      "passes": false,
+      "category": "testing",
+      "files": [
+        ".github/workflows/test.yml"
+      ],
+      "acceptance": [
+        "Tests run on PR",
+        "Coverage reported",
+        "Failures block merge"
+      ]
+    },
+    {
+      "id": "INFRA-001",
+      "name": "Production Supabase Setup",
+      "description": "Configure production Supabase project with all tables",
+      "priority": "P0",
+      "phase": 8,
+      "effort": "4h",
+      "passes": false,
+      "category": "infrastructure",
+      "files": [
+        "supabase/migrations/"
+      ],
+      "acceptance": [
+        "All tables created",
+        "RLS policies applied",
+        "Connection working"
+      ]
+    },
+    {
+      "id": "INFRA-002",
+      "name": "Vercel Deployment",
+      "description": "Deploy application to Vercel with environment variables",
+      "priority": "P0",
+      "phase": 8,
+      "effort": "3h",
+      "passes": false,
+      "category": "infrastructure",
+      "files": [
+        "vercel.json"
+      ],
+      "acceptance": [
+        "Deployment succeeds",
+        "Env vars configured",
+        "Build optimized"
+      ]
+    },
+    {
+      "id": "INFRA-003",
+      "name": "Domain Setup",
+      "description": "Configure demandradar.app domain with SSL",
+      "priority": "P0",
+      "phase": 8,
+      "effort": "2h",
+      "passes": false,
+      "category": "infrastructure",
+      "files": [],
+      "acceptance": [
+        "Domain resolves",
+        "SSL working",
+        "Redirects configured"
+      ]
+    },
+    {
+      "id": "INFRA-004",
+      "name": "Error Monitoring (Sentry)",
+      "description": "Integrate Sentry for error tracking and alerting",
+      "priority": "P1",
+      "phase": 8,
+      "effort": "3h",
+      "passes": false,
+      "category": "infrastructure",
+      "files": [
+        "sentry.client.config.ts",
+        "sentry.server.config.ts"
+      ],
+      "acceptance": [
+        "Errors captured",
+        "Alerts configured",
+        "Source maps uploaded"
+      ]
+    },
+    {
+      "id": "INFRA-005",
+      "name": "Logging Service",
+      "description": "Structured logging for debugging and monitoring",
+      "priority": "P1",
+      "phase": 8,
+      "effort": "3h",
+      "passes": false,
+      "category": "infrastructure",
+      "files": [
+        "src/lib/logger.ts"
+      ],
+      "acceptance": [
+        "Logs structured",
+        "Levels configurable",
+        "Context preserved"
+      ]
+    },
+    {
+      "id": "INFRA-006",
+      "name": "Health Check Endpoint",
+      "description": "API health check for monitoring and load balancing",
+      "priority": "P0",
+      "phase": 8,
+      "effort": "1h",
+      "passes": false,
+      "category": "infrastructure",
+      "files": [
+        "src/app/api/health/route.ts"
+      ],
+      "acceptance": [
+        "Returns 200 when healthy",
+        "Checks DB connection"
+      ]
+    },
+    {
+      "id": "NLP-001",
+      "name": "Server-Side NLP Suggestions",
+      "description": "Upgrade NLP search to server-powered embedding-based suggestions",
+      "priority": "P2",
+      "phase": 1,
+      "effort": "6h",
+      "passes": false,
+      "category": "nlp",
+      "files": [
+        "src/app/api/nlp/suggestions/route.ts",
+        "src/lib/nlp/embeddings.ts"
+      ],
+      "acceptance": [
+        "Keyword expansion works",
+        "Competitor recognition",
+        "Query rewrite"
+      ]
+    },
+    {
+      "id": "NLP-002",
+      "name": "Entity Recognition",
+      "description": "Recognize competitors, products, and brands in NLP queries",
+      "priority": "P2",
+      "phase": 1,
+      "effort": "4h",
+      "passes": false,
+      "category": "nlp",
+      "files": [
+        "src/lib/nlp/entities.ts"
+      ],
+      "acceptance": [
+        "Entities extracted",
+        "Linked to known brands",
+        "Suggestions refined"
+      ]
+    },
+    {
+      "id": "TREND-001",
+      "name": "ProductHunt Trends Source",
+      "description": "Add ProductHunt as a trend source for landing page",
+      "priority": "P2",
+      "phase": 1,
+      "effort": "4h",
+      "passes": false,
+      "category": "trends",
+      "files": [
+        "src/lib/trends/producthunt.ts"
+      ],
+      "acceptance": [
+        "Fetches recent launches",
+        "Normalized to trend format"
+      ]
+    },
+    {
+      "id": "TREND-002",
+      "name": "Google Trends Integration",
+      "description": "Add Google Trends as a trend source",
+      "priority": "P2",
+      "phase": 1,
+      "effort": "4h",
+      "passes": false,
+      "category": "trends",
+      "files": [
+        "src/lib/trends/google-trends.ts"
+      ],
+      "acceptance": [
+        "Fetches trending topics",
+        "Geographic filtering",
+        "Rate limited"
+      ]
+    },
+    {
+      "id": "SCORE-008",
+      "name": "Build-to-Profit Score (Full)",
+      "description": "Complete implementation of Build-to-Profit scoring formula",
+      "priority": "P1",
+      "phase": 3,
+      "effort": "3h",
+      "passes": false,
+      "category": "scoring",
+      "files": [
+        "src/lib/scoring/build-to-profit.ts"
+      ],
+      "acceptance": [
+        "All factors included",
+        "TAM/Margin factored",
+        "Complexity scored"
+      ]
+    },
+    {
+      "id": "AUTH-001",
+      "name": "OAuth Social Login",
+      "description": "Add Google and GitHub OAuth login options",
+      "priority": "P2",
+      "phase": 1,
+      "effort": "4h",
+      "passes": false,
+      "category": "auth",
+      "files": [
+        "src/app/login/page.tsx",
+        "src/lib/supabase/auth.ts"
+      ],
+      "acceptance": [
+        "Google login works",
+        "GitHub login works",
+        "Account linking"
+      ]
+    },
+    {
+      "id": "AUTH-002",
+      "name": "Password Reset Flow",
+      "description": "Forgot password and reset functionality",
+      "priority": "P1",
+      "phase": 1,
+      "effort": "3h",
+      "passes": false,
+      "category": "auth",
+      "files": [
+        "src/app/reset-password/page.tsx",
+        "src/app/api/auth/reset/route.ts"
+      ],
+      "acceptance": [
+        "Reset email sent",
+        "Token validated",
+        "Password updated"
+      ]
+    },
+    {
+      "id": "EXPORT-001",
+      "name": "Slide Deck Export",
+      "description": "Export report as PowerPoint/Google Slides presentation",
+      "priority": "P2",
+      "phase": 4,
+      "effort": "6h",
+      "passes": false,
+      "category": "reports",
+      "files": [
+        "src/lib/reports/slide-generator.ts",
+        "src/app/api/reports/[id]/slides/route.ts"
+      ],
+      "acceptance": [
+        "PPTX generated",
+        "Key insights formatted",
+        "Charts included"
+      ]
+    },
+    {
+      "id": "EXPORT-002",
+      "name": "Notion Export",
+      "description": "Export report directly to Notion workspace",
+      "priority": "P3",
+      "phase": 4,
+      "effort": "4h",
+      "passes": false,
+      "category": "reports",
+      "files": [
+        "src/lib/reports/notion-export.ts"
+      ],
+      "acceptance": [
+        "Notion API connected",
+        "Page created",
+        "Formatted correctly"
+      ]
+    },
+    {
+      "id": "DEMO-001",
+      "name": "Demo Niches",
+      "description": "Pre-generated demo reports for onboarding",
+      "priority": "P1",
+      "phase": 1,
+      "effort": "4h",
+      "passes": false,
+      "category": "onboarding",
+      "files": [
+        "src/lib/demo/niches.ts",
+        "src/app/demo/page.tsx"
+      ],
+      "acceptance": [
+        "3+ demo niches available",
+        "Instant view without auth",
+        "CTA to signup"
+      ]
+    },
+    {
+      "id": "ONBOARD-001",
+      "name": "User Onboarding Flow",
+      "description": "Guided onboarding for new users after signup",
+      "priority": "P1",
+      "phase": 1,
+      "effort": "4h",
+      "passes": false,
+      "category": "onboarding",
       "files": [
         "src/app/onboarding/page.tsx",
-        "src/app/onboarding/components/OfferingInput.tsx",
-        "src/app/onboarding/components/NichePreview.tsx"
+        "src/components/onboarding/OnboardingWizard.tsx"
+      ],
+      "acceptance": [
+        "Steps explained",
+        "First run guided",
+        "Skip option"
       ]
     },
     {
-      "id": "TASK-111",
-      "name": "Demand Brief - Niche Config Schema",
-      "description": "Create database tables for user_niches and demand_snapshots",
-      "priority": "P0",
-      "sprint": 10,
-      "effort": "2h",
-      "passes": true,
+      "id": "BRIEF-001",
+      "name": "Demand Brief Onboarding",
+      "description": "Single input → structured data extraction for niche tracking setup",
+      "priority": "P2",
+      "phase": 9,
+      "effort": "6h",
+      "passes": false,
       "category": "demand_brief",
       "files": [
-        "supabase/migrations/20260116_demand_brief_tables.sql"
+        "src/app/onboarding/niche/page.tsx",
+        "src/lib/ai/niche-extractor.ts"
+      ],
+      "acceptance": [
+        "Offering name extracted",
+        "Category/tags inferred",
+        "Competitors auto-detected",
+        "Keywords generated"
       ]
     },
     {
-      "id": "TASK-112",
-      "name": "Demand Brief - Niche API Routes",
-      "description": "Create CRUD API routes for managing user niches",
-      "priority": "P0",
-      "sprint": 10,
-      "effort": "3h",
-      "passes": true,
-      "category": "demand_brief",
-      "files": [
-        "src/app/api/niches/route.ts",
-        "src/app/api/niches/[id]/route.ts",
-        "src/app/api/niches/extract/route.ts"
-      ]
-    },
-    {
-      "id": "TASK-113",
-      "name": "Demand Brief - My Niches Dashboard",
-      "description": "Dashboard page to view and manage tracked niches",
-      "priority": "P0",
-      "sprint": 10,
+      "id": "BRIEF-002",
+      "name": "User Niche Configuration",
+      "description": "Database schema and API for storing user niche tracking preferences",
+      "priority": "P2",
+      "phase": 9,
       "effort": "4h",
-      "passes": true,
+      "passes": false,
       "category": "demand_brief",
       "files": [
-        "src/app/dashboard/niches/page.tsx",
-        "src/app/dashboard/niches/[id]/page.tsx"
+        "supabase/migrations/user_niches.sql",
+        "src/app/api/niches/route.ts"
+      ],
+      "acceptance": [
+        "user_niches table created",
+        "CRUD API works",
+        "User can edit config"
       ]
     },
     {
-      "id": "TASK-114",
-      "name": "Demand Brief - Demand Score Calculator",
-      "description": "Implement demand score formula: ads(30%) + intent(25%) + velocity(20%) + pain(15%) + heat(10%)",
-      "priority": "P0",
-      "sprint": 10,
+      "id": "BRIEF-003",
+      "name": "Weekly Demand Brief Email",
+      "description": "Generate and send weekly demand score + insights email via Resend",
+      "priority": "P2",
+      "phase": 9,
+      "effort": "8h",
+      "passes": false,
+      "category": "demand_brief",
+      "files": [
+        "src/lib/email/demand-brief.ts",
+        "src/lib/email/templates/demand-brief.tsx"
+      ],
+      "acceptance": [
+        "Email renders correctly",
+        "Demand score shown",
+        "What changed section",
+        "Copy-pasteable hooks"
+      ]
+    },
+    {
+      "id": "BRIEF-004",
+      "name": "Demand Score Formula",
+      "description": "Calculate weekly demand score (0-100) from ad activity, buyer intent, chatter velocity, pain intensity",
+      "priority": "P2",
+      "phase": 9,
       "effort": "4h",
-      "passes": true,
+      "passes": false,
       "category": "demand_brief",
       "files": [
         "src/lib/scoring/demand-score.ts"
+      ],
+      "acceptance": [
+        "Score 0-100",
+        "Trend delta calculated",
+        "Message-market fit score"
       ]
     },
     {
-      "id": "TASK-115",
-      "name": "Demand Brief - Weekly Signal Collection",
-      "description": "Pipeline to collect weekly signals from all sources for each niche",
-      "priority": "P0",
-      "sprint": 10,
-      "effort": "6h",
-      "passes": true,
-      "category": "demand_brief",
-      "files": [
-        "src/lib/pipeline/weekly-signals.ts",
-        "src/app/api/cron/weekly-briefs/route.ts"
-      ]
-    },
-    {
-      "id": "TASK-116",
-      "name": "Demand Brief - AI Content Generation",
-      "description": "Generate 3 plays, ad hooks, subject lines, and landing copy using AI",
-      "priority": "P0",
-      "sprint": 10,
-      "effort": "4h",
-      "passes": true,
-      "category": "demand_brief",
-      "files": [
-        "src/lib/ai/brief-generator.ts"
-      ]
-    },
-    {
-      "id": "TASK-117",
-      "name": "Demand Brief - Email Template",
-      "description": "Create React email template for weekly Demand Brief",
-      "priority": "P0",
-      "sprint": 10,
-      "effort": "4h",
-      "passes": true,
-      "category": "demand_brief",
-      "files": [
-        "src/lib/email/templates/demand-brief.tsx",
-        "src/lib/email/send-brief.ts"
-      ]
-    },
-    {
-      "id": "TASK-118",
-      "name": "Demand Brief - Web View",
-      "description": "Web version of the Demand Brief email for dashboard viewing",
-      "priority": "P1",
-      "sprint": 10,
-      "effort": "3h",
-      "passes": true,
-      "category": "demand_brief",
-      "files": [
-        "src/app/dashboard/briefs/[id]/page.tsx",
-        "src/app/api/briefs/[id]/route.ts"
-      ]
-    },
-    {
-      "id": "TASK-119",
-      "name": "Demand Brief - Alert System",
-      "description": "Between-brief alerts for competitor changes, trend spikes, new angles",
-      "priority": "P1",
-      "sprint": 11,
-      "effort": "4h",
-      "passes": true,
-      "category": "demand_brief",
-      "files": [
-        "src/lib/alerts/detector.ts",
-        "src/app/api/alerts/route.ts",
-        "src/app/dashboard/alerts/page.tsx"
-      ]
-    },
-    {
-      "id": "TASK-120",
-      "name": "Demand Brief - Progress Tracking",
-      "description": "Show niche score evolution over time with charts",
-      "priority": "P1",
-      "sprint": 11,
-      "effort": "3h",
-      "passes": true,
-      "category": "demand_brief",
-      "files": [
-        "src/app/dashboard/niches/[id]/components/ProgressChart.tsx"
-      ]
-    },
-    {
-      "id": "TASK-121",
-      "name": "Demand Brief - Experiment Loop",
-      "description": "Weekly experiment suggestions and results tracking",
+      "id": "BRIEF-005",
+      "name": "Weekly Snapshot Storage",
+      "description": "Store demand snapshots for historical tracking",
       "priority": "P2",
-      "sprint": 11,
-      "effort": "4h",
-      "passes": true,
+      "phase": 9,
+      "effort": "3h",
+      "passes": false,
       "category": "demand_brief",
       "files": [
-        "src/lib/experiments/suggestions.ts",
-        "src/app/dashboard/experiments/page.tsx"
+        "supabase/migrations/demand_snapshots.sql"
+      ],
+      "acceptance": [
+        "Snapshots stored weekly",
+        "Historical queries work",
+        "Index on niche_id/week"
       ]
     },
     {
-      "id": "TASK-122",
-      "name": "Demand Brief - Subscription Tier Enforcement",
-      "description": "Enforce niche limits based on subscription tier (1/3/10-25)",
-      "priority": "P1",
-      "sprint": 11,
-      "effort": "3h",
-      "passes": true,
+      "id": "BRIEF-006",
+      "name": "Weekly Cron Pipeline",
+      "description": "Cron job to collect signals and send weekly briefs for all active niches",
+      "priority": "P2",
+      "phase": 9,
+      "effort": "4h",
+      "passes": false,
       "category": "demand_brief",
       "files": [
-        "src/lib/subscription/tier-limits.ts",
-        "src/lib/subscription/permissions.ts",
-        "src/app/api/runs/route.ts"
+        "src/app/api/cron/weekly-briefs/route.ts"
+      ],
+      "acceptance": [
+        "Runs weekly",
+        "Processes all niches",
+        "Sends emails",
+        "Stores snapshots"
+      ]
+    },
+    {
+      "id": "BRIEF-007",
+      "name": "Between-Brief Alerts",
+      "description": "Real-time alerts for significant events (competitor price changes, trend spikes)",
+      "priority": "P3",
+      "phase": 9,
+      "effort": "4h",
+      "passes": false,
+      "category": "demand_brief",
+      "files": [
+        "src/lib/alerts/trigger.ts",
+        "src/app/api/alerts/route.ts"
+      ],
+      "acceptance": [
+        "Alerts triggered on events",
+        "Email sent",
+        "Dashboard notification"
+      ]
+    },
+    {
+      "id": "BRIEF-008",
+      "name": "Niche Progress Tracking",
+      "description": "Show users their niche evolution over time",
+      "priority": "P3",
+      "phase": 9,
+      "effort": "4h",
+      "passes": false,
+      "category": "demand_brief",
+      "files": [
+        "src/app/dashboard/niches/[id]/page.tsx"
+      ],
+      "acceptance": [
+        "Historical charts",
+        "Trend visualization",
+        "Competitor tracking"
+      ]
+    },
+    {
+      "id": "BRIEF-009",
+      "name": "Experiment Loop",
+      "description": "Suggest weekly experiments and track results",
+      "priority": "P3",
+      "phase": 9,
+      "effort": "3h",
+      "passes": false,
+      "category": "demand_brief",
+      "files": [
+        "src/lib/experiments/generator.ts"
+      ],
+      "acceptance": [
+        "Weekly experiment suggested",
+        "Previous results shown"
+      ]
+    },
+    {
+      "id": "BRIEF-010",
+      "name": "Demand Brief Web View",
+      "description": "Web version of email brief for dashboard viewing",
+      "priority": "P2",
+      "phase": 9,
+      "effort": "4h",
+      "passes": false,
+      "category": "demand_brief",
+      "files": [
+        "src/app/dashboard/briefs/[id]/page.tsx"
+      ],
+      "acceptance": [
+        "All email sections rendered",
+        "Actions clickable",
+        "Export option"
+      ]
+    },
+    {
+      "id": "REPORT-021",
+      "name": "Economics Component",
+      "description": "Display CPC, CAC, TAM estimates with range indicators",
+      "priority": "P1",
+      "phase": 4,
+      "effort": "2h",
+      "passes": false,
+      "category": "reports",
+      "files": [
+        "src/app/dashboard/reports/[id]/components/Economics.tsx"
+      ],
+      "acceptance": [
+        "CPC/CAC/TAM ranges displayed",
+        "Confidence indicators",
+        "Budget scenarios"
+      ]
+    },
+    {
+      "id": "REPORT-022",
+      "name": "Buildability Component",
+      "description": "Display implementation difficulty, human touch level, autonomous suitability",
+      "priority": "P1",
+      "phase": 4,
+      "effort": "2h",
+      "passes": false,
+      "category": "reports",
+      "files": [
+        "src/app/dashboard/reports/[id]/components/Buildability.tsx"
+      ],
+      "acceptance": [
+        "Difficulty score shown",
+        "Risk flags displayed",
+        "Time-to-MVP estimate"
+      ]
+    },
+    {
+      "id": "REPORT-023",
+      "name": "UGC Pack Component",
+      "description": "Display 10 hooks, 5 scripts, 6 shots with copy functionality",
+      "priority": "P1",
+      "phase": 4,
+      "effort": "3h",
+      "passes": false,
+      "category": "reports",
+      "files": [
+        "src/app/dashboard/reports/[id]/components/UGCPack.tsx"
+      ],
+      "acceptance": [
+        "Hooks with copy button",
+        "Scripts expandable",
+        "Shot list",
+        "Download all"
+      ]
+    },
+    {
+      "id": "REPORT-024",
+      "name": "Action Plan Component",
+      "description": "Display 7-day quick wins and 30-day roadmap",
+      "priority": "P2",
+      "phase": 4,
+      "effort": "3h",
+      "passes": false,
+      "category": "reports",
+      "files": [
+        "src/app/dashboard/reports/[id]/components/ActionPlan.tsx"
+      ],
+      "acceptance": [
+        "7-day checklist",
+        "30-day milestones",
+        "Resource estimates"
+      ]
+    },
+    {
+      "id": "REPORT-025",
+      "name": "Platform Gap Component",
+      "description": "iOS/Android/Web competitor presence visualization",
+      "priority": "P0",
+      "phase": 4,
+      "effort": "2h",
+      "passes": false,
+      "category": "reports",
+      "files": [
+        "src/app/dashboard/reports/[id]/components/PlatformGap.tsx"
+      ],
+      "acceptance": [
+        "3-column layout",
+        "Top apps per platform",
+        "Saturation indicators"
+      ]
+    },
+    {
+      "id": "REPORT-026",
+      "name": "Gap List Component",
+      "description": "Ranked list of market gaps with evidence",
+      "priority": "P0",
+      "phase": 4,
+      "effort": "3h",
+      "passes": false,
+      "category": "reports",
+      "files": [
+        "src/app/dashboard/reports/[id]/components/GapList.tsx"
+      ],
+      "acceptance": [
+        "Gaps ranked by score",
+        "Type badges",
+        "Expandable evidence",
+        "Recommendation"
+      ]
+    },
+    {
+      "id": "BILL-007",
+      "name": "Public API Access",
+      "description": "API access for Agency+ plans with key management",
+      "priority": "P3",
+      "phase": 6,
+      "effort": "6h",
+      "passes": false,
+      "category": "billing",
+      "files": [
+        "src/app/api/v1/route.ts",
+        "src/lib/api-keys.ts"
+      ],
+      "acceptance": [
+        "API key generation",
+        "Rate limiting",
+        "Documentation"
+      ]
+    },
+    {
+      "id": "BILL-008",
+      "name": "White-Label Reports",
+      "description": "Custom branding for Studio plan reports",
+      "priority": "P3",
+      "phase": 6,
+      "effort": "4h",
+      "passes": false,
+      "category": "billing",
+      "files": [
+        "src/lib/reports/white-label.ts"
+      ],
+      "acceptance": [
+        "Custom logo",
+        "Custom colors",
+        "Remove DemandRadar branding"
+      ]
+    },
+    {
+      "id": "BILL-009",
+      "name": "Subscription Usage Tracking",
+      "description": "Track runs, exports, alerts per subscription period",
+      "priority": "P1",
+      "phase": 6,
+      "effort": "3h",
+      "passes": false,
+      "category": "billing",
+      "files": [
+        "supabase/migrations/subscription_usage.sql",
+        "src/lib/billing/usage.ts"
+      ],
+      "acceptance": [
+        "Usage tracked",
+        "Limits enforced",
+        "Dashboard display"
+      ]
+    },
+    {
+      "id": "BILL-010",
+      "name": "Add-On Purchases",
+      "description": "Ad Angle Pack, Landing Page Rewrites, Competitor Watchlist add-ons",
+      "priority": "P3",
+      "phase": 6,
+      "effort": "4h",
+      "passes": false,
+      "category": "billing",
+      "files": [
+        "src/app/api/billing/addons/route.ts"
+      ],
+      "acceptance": [
+        "Add-ons purchasable",
+        "Features unlocked",
+        "Usage tracked"
+      ]
+    },
+    {
+      "id": "UI-004",
+      "name": "Dark Mode",
+      "description": "Dark theme support with next-themes",
+      "priority": "P2",
+      "phase": 4,
+      "effort": "3h",
+      "passes": true,
+      "category": "dashboard",
+      "files": [
+        "src/app/layout.tsx",
+        "src/components/ThemeProvider.tsx"
+      ],
+      "acceptance": [
+        "Theme toggle works",
+        "Persisted preference",
+        "All components styled"
+      ]
+    },
+    {
+      "id": "UI-005",
+      "name": "Pricing Page",
+      "description": "Public pricing page with plan comparison and checkout",
+      "priority": "P1",
+      "phase": 1,
+      "effort": "3h",
+      "passes": true,
+      "category": "dashboard",
+      "files": [
+        "src/app/pricing/page.tsx"
+      ],
+      "acceptance": [
+        "All plans displayed",
+        "Checkout links work",
+        "Feature comparison table"
+      ]
+    },
+    {
+      "id": "INFRA-007",
+      "name": "Supabase Realtime Subscriptions",
+      "description": "Real-time run progress updates via Supabase Realtime",
+      "priority": "P1",
+      "phase": 8,
+      "effort": "4h",
+      "passes": false,
+      "category": "infrastructure",
+      "files": [
+        "src/hooks/use-run-status.ts"
+      ],
+      "acceptance": [
+        "Progress updates in real-time",
+        "No polling required",
+        "Connection handling"
+      ]
+    },
+    {
+      "id": "INFRA-008",
+      "name": "Analytics Dashboard",
+      "description": "Internal analytics for tracking usage and conversion metrics",
+      "priority": "P2",
+      "phase": 8,
+      "effort": "4h",
+      "passes": false,
+      "category": "infrastructure",
+      "files": [
+        "src/app/admin/analytics/page.tsx"
+      ],
+      "acceptance": [
+        "Reports generated",
+        "User metrics",
+        "Conversion tracking"
+      ]
+    },
+    {
+      "id": "TEST-012",
+      "name": "Accessibility E2E Tests",
+      "description": "Playwright accessibility scans using @axe-core/playwright",
+      "priority": "P1",
+      "phase": 7,
+      "effort": "3h",
+      "passes": false,
+      "category": "testing",
+      "files": [
+        "e2e/accessibility.spec.ts"
+      ],
+      "acceptance": [
+        "WCAG violations detected",
+        "Landing/dashboard scanned"
+      ]
+    },
+    {
+      "id": "TEST-013",
+      "name": "Production Smoke Diagnostics",
+      "description": "Tests against production for 404/500 detection",
+      "priority": "P1",
+      "phase": 7,
+      "effort": "4h",
+      "passes": false,
+      "category": "testing",
+      "files": [
+        "e2e/production-diagnostics.spec.ts"
+      ],
+      "acceptance": [
+        "Critical routes verified",
+        "Console errors captured"
+      ]
+    },
+    {
+      "id": "TEST-014",
+      "name": "Resilience & Error Handling E2E",
+      "description": "Offline mode, API failure simulation, error boundary tests",
+      "priority": "P1",
+      "phase": 7,
+      "effort": "4h",
+      "passes": false,
+      "category": "testing",
+      "files": [
+        "e2e/error-handling.spec.ts"
+      ],
+      "acceptance": [
+        "Friendly 404 verified",
+        "Offline handled",
+        "API failures graceful"
+      ]
+    },
+    {
+      "id": "TEST-015",
+      "name": "Cross-Browser E2E Matrix",
+      "description": "Run E2E across chromium/firefox/webkit + mobile profiles",
+      "priority": "P2",
+      "phase": 7,
+      "effort": "3h",
+      "passes": false,
+      "category": "testing",
+      "files": [
+        "e2e/smoke-matrix.spec.ts",
+        "playwright.config.ts"
+      ],
+      "acceptance": [
+        "All browsers pass",
+        "Mobile profiles pass",
+        "Screenshots on failure"
+      ]
+    },
+    {
+      "id": "COLL-012",
+      "name": "Google Ads Pipeline Integration",
+      "description": "Integrate Google Ads collector into main execution pipeline",
+      "priority": "P1",
+      "phase": 2,
+      "effort": "2h",
+      "passes": false,
+      "category": "collectors",
+      "files": [
+        "src/app/api/runs/[id]/execute/route.ts"
+      ],
+      "acceptance": [
+        "Google ads collected in parallel",
+        "Combined with Meta ads",
+        "Stored correctly"
+      ]
+    },
+    {
+      "id": "COLL-013",
+      "name": "UGC Pipeline Integration",
+      "description": "Integrate TikTok and Instagram collectors into main pipeline",
+      "priority": "P1",
+      "phase": 2,
+      "effort": "3h",
+      "passes": false,
+      "category": "collectors",
+      "files": [
+        "src/app/api/runs/[id]/execute/route.ts"
+      ],
+      "acceptance": [
+        "UGC data collected",
+        "Stored in ugc tables",
+        "Mock fallback works"
+      ]
+    },
+    {
+      "id": "SCORE-009",
+      "name": "UGC Trend Score",
+      "description": "Scoring formula for UGC trend content",
+      "priority": "P2",
+      "phase": 3,
+      "effort": "2h",
+      "passes": false,
+      "category": "scoring",
+      "files": [
+        "src/lib/scoring/ugc-score.ts"
+      ],
+      "acceptance": [
+        "0.6*Recency + 0.4*Relevance formula",
+        "Normalized 0-100"
+      ]
+    },
+    {
+      "id": "SCORE-010",
+      "name": "UGC Connected Score",
+      "description": "Scoring formula for connected account UGC performance",
+      "priority": "P2",
+      "phase": 3,
+      "effort": "2h",
+      "passes": false,
+      "category": "scoring",
+      "files": [
+        "src/lib/scoring/ugc-score.ts"
+      ],
+      "acceptance": [
+        "Shares/comments/likes/views weighted",
+        "Normalized 0-100"
+      ]
+    },
+    {
+      "id": "API-004",
+      "name": "Global Error Boundary",
+      "description": "App-wide error boundary with friendly error pages",
+      "priority": "P0",
+      "phase": 8,
+      "effort": "2h",
+      "passes": false,
+      "category": "infrastructure",
+      "files": [
+        "src/app/error.tsx",
+        "src/app/global-error.tsx"
+      ],
+      "acceptance": [
+        "Errors caught",
+        "User-friendly message",
+        "Report option"
+      ]
+    },
+    {
+      "id": "API-005",
+      "name": "API Error Responses",
+      "description": "Standardized error response format for all API routes",
+      "priority": "P1",
+      "phase": 8,
+      "effort": "2h",
+      "passes": false,
+      "category": "infrastructure",
+      "files": [
+        "src/lib/api-error.ts"
+      ],
+      "acceptance": [
+        "Consistent format",
+        "Error codes",
+        "Helpful messages"
+      ]
+    },
+    {
+      "id": "PERF-001",
+      "name": "Response Caching",
+      "description": "Implement caching layer for expensive API calls",
+      "priority": "P1",
+      "phase": 8,
+      "effort": "3h",
+      "passes": false,
+      "category": "infrastructure",
+      "files": [
+        "src/lib/cache.ts"
+      ],
+      "acceptance": [
+        "Trends cached 5min",
+        "Reports cached",
+        "Invalidation works"
+      ]
+    },
+    {
+      "id": "PERF-002",
+      "name": "Lazy Load Components",
+      "description": "Dynamic imports for heavy components",
+      "priority": "P2",
+      "phase": 8,
+      "effort": "2h",
+      "passes": false,
+      "category": "infrastructure",
+      "files": [
+        "src/app/dashboard/reports/[id]/page.tsx"
+      ],
+      "acceptance": [
+        "Charts lazy loaded",
+        "Bundle size reduced"
+      ]
+    },
+    {
+      "id": "PERF-003",
+      "name": "Database Query Optimization",
+      "description": "Add indexes and optimize slow queries",
+      "priority": "P1",
+      "phase": 8,
+      "effort": "2h",
+      "passes": false,
+      "category": "infrastructure",
+      "files": [
+        "supabase/migrations/indexes.sql"
+      ],
+      "acceptance": [
+        "Key queries indexed",
+        "Query times improved"
+      ]
+    },
+    {
+      "id": "SEO-001",
+      "name": "OpenGraph / Twitter Cards",
+      "description": "Social sharing metadata for landing and report pages",
+      "priority": "P2",
+      "phase": 1,
+      "effort": "2h",
+      "passes": false,
+      "category": "seo",
+      "files": [
+        "src/app/layout.tsx",
+        "src/app/page.tsx"
+      ],
+      "acceptance": [
+        "OG image renders",
+        "Twitter card works",
+        "Description correct"
+      ]
+    },
+    {
+      "id": "SEO-002",
+      "name": "Structured Data",
+      "description": "JSON-LD schema markup for landing page",
+      "priority": "P3",
+      "phase": 1,
+      "effort": "2h",
+      "passes": false,
+      "category": "seo",
+      "files": [
+        "src/app/page.tsx"
+      ],
+      "acceptance": [
+        "Product schema",
+        "Organization schema",
+        "Rich results eligible"
+      ]
+    },
+    {
+      "id": "ANALYTICS-001",
+      "name": "Event Tracking",
+      "description": "Track landing views, CTA clicks, search submits, conversions",
+      "priority": "P1",
+      "phase": 1,
+      "effort": "3h",
+      "passes": false,
+      "category": "analytics",
+      "files": [
+        "src/lib/analytics.ts"
+      ],
+      "acceptance": [
+        "Events fired",
+        "Funnel tracked",
+        "Dashboard integration"
+      ]
+    },
+    {
+      "id": "ANALYTICS-002",
+      "name": "Conversion Funnel",
+      "description": "Track signup started → completed → first run → paid conversion",
+      "priority": "P1",
+      "phase": 1,
+      "effort": "2h",
+      "passes": false,
+      "category": "analytics",
+      "files": [
+        "src/lib/analytics.ts"
+      ],
+      "acceptance": [
+        "Each stage tracked",
+        "Drop-off visible"
       ]
     }
-  ]
+  ],
+  "phases_extended": {
+    "phase9_demand_brief": "Weekly Demand Brief subscription product"
+  },
+  "lastUpdated": "2026-01-17T06:00:00.000Z"
 }

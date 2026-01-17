@@ -1,15 +1,15 @@
 {
-  "projectId": "demandradar",
+  "projectId": "gapradar",
   "projectRoot": "/Users/isaiahdupree/Documents/Software/WhatsCurrentlyInTheMarket/gap-radar",
-  "lastUpdated": "2026-01-17T03:01:35.484Z",
+  "lastUpdated": "2026-01-17T04:44:05.038Z",
   "sessionType": "CODING",
   "status": "running",
   "stats": {
-    "total": 62,
-    "passing": 60,
-    "pending": 2,
-    "percentComplete": "96.8"
+    "total": 78,
+    "passing": 0,
+    "pending": 78,
+    "percentComplete": "0.0"
   },
-  "pid": 55963,
-  "currentSession": 5
+  "pid": 40500,
+  "currentSession": 1
 }
