@@ -7,8 +7,31 @@
 
 import { Document, Page, Text, View, StyleSheet, pdf, Font } from '@react-pdf/renderer';
 
-// Define styles
-const styles = StyleSheet.create({
+export interface BrandingSettings {
+  companyName?: string;
+  primaryColor?: string;
+  secondaryColor?: string;
+  accentColor?: string;
+  reportTitlePrefix?: string;
+  footerText?: string;
+  showPoweredBy?: boolean;
+  contactEmail?: string;
+  websiteUrl?: string;
+}
+
+// Default branding
+const DEFAULT_BRANDING: BrandingSettings = {
+  companyName: 'DemandRadar',
+  primaryColor: '#2563eb',
+  secondaryColor: '#1e40af',
+  accentColor: '#3b82f6',
+  reportTitlePrefix: 'DemandRadar',
+  footerText: 'DemandRadar • Market Gap Analysis Tool',
+  showPoweredBy: false,
+};
+
+// Create dynamic styles based on branding
+const createStyles = (branding: BrandingSettings) => StyleSheet.create({
   page: {
     padding: 40,
     fontFamily: 'Helvetica',
@@ -17,13 +40,13 @@ const styles = StyleSheet.create({
   },
   header: {
     marginBottom: 30,
-    borderBottom: '2 solid #2563eb',
+    borderBottom: `2 solid ${branding.primaryColor || '#2563eb'}`,
     paddingBottom: 15,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#1e40af',
+    color: branding.secondaryColor || '#1e40af',
     marginBottom: 8,
   },
   subtitle: {
@@ -34,7 +57,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#1e40af',
+    color: branding.secondaryColor || '#1e40af',
     marginTop: 20,
     marginBottom: 12,
     borderBottom: '1 solid #e5e7eb',
@@ -70,7 +93,7 @@ const styles = StyleSheet.create({
   scoreValue: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#2563eb',
+    color: branding.primaryColor || '#2563eb',
   },
   gapCard: {
     backgroundColor: '#ffffff',
@@ -125,7 +148,7 @@ const styles = StyleSheet.create({
   },
   badge: {
     backgroundColor: '#dbeafe',
-    color: '#1e40af',
+    color: branding.secondaryColor || '#1e40af',
     paddingHorizontal: 8,
     paddingVertical: 3,
     borderRadius: 3,
@@ -250,19 +273,23 @@ interface ReportData {
 }
 
 // PDF Document Component
-function ReportPDF({ data }: { data: ReportData }) {
+function ReportPDF({ data, branding = DEFAULT_BRANDING }: { data: ReportData; branding?: BrandingSettings }) {
   const formattedDate = new Date(data.run.created_at).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
   });
 
+  const styles = createStyles(branding);
+  const brandName = branding.reportTitlePrefix || branding.companyName || 'DemandRadar';
+  const footerText = branding.footerText || 'DemandRadar • Market Gap Analysis Tool';
+
   return (
     <Document>
       {/* Page 1: Executive Summary */}
       <Page size="A4" style={styles.page}>
         <View style={styles.header}>
-          <Text style={styles.title}>DemandRadar Market Analysis</Text>
+          <Text style={styles.title}>{brandName} Market Analysis</Text>
           <Text style={styles.subtitle}>Niche: {data.run.niche_query}</Text>
           <Text style={styles.subtitle}>Generated: {formattedDate}</Text>
           <Text style={styles.subtitle}>Run ID: {data.run.id.slice(0, 8)}</Text>
@@ -341,7 +368,7 @@ function ReportPDF({ data }: { data: ReportData }) {
         ))}
 
         <Text style={styles.footer}>
-          DemandRadar • Market Gap Analysis Tool • Generated {formattedDate}
+          {footerText} • Generated {formattedDate}
         </Text>
       </Page>
 
@@ -402,7 +429,7 @@ function ReportPDF({ data }: { data: ReportData }) {
         ))}
 
         <Text style={styles.footer}>
-          DemandRadar • Market Gap Analysis Tool • Page 2
+          {footerText} • Page 2
         </Text>
       </Page>
 
@@ -460,7 +487,7 @@ function ReportPDF({ data }: { data: ReportData }) {
         )}
 
         <Text style={styles.footer}>
-          DemandRadar • Market Gap Analysis Tool • Page 3
+          {footerText} • Page 3
         </Text>
       </Page>
 
@@ -493,7 +520,7 @@ function ReportPDF({ data }: { data: ReportData }) {
         ))}
 
         <Text style={styles.footer}>
-          DemandRadar • Market Gap Analysis Tool • Page 4
+          {footerText} • Page 4
         </Text>
       </Page>
 
@@ -547,7 +574,7 @@ function ReportPDF({ data }: { data: ReportData }) {
           })}
 
           <Text style={styles.footer}>
-            DemandRadar • Market Gap Analysis Tool • Page 5
+            {footerText} • Page 5
           </Text>
         </Page>
       )}
@@ -584,7 +611,7 @@ function ReportPDF({ data }: { data: ReportData }) {
           )}
 
           <Text style={styles.footer}>
-            DemandRadar • Market Gap Analysis Tool • Page 6
+            {footerText} • Page 6
           </Text>
         </Page>
       )}
@@ -595,8 +622,11 @@ function ReportPDF({ data }: { data: ReportData }) {
 /**
  * Generate PDF report from report data
  */
-export async function generateReportPDF(reportData: ReportData): Promise<Blob> {
-  const blob = await pdf(ReportPDF({ data: reportData })).toBlob();
+export async function generateReportPDF(
+  reportData: ReportData,
+  branding?: BrandingSettings
+): Promise<Blob> {
+  const blob = await pdf(ReportPDF({ data: reportData, branding })).toBlob();
   return blob;
 }
 
