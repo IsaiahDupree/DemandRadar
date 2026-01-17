@@ -79,7 +79,7 @@ export function TrendingTopics({ onTopicClick }: { onTopicClick?: (topic: string
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4" data-testid="trending-topics">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Sparkles className="h-5 w-5 text-primary" />
@@ -88,54 +88,57 @@ export function TrendingTopics({ onTopicClick }: { onTopicClick?: (topic: string
           </span>
         </div>
         {lastUpdated && (
-          <span className="text-xs text-muted-foreground">
+          <span className="text-xs text-muted-foreground" data-testid="trends-updated-at">
             Updated {new Date(lastUpdated).toLocaleTimeString()}
           </span>
         )}
       </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" data-testid="trends-grid">
         {trends.map((trend) => (
-          <div
+          <button
             key={trend.id}
             onClick={() => {
               trackTrendClick(trend.topic, trend.category, trend.opportunityScore);
               onTopicClick?.(trend.topic);
             }}
             className={cn(
-              "bg-card border rounded-xl p-5 hover:border-primary/50 transition-all cursor-pointer group",
-              "hover:shadow-lg hover:-translate-y-1"
+              "bg-card border rounded-xl p-5 hover:border-primary/50 transition-all cursor-pointer group w-full text-left",
+              "hover:shadow-lg hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
             )}
+            data-testid="trend-card"
+            aria-label={`Analyze ${trend.topic} in ${trend.category} category`}
           >
             <div className="flex items-start justify-between mb-2">
-              <h3 className="font-semibold text-lg group-hover:text-primary transition-colors line-clamp-2">
+              <h3 className="font-semibold text-lg group-hover:text-primary transition-colors line-clamp-2" data-testid="trend-topic">
                 {trend.topic}
               </h3>
-              <div className="flex items-center gap-1 shrink-0 ml-2">
+              <div className="flex items-center gap-1 shrink-0 ml-2" data-testid="trend-sentiment">
                 {getSentimentIcon(trend.sentiment)}
-                <span className="text-xs text-muted-foreground">
+                <span className="text-xs text-muted-foreground" data-testid="trend-growth">
                   {trend.growth > 0 ? '+' : ''}{Math.round(trend.growth)}%
                 </span>
               </div>
             </div>
-            
+
             <div className="flex items-center gap-2 mb-3">
-              <span className="text-xs px-2 py-1 bg-muted rounded-full">
+              <span className="text-xs px-2 py-1 bg-muted rounded-full" data-testid="trend-category">
                 {trend.category}
               </span>
-              <span className="text-xs text-muted-foreground">
+              <span className="text-xs text-muted-foreground" data-testid="trend-volume">
                 {trend.volume.toLocaleString()} mentions
               </span>
             </div>
-            
+
             <div className="flex items-center gap-2 mb-3">
               <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden">
                 <div
                   className={cn("h-full rounded-full transition-all", getOpportunityColor(trend.opportunityScore))}
                   style={{ width: `${trend.opportunityScore}%` }}
+                  data-testid="trend-opportunity-bar"
                 />
               </div>
-              <span className="text-sm font-medium">{trend.opportunityScore}</span>
+              <span className="text-sm font-medium" data-testid="trend-opportunity-score">{trend.opportunityScore}</span>
             </div>
             
             <div className="flex flex-wrap gap-1.5">
@@ -148,9 +151,9 @@ export function TrendingTopics({ onTopicClick }: { onTopicClick?: (topic: string
                 </span>
               ))}
             </div>
-            
+
             <div className="mt-3 pt-3 border-t flex items-center justify-between">
-              <div className="flex gap-1">
+              <div className="flex gap-1" data-testid="trend-sources">
                 {trend.sources.slice(0, 2).map((source) => (
                   <span key={source} className="text-xs text-muted-foreground">
                     {source}
@@ -159,7 +162,7 @@ export function TrendingTopics({ onTopicClick }: { onTopicClick?: (topic: string
               </div>
               <ExternalLink className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
-          </div>
+          </button>
         ))}
       </div>
     </div>

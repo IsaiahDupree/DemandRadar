@@ -27,6 +27,7 @@ export function NLPSearch({ onSearch, initialValue = '' }: { onSearch?: (query: 
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
+  const [focusedIndex, setFocusedIndex] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Rotate placeholder examples
@@ -41,6 +42,7 @@ export function NLPSearch({ onSearch, initialValue = '' }: { onSearch?: (query: 
   useEffect(() => {
     if (query.length < 3) {
       setSuggestions([]);
+      setFocusedIndex(-1);
       return;
     }
 
@@ -53,6 +55,7 @@ export function NLPSearch({ onSearch, initialValue = '' }: { onSearch?: (query: 
         setSuggestions(generated);
         setIsAnalyzing(false);
         setShowSuggestions(true);
+        setFocusedIndex(-1);
       }, 300);
     }, 200);
 
@@ -87,6 +90,7 @@ export function NLPSearch({ onSearch, initialValue = '' }: { onSearch?: (query: 
   const handleSuggestionClick = (suggestion: Suggestion) => {
     setQuery(suggestion.text);
     setShowSuggestions(false);
+    setFocusedIndex(-1);
     trackNLPSearch('submit', suggestion.text);
 
     // Call onSearch callback if provided (for custom handling)
@@ -106,6 +110,24 @@ export function NLPSearch({ onSearch, initialValue = '' }: { onSearch?: (query: 
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (!showSuggestions || suggestions.length === 0) return;
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setFocusedIndex((prev) => (prev < suggestions.length - 1 ? prev + 1 : prev));
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setFocusedIndex((prev) => (prev > 0 ? prev - 1 : -1));
+    } else if (e.key === 'Enter' && focusedIndex >= 0) {
+      e.preventDefault();
+      handleSuggestionClick(suggestions[focusedIndex]);
+    } else if (e.key === 'Escape') {
+      setShowSuggestions(false);
+      setFocusedIndex(-1);
+    }
+  };
+
   return (
     <div className="w-full max-w-3xl mx-auto">
       <form onSubmit={handleSubmit} className="relative">
@@ -120,13 +142,18 @@ export function NLPSearch({ onSearch, initialValue = '' }: { onSearch?: (query: 
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={handleKeyDown}
                 onFocus={() => {
                   trackNLPSearch('focus');
                   query.length >= 3 && setShowSuggestions(true);
                 }}
-                onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+                onBlur={() => setTimeout(() => {
+                  setShowSuggestions(false);
+                  setFocusedIndex(-1);
+                }, 200)}
                 placeholder={`Try: "${EXAMPLE_QUERIES[placeholderIndex]}"`}
                 className="flex-1 bg-transparent border-none outline-none text-lg py-3 placeholder:text-muted-foreground/60"
+                data-testid="nlp-search-input"
               />
               {isAnalyzing && (
                 <Loader2 className="h-5 w-5 text-primary animate-spin mr-2" />
@@ -149,7 +176,7 @@ export function NLPSearch({ onSearch, initialValue = '' }: { onSearch?: (query: 
 
         {/* Suggestions dropdown */}
         {showSuggestions && suggestions.length > 0 && (
-          <div className="absolute top-full left-0 right-0 mt-2 bg-card border rounded-xl shadow-xl z-50 overflow-hidden">
+          <div className="absolute top-full left-0 right-0 mt-2 bg-card border rounded-xl shadow-xl z-50 overflow-hidden" data-testid="nlp-suggestions">
             <div className="p-2 border-b bg-muted/50">
               <span className="text-xs text-muted-foreground flex items-center gap-1">
                 <Sparkles className="h-3 w-3" />
@@ -161,16 +188,24 @@ export function NLPSearch({ onSearch, initialValue = '' }: { onSearch?: (query: 
                 key={i}
                 type="button"
                 onClick={() => handleSuggestionClick(suggestion)}
-                className="w-full px-4 py-3 text-left hover:bg-muted/50 transition-colors flex items-center justify-between group"
+                className={cn(
+                  "w-full px-4 py-3 text-left hover:bg-muted/50 transition-colors flex items-center justify-between group",
+                  focusedIndex === i && "bg-muted/50"
+                )}
+                data-testid="suggestion-item"
+                data-focused={focusedIndex === i ? 'true' : 'false'}
               >
                 <div>
                   <span className="font-medium">{suggestion.text}</span>
-                  <span className="ml-2 text-xs text-muted-foreground">
+                  <span className="ml-2 text-xs text-muted-foreground" data-testid="suggestion-category">
                     {suggestion.category}
                   </span>
                 </div>
-                <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <span className="text-xs text-primary">
+                <div className={cn(
+                  "flex items-center gap-2 transition-opacity",
+                  focusedIndex === i ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+                )}>
+                  <span className="text-xs text-primary" data-testid="suggestion-confidence">
                     {Math.round(suggestion.confidence * 100)}% match
                   </span>
                   <ArrowRight className="h-4 w-4 text-primary" />

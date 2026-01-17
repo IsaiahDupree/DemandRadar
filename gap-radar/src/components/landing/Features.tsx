@@ -69,6 +69,7 @@ export function Features() {
       {features.map((feature, i) => (
         <div
           key={feature.title}
+          data-testid="feature-item"
           className={cn(
             "group relative bg-card border rounded-2xl p-6 hover:border-primary/50 transition-all",
             "hover:shadow-xl hover:-translate-y-1"

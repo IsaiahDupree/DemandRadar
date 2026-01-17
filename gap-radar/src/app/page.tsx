@@ -60,7 +60,7 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4">
+      <section className="pt-32 pb-20 px-4" data-testid="hero-section">
         <div className="max-w-5xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
             <Sparkles className="h-4 w-4" />
@@ -114,7 +114,7 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 px-4">
+      <section className="py-20 px-4" data-testid="features-section">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">
@@ -124,7 +124,7 @@ export default function Home() {
               From data collection to actionable insights—all powered by AI.
             </p>
           </div>
-          
+
           <Features />
         </div>
       </section>
@@ -198,7 +198,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4">
+      <section className="py-20 px-4" data-testid="cta-footer">
         <div className="max-w-4xl mx-auto">
           <div className="bg-gradient-to-br from-primary/10 via-purple-500/10 to-pink-500/10 rounded-3xl p-12 text-center border">
             <Zap className="h-12 w-12 text-primary mx-auto mb-6" />
