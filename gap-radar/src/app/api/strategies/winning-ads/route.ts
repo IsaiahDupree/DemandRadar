@@ -18,6 +18,9 @@ export async function GET(request: NextRequest) {
     const format = searchParams.get('format');
     const featured = searchParams.get('featured');
     const limit = parseInt(searchParams.get('limit') || '20');
+    const minRunDays = parseInt(searchParams.get('min_run_days') || '7');
+    const excludeLowImpressions = searchParams.get('exclude_low') !== 'false'; // Default: true
+    const verifiedOnly = searchParams.get('verified_only') === 'true';
 
     let query = supabase
       .from('winning_ads_library')
@@ -33,6 +36,21 @@ export async function GET(request: NextRequest) {
       .order('is_featured', { ascending: false })
       .order('created_at', { ascending: false })
       .limit(limit);
+
+    // CRITICAL: Filter out low impression ads by default
+    if (excludeLowImpressions) {
+      query = query.neq('impression_level', 'low');
+    }
+
+    // Filter by minimum run days
+    if (minRunDays > 0) {
+      query = query.gte('run_time_days', minRunDays);
+    }
+
+    // Only verified winners (30+ days runtime)
+    if (verifiedOnly) {
+      query = query.eq('is_verified_winner', true);
+    }
 
     if (niche) {
       query = query.eq('niche', niche);

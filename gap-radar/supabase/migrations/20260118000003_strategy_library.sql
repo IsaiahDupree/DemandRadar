@@ -70,10 +70,12 @@ CREATE TABLE IF NOT EXISTS winning_ads_library (
   strategy_id UUID REFERENCES ad_strategies(id),
   strategy_used VARCHAR(255),
   
-  -- Performance indicators
+  -- Performance indicators (CRITICAL: Filter out low impression ads)
+  impression_level VARCHAR(20) CHECK (impression_level IN ('low', 'medium', 'high', 'very_high')) DEFAULT 'medium',
   run_time_days INT,
   estimated_spend VARCHAR(50),
   is_verified_winner BOOLEAN DEFAULT FALSE,
+  min_run_days_required INT DEFAULT 7, -- Must run 7+ days to be considered
   
   -- Analysis
   why_it_works TEXT,

@@ -22,7 +22,18 @@ export interface MetaAd {
   is_active?: boolean;
   media_type: 'image' | 'video' | 'carousel' | 'unknown';
   raw_payload?: Record<string, unknown>;
+  // Performance indicators
+  impression_count?: 'low' | 'medium' | 'high' | 'very_high';
+  run_days?: number;
+  is_verified_winner?: boolean;
 }
+
+// Minimum thresholds for "winning" ads
+export const WINNING_AD_THRESHOLDS = {
+  MIN_RUN_DAYS: 7,           // Must run at least 7 days
+  MIN_IMPRESSION_LEVEL: 'medium', // Skip 'low' impression ads
+  VERIFIED_RUN_DAYS: 30,     // 30+ days = verified winner
+};
 
 export interface MetaAdAccount {
   id: string;
@@ -35,8 +46,19 @@ export interface MetaAdAccount {
 export async function collectMetaAds(
   nicheQuery: string,
   seedTerms: string[],
-  geo: string = 'US'
+  geo: string = 'US',
+  options: { 
+    filterLowImpressions?: boolean;
+    minRunDays?: number;
+    onlyVerifiedWinners?: boolean;
+  } = {}
 ): Promise<MetaAd[]> {
+  const { 
+    filterLowImpressions = true, 
+    minRunDays = WINNING_AD_THRESHOLDS.MIN_RUN_DAYS,
+    onlyVerifiedWinners = false 
+  } = options;
+  
   const ads: MetaAd[] = [];
   
   // Combine niche query with seed terms for search
@@ -53,12 +75,73 @@ export async function collectMetaAds(
 
   // Dedupe by advertiser + creative text
   const seen = new Set<string>();
-  return ads.filter(ad => {
+  let filtered = ads.filter(ad => {
     const key = `${ad.advertiser_name}:${ad.creative_text?.slice(0, 100)}`;
     if (seen.has(key)) return false;
     seen.add(key);
     return true;
   });
+
+  // Filter out low impression ads (these are not proven winners)
+  if (filterLowImpressions) {
+    filtered = filtered.filter(ad => {
+      // Skip ads with low impression count
+      if (ad.impression_count === 'low') {
+        return false;
+      }
+      return true;
+    });
+  }
+
+  // Filter by minimum run days
+  if (minRunDays > 0) {
+    filtered = filtered.filter(ad => {
+      const runDays = ad.run_days || calculateRunDays(ad.first_seen, ad.last_seen);
+      return runDays >= minRunDays;
+    });
+  }
+
+  // Only verified winners (30+ days)
+  if (onlyVerifiedWinners) {
+    filtered = filtered.filter(ad => {
+      const runDays = ad.run_days || calculateRunDays(ad.first_seen, ad.last_seen);
+      return runDays >= WINNING_AD_THRESHOLDS.VERIFIED_RUN_DAYS;
+    });
+  }
+
+  return filtered;
+}
+
+/**
+ * Calculate run days from first_seen and last_seen dates
+ */
+function calculateRunDays(firstSeen?: string, lastSeen?: string): number {
+  if (!firstSeen) return 0;
+  const start = new Date(firstSeen);
+  const end = lastSeen ? new Date(lastSeen) : new Date();
+  return Math.floor((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
+}
+
+/**
+ * Check if an ad qualifies as a "winning" ad
+ */
+export function isWinningAd(ad: MetaAd): boolean {
+  // Must not be low impression
+  if (ad.impression_count === 'low') return false;
+  
+  // Calculate run days
+  const runDays = ad.run_days || calculateRunDays(ad.first_seen, ad.last_seen);
+  
+  // Must have run for minimum days
+  if (runDays < WINNING_AD_THRESHOLDS.MIN_RUN_DAYS) return false;
+  
+  // Must be active (or recently active)
+  if (ad.is_active === false && ad.last_seen) {
+    const daysSinceStopped = calculateRunDays(ad.last_seen, new Date().toISOString());
+    if (daysSinceStopped > 30) return false; // Stopped more than 30 days ago
+  }
+  
+  return true;
 }
 
 /**

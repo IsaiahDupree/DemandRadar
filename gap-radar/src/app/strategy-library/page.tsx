@@ -31,6 +31,10 @@ interface WinningAd {
   why_it_works: string;
   key_elements: Record<string, string>;
   is_featured: boolean;
+  // Performance indicators
+  impression_level: 'low' | 'medium' | 'high' | 'very_high';
+  run_time_days: number;
+  is_verified_winner: boolean;
 }
 
 interface Playbook {
@@ -210,6 +214,15 @@ export default function StrategyLibraryPage() {
             {/* Winning Ads Tab */}
             {activeTab === 'ads' && (
               <div className="space-y-6">
+                {/* Filter notice */}
+                <div className="bg-green-50 border border-green-200 rounded-lg p-4 flex items-center space-x-3">
+                  <span className="text-2xl">✅</span>
+                  <div>
+                    <p className="text-green-800 font-medium">Only Verified Winners Shown</p>
+                    <p className="text-green-600 text-sm">Low impression ads are automatically filtered out. All ads shown have run 7+ days with medium-high impressions.</p>
+                  </div>
+                </div>
+
                 {winningAds.map((ad) => (
                   <div
                     key={ad.id}
@@ -219,6 +232,11 @@ export default function StrategyLibraryPage() {
                       <div>
                         <div className="flex items-center space-x-3 mb-2">
                           <h3 className="text-xl font-semibold text-gray-900">{ad.brand_name}</h3>
+                          {ad.is_verified_winner && (
+                            <span className="bg-green-100 text-green-700 px-2 py-1 rounded text-xs font-medium">
+                              ✓ Verified Winner
+                            </span>
+                          )}
                           {ad.is_featured && (
                             <span className="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-xs font-medium">
                               ⭐ Featured
@@ -231,6 +249,24 @@ export default function StrategyLibraryPage() {
                           <span className="capitalize">{ad.niche?.replace(/-/g, ' ')}</span>
                           <span>•</span>
                           <span className="capitalize">{ad.ad_format?.replace(/_/g, ' ')}</span>
+                          {ad.run_time_days && (
+                            <>
+                              <span>•</span>
+                              <span className="text-green-600 font-medium">{ad.run_time_days} days running</span>
+                            </>
+                          )}
+                          {ad.impression_level && ad.impression_level !== 'low' && (
+                            <>
+                              <span>•</span>
+                              <span className={`font-medium ${
+                                ad.impression_level === 'very_high' ? 'text-purple-600' :
+                                ad.impression_level === 'high' ? 'text-blue-600' :
+                                'text-gray-600'
+                              }`}>
+                                {ad.impression_level.replace('_', ' ')} impressions
+                              </span>
+                            </>
+                          )}
                         </div>
                       </div>
                       <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">
