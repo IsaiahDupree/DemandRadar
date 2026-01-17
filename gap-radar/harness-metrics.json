@@ -1,0 +1,10 @@
+{
+  "totalSessions": 2,
+  "successfulSessions": 2,
+  "failedSessions": 0,
+  "totalTokens": 209111,
+  "rateLimitHits": 0,
+  "authErrors": 0,
+  "consecutiveErrors": 0,
+  "lastSessionTime": "2026-01-17T02:31:40.188Z"
+}

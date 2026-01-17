@@ -11,6 +11,8 @@ import { generateConcepts } from '@/lib/ai/concept-generator'
 import { generateUGCRecommendations } from '@/lib/ai/ugc-generator'
 import { generateActionPlan } from '@/lib/ai/action-plan'
 import { calculateScores } from '@/lib/scoring'
+import { sendEmail } from '@/lib/email'
+import { ReportCompleteEmail } from '@/lib/email-templates'
 
 export async function POST(
   request: NextRequest,
@@ -223,7 +225,40 @@ export async function POST(
       .eq('id', runId)
 
     console.log(`[Run ${runId}] Complete!`)
-    
+
+    // Step 11: Send completion email notification
+    try {
+      // Get user info
+      const { data: { user } } = await supabase.auth.getUser()
+
+      if (user?.email) {
+        // Extract top gaps (up to 3)
+        const topGaps = gaps
+          .sort((a, b) => (b.opportunity_score || 0) - (a.opportunity_score || 0))
+          .slice(0, 3)
+          .map(gap => gap.title)
+          .filter(Boolean)
+
+        // Send email
+        await sendEmail({
+          to: user.email,
+          subject: `Your GapRadar Report is Ready: "${niche_query}"`,
+          react: ReportCompleteEmail({
+            userName: user.user_metadata?.name,
+            reportId: runId,
+            searchQuery: niche_query,
+            demandScore: scores?.opportunity,
+            topGaps: topGaps.length > 0 ? topGaps : undefined,
+          }),
+        })
+
+        console.log(`[Run ${runId}] Completion email sent to ${user.email}`)
+      }
+    } catch (emailError) {
+      // Don't fail the run if email fails
+      console.error(`[Run ${runId}] Failed to send completion email:`, emailError)
+    }
+
     return NextResponse.json({ success: true, runId })
 
   } catch (error) {

@@ -8,13 +8,20 @@
 
 import { Resend } from "resend";
 
-// Initialize Resend client
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Lazy initialize Resend client
+let resend: Resend | null = null;
+
+function getResendClient(): Resend {
+  if (!resend) {
+    resend = new Resend(process.env.RESEND_API_KEY);
+  }
+  return resend;
+}
 
 export interface EmailOptions {
   to: string | string[];
   subject: string;
-  react?: React.ReactElement;
+  react?: any;
   html?: string;
   text?: string;
   from?: string;
@@ -62,7 +69,8 @@ export async function sendEmail(options: EmailOptions): Promise<EmailResult> {
     }
 
     // Send email
-    const { data, error } = await resend.emails.send({
+    const resendClient = getResendClient();
+    const { data, error } = await resendClient.emails.send({
       from: options.from || DEFAULT_FROM,
       to: Array.isArray(options.to) ? options.to : [options.to],
       subject: options.subject,
