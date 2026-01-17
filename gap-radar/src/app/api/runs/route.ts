@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextRequest, NextResponse } from 'next/server'
-import { canCreateAnalysisRun, decrementRuns } from '@/lib/subscription/permissions'
+import { canCreateRun, incrementRunsUsed } from '@/lib/usage-tracker'
 
 export async function GET(request: NextRequest) {
   const supabase = await createClient()
@@ -51,8 +51,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Niche query is required' }, { status: 400 })
   }
 
-  // Check user's run limit using subscription permissions
-  const runCheck = await canCreateAnalysisRun(supabase, user.id)
+  // Check user's run limit
+  const runCheck = await canCreateRun(supabase, user.id)
 
   if (!runCheck.allowed) {
     return NextResponse.json({
@@ -92,8 +92,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500 })
   }
 
-  // Decrement user's remaining runs
-  await decrementRuns(supabase, user.id)
+  // Increment user's runs_used counter and check for usage warnings
+  await incrementRunsUsed(supabase, user.id)
 
   // Trigger the analysis pipeline (async)
   // In production, this would be a background job/queue
