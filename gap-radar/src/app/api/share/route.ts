@@ -1,6 +1,8 @@
 import { createClient } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
+import { sendEmail } from '@/lib/email';
+import { ReportShareEmail } from '@/lib/email-templates';
 
 // POST /api/share - Create a new share link
 export async function POST(request: NextRequest) {
@@ -14,16 +16,16 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { runId, password, expiresInDays } = body;
+    const { runId, password, expiresInDays, recipientEmail, message } = body;
 
     if (!runId) {
       return NextResponse.json({ error: 'runId is required' }, { status: 400 });
     }
 
-    // Verify the run belongs to the user
+    // Verify the run belongs to the user and get details for email
     const { data: run, error: runError } = await supabase
       .from('runs')
-      .select('id, user_id')
+      .select('id, user_id, niche_query')
       .eq('id', runId)
       .eq('user_id', user.id)
       .single();
@@ -34,6 +36,13 @@ export async function POST(request: NextRequest) {
         { status: 404 }
       );
     }
+
+    // Get user's name for email
+    const { data: userData } = await supabase
+      .from('users')
+      .select('name, email')
+      .eq('id', user.id)
+      .single();
 
     // Generate unique token
     const { data: tokenData, error: tokenError } = await supabase.rpc(
@@ -89,6 +98,28 @@ export async function POST(request: NextRequest) {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || request.nextUrl.origin;
     const shareUrl = `${baseUrl}/share/${token}`;
 
+    // Send email to recipient if email provided
+    if (recipientEmail && recipientEmail.trim()) {
+      try {
+        await sendEmail({
+          to: recipientEmail,
+          subject: `${userData?.name || 'Someone'} shared a GapRadar report with you`,
+          react: ReportShareEmail({
+            recipientEmail,
+            senderName: userData?.name,
+            reportTitle: run.niche_query,
+            shareUrl,
+            message,
+            hasPassword: !!passwordHash,
+          }),
+        });
+        console.log('✅ Share notification email sent to:', recipientEmail);
+      } catch (emailError) {
+        // Don't fail the share creation if email fails
+        console.error('⚠️ Failed to send share notification email:', emailError);
+      }
+    }
+
     return NextResponse.json({
       success: true,
       shareLink: {
@@ -99,6 +130,7 @@ export async function POST(request: NextRequest) {
         expiresAt: shareLink.expires_at,
         createdAt: shareLink.created_at,
       },
+      emailSent: !!recipientEmail,
     });
   } catch (error) {
     console.error('Error in share API:', error);
