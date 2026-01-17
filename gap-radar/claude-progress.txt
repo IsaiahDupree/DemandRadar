@@ -189,3 +189,40 @@
 - Files modified:
   * src/app/api/webhooks/stripe/route.ts (updated)
   * feature_list.json (updated TASK-073 to passing, completedFeatures 57→58)
+
+=== Session January 17, 2026 00:00 ===
+- Dev environment already running on port 3000
+- Implemented: TASK-074 - Usage Limit Warning Email
+- Features completed:
+  * Created src/lib/usage-tracker.ts comprehensive usage tracking library:
+    - canCreateRun(): Checks if user has runs available (uses users table)
+    - incrementRunsUsed(): Increments runs_used and triggers warning checks
+    - checkUsageAndWarn(): Sends warning emails at 80% and 90% thresholds
+    - shouldSendWarning(): Prevents duplicate warnings in same month
+    - recordWarning(): Tracks which warnings have been sent
+    - Works with actual database schema (users table, not profiles)
+  * Created database migration supabase/migrations/20260117_usage_warnings.sql:
+    - usage_warnings table to track sent warnings
+    - Columns: user_id, warning_level, runs_used, runs_limit, created_at
+    - Indexes for performance (user_id, created_at)
+    - RLS policies for security
+  * Updated src/app/api/runs/route.ts:
+    - Replaced broken decrementRuns from permissions.ts
+    - Now uses canCreateRun and incrementRunsUsed from usage-tracker
+    - Automatically sends usage warnings when creating runs
+  * Warning system features:
+    - Sends at 80% usage (early warning)
+    - Sends at 90% usage (critical warning)
+    - Only sends each warning level once per month
+    - Visual progress bar in email
+    - Different messaging based on usage level
+  * Uses existing UsageLimitWarningEmail template from TASK-070
+  * Fixed bug: permissions.ts referenced non-existent 'profiles' table
+- Tests passed: Build succeeds without errors
+- Committed: "feat: Add Usage Limit Warning Emails (TASK-074)"
+- Next priority: TASK-075 - Report Share Email
+- Files modified:
+  * src/lib/usage-tracker.ts (new)
+  * src/app/api/runs/route.ts (updated)
+  * supabase/migrations/20260117_usage_warnings.sql (new)
+  * feature_list.json (updated TASK-074 to passing, completedFeatures 58→59)
