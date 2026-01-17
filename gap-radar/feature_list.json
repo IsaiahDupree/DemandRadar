@@ -2,7 +2,7 @@
   "project": "DemandRadar",
   "description": "Market gap analysis tool for founders and marketers",
   "totalFeatures": 165,
-  "completedFeatures": 54,
+  "completedFeatures": 55,
   "integrations": {
     "openai": {
       "status": "complete",
@@ -50,7 +50,7 @@
       "env": "SENTRY_DSN"
     },
     "resend": {
-      "status": "missing",
+      "status": "complete",
       "purpose": "Email notifications",
       "env": "RESEND_API_KEY"
     },
@@ -511,7 +511,8 @@
       "priority": "P2",
       "sprint": 8,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
+      "implemented_at": "2026-01-16T21:40:00.000Z",
       "category": "notifications",
       "files": [
         "src/lib/email.ts",
