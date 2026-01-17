@@ -7,12 +7,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { trackNLPSearch } from '@/lib/analytics/landing';
 import { isAuthenticated, buildSignupURL, buildCreateRunURL, storePendingQuery } from '@/lib/auth/redirect';
-
-interface Suggestion {
-  text: string;
-  category: string;
-  confidence: number;
-}
+import { generateSuggestions, type Suggestion } from '@/lib/nlp';
 
 const EXAMPLE_QUERIES = [
   "AI tools for content creators",
@@ -42,7 +37,7 @@ export function NLPSearch({ onSearch, initialValue = '' }: { onSearch?: (query: 
     return () => clearInterval(interval);
   }, []);
 
-  // Simple NLP-like analysis for suggestions
+  // NLP-powered suggestions using the library
   useEffect(() => {
     if (query.length < 3) {
       setSuggestions([]);
@@ -51,8 +46,8 @@ export function NLPSearch({ onSearch, initialValue = '' }: { onSearch?: (query: 
 
     const timer = setTimeout(() => {
       setIsAnalyzing(true);
-      
-      // Simulate NLP processing
+
+      // Simulate NLP processing with slight delay for UX
       setTimeout(() => {
         const generated = generateSuggestions(query);
         setSuggestions(generated);
@@ -63,79 +58,6 @@ export function NLPSearch({ onSearch, initialValue = '' }: { onSearch?: (query: 
 
     return () => clearTimeout(timer);
   }, [query]);
-
-  const generateSuggestions = (input: string): Suggestion[] => {
-    const inputLower = input.toLowerCase();
-    const suggestions: Suggestion[] = [];
-
-    // Category detection
-    const categories: Record<string, string[]> = {
-      'AI & Automation': ['ai', 'automation', 'gpt', 'chatbot', 'machine learning', 'automate'],
-      'Marketing': ['marketing', 'seo', 'ads', 'social', 'content', 'email', 'growth'],
-      'Productivity': ['productivity', 'task', 'time', 'workflow', 'project', 'organize'],
-      'E-commerce': ['ecommerce', 'shop', 'store', 'sell', 'dropship', 'retail'],
-      'Finance': ['finance', 'payment', 'invoice', 'budget', 'expense', 'money'],
-      'Development': ['code', 'developer', 'api', 'software', 'app', 'web', 'build'],
-    };
-
-    let detectedCategory = 'General';
-    for (const [category, keywords] of Object.entries(categories)) {
-      if (keywords.some(k => inputLower.includes(k))) {
-        detectedCategory = category;
-        break;
-      }
-    }
-
-    // Generate contextual suggestions
-    if (inputLower.includes('alternative')) {
-      suggestions.push({
-        text: `${input} with better pricing`,
-        category: detectedCategory,
-        confidence: 0.92,
-      });
-      suggestions.push({
-        text: `${input} for small teams`,
-        category: detectedCategory,
-        confidence: 0.85,
-      });
-    }
-
-    if (inputLower.includes('tool') || inputLower.includes('app')) {
-      suggestions.push({
-        text: `best ${input} 2025`,
-        category: detectedCategory,
-        confidence: 0.88,
-      });
-      suggestions.push({
-        text: `free ${input}`,
-        category: detectedCategory,
-        confidence: 0.82,
-      });
-    }
-
-    // Add category-specific suggestions
-    suggestions.push({
-      text: input,
-      category: detectedCategory,
-      confidence: 0.95,
-    });
-
-    if (inputLower.includes('for')) {
-      const enhanced = input.replace(/for\s+/i, 'for startups and ');
-      suggestions.push({
-        text: enhanced,
-        category: detectedCategory,
-        confidence: 0.78,
-      });
-    }
-
-    // Dedupe and limit
-    const unique = suggestions.filter((s, i, arr) => 
-      arr.findIndex(x => x.text.toLowerCase() === s.text.toLowerCase()) === i
-    );
-
-    return unique.slice(0, 4);
-  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

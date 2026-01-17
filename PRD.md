@@ -224,6 +224,119 @@ Track:
 5. NLP search suggestions appear within 300ms after typing and are keyboard navigable.
 6. No secrets are present in client bundles; API keys never appear in responses.
 
+---
+
+## Onboarding & App Shell UX
+
+### Purpose
+
+Post-signup, users need guided activation to reach their first "aha moment" (seeing a gap report). The app shell must support efficient navigation, credit visibility, and upgrade paths.
+
+### Information Architecture
+
+#### Primary Navigation (Sidebar)
+
+| Section | Route | Purpose |
+|---------|-------|---------|
+| **Discover** | `/discover` | Browse analyzed gaps, trending niches |
+| **My Reports** | `/reports` | User's saved/generated reports |
+| **Run Analysis** | `/runs/new` | Start a new niche analysis |
+| **Run History** | `/runs` | Past analysis runs |
+| **Integrations** | `/integrations` | Slack, Discord, Webhooks |
+| **Settings** | `/settings` | Account, billing, API keys |
+
+#### Secondary Elements
+- **Credits indicator** — visible remaining runs in sidebar
+- **Upgrade CTA** — persistent but dismissible banner
+- **Help/Support** — Intercom or similar widget
+
+### Onboarding Flow (`/get-started`)
+
+#### Checklist Structure
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  Setup Guide                    │  Video/Tutorial Card     │
+│  ─────────────────────────────  │  - Thumbnail             │
+│  ✓ Welcome aboard               │  - "See DemandRadar      │
+│  ○ Run your first analysis      │     in action"           │
+│    - Enter a niche              │  - Play button           │
+│    - Review gap results         │                          │
+│    - Save a report              │                          │
+│  ○ Explore trending gaps        │                          │
+│  ○ Set up notifications         │                          │
+│  ○ Invite team members          │                          │
+└─────────────────────────────────────────────────────────────┘
+```
+
+#### Checklist Requirements
+- **Progress persistence** — store in DB (`user_onboarding` table)
+- **Expandable sub-tasks** — break large steps into micro-actions
+- **Auto-complete detection** — mark steps done when user completes action elsewhere
+- **Skip option** — allow power users to dismiss
+
+### Component Library Requirements
+
+#### Filter Panel
+- Collapsible accordion sections
+- Multi-select checkboxes with search
+- Range sliders for scores (0-100)
+- Quick-filter chips/tags
+- Clear all / Apply buttons
+
+#### Results Card (Gap Card)
+- Title + category badge
+- Opportunity score (large, prominent)
+- Confidence indicator
+- Key metrics: saturation, dissatisfaction, misalignment
+- Source indicators (Meta, Reddit, App Store)
+- Hover actions: Save, Analyze deeper, Export
+
+#### Empty State
+- Reusable component with slots for:
+  - Illustration
+  - Headline
+  - Description
+  - Primary CTA
+  - Secondary CTA (optional)
+
+#### Paywall/Upgrade Gate
+- Feature name being accessed
+- "Upgrade to unlock" message
+- Plan comparison (optional)
+- Primary CTA to pricing/checkout
+- No content preview (clean gate)
+
+### State Management
+
+| State | UI Treatment |
+|-------|--------------|
+| **Loading** | Skeleton loaders matching card shape |
+| **Empty** | Empty state component with CTA |
+| **Error** | Error message + retry button |
+| **Populated** | Card grid/list with filters |
+| **Paywall** | Upgrade gate (no partial content) |
+
+### Engagement Patterns
+
+1. **Credits visibility** — always show remaining in sidebar
+2. **Progress indicators** — onboarding completion percentage
+3. **Upgrade prompts** — contextual, based on feature access
+4. **Notification opt-in** — prompt for Slack/email alerts
+5. **Social proof** — testimonials in upgrade flows
+
+### Acceptance Criteria
+
+1. New users land on `/get-started` after first login
+2. Onboarding checklist persists progress across sessions
+3. Completing "Run your first analysis" auto-marks sub-tasks
+4. Sidebar shows credits remaining (e.g., "3 runs left")
+5. Paywall gate appears for tier-locked features
+6. Empty states include actionable CTAs
+7. Filter panel state persists in URL params
+
+---
+
 ## Data Sources & Integrations
 
 ### 1. Meta Ads Library

@@ -3,7 +3,7 @@
   "description": "Market gap analysis platform - enter a niche, get ranked market gaps backed by Meta/Google ads, Reddit sentiment, app store data, and UGC patterns with actionable recommendations",
   "version": "3.0",
   "totalFeatures": 195,
-  "completedFeatures": 17,
+  "completedFeatures": 54,
   "phases": {
     "phase1_landing": "Landing page with NLP search and live trends",
     "phase2_collectors": "Data collectors (Meta, Reddit, Google, App Stores, TikTok, Instagram)",
@@ -147,7 +147,7 @@
     },
     {
       "id": "LAND-008",
-      "name": "Trend Card Click → Prefill Search",
+      "name": "Trend Card Click \u2192 Prefill Search",
       "description": "Clicking a trend card prefills the NLP search input",
       "priority": "P1",
       "phase": 1,
@@ -290,7 +290,7 @@
       "priority": "P0",
       "phase": 2,
       "effort": "1h",
-      "passes": false,
+      "passes": true,
       "category": "database",
       "files": [
         "supabase/migrations/projects.sql",
@@ -308,7 +308,7 @@
       "priority": "P0",
       "phase": 2,
       "effort": "1h",
-      "passes": false,
+      "passes": true,
       "category": "database",
       "files": [
         "supabase/migrations/runs.sql",
@@ -326,7 +326,7 @@
       "priority": "P0",
       "phase": 2,
       "effort": "1h",
-      "passes": false,
+      "passes": true,
       "category": "database",
       "files": [
         "supabase/migrations/ad_creatives.sql",
@@ -344,7 +344,7 @@
       "priority": "P0",
       "phase": 2,
       "effort": "1h",
-      "passes": false,
+      "passes": true,
       "category": "database",
       "files": [
         "supabase/migrations/reddit_mentions.sql",
@@ -362,7 +362,7 @@
       "priority": "P0",
       "phase": 2,
       "effort": "1h",
-      "passes": false,
+      "passes": true,
       "category": "database",
       "files": [
         "supabase/migrations/extractions.sql",
@@ -380,7 +380,7 @@
       "priority": "P0",
       "phase": 2,
       "effort": "1h",
-      "passes": false,
+      "passes": true,
       "category": "database",
       "files": [
         "supabase/migrations/clusters.sql",
@@ -398,7 +398,7 @@
       "priority": "P0",
       "phase": 2,
       "effort": "1h",
-      "passes": false,
+      "passes": true,
       "category": "database",
       "files": [
         "supabase/migrations/gap_opportunities.sql",
@@ -416,7 +416,7 @@
       "priority": "P0",
       "phase": 2,
       "effort": "1h",
-      "passes": false,
+      "passes": true,
       "category": "database",
       "files": [
         "supabase/migrations/app_store_results.sql",
@@ -434,7 +434,7 @@
       "priority": "P0",
       "phase": 2,
       "effort": "1h",
-      "passes": false,
+      "passes": true,
       "category": "database",
       "files": [
         "supabase/migrations/concept_ideas.sql",
@@ -452,7 +452,7 @@
       "priority": "P0",
       "phase": 2,
       "effort": "1h",
-      "passes": false,
+      "passes": true,
       "category": "database",
       "files": [
         "supabase/migrations/concept_metrics.sql",
@@ -470,7 +470,7 @@
       "priority": "P1",
       "phase": 2,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "database",
       "files": [
         "supabase/migrations/ugc.sql",
@@ -488,7 +488,7 @@
       "priority": "P0",
       "phase": 2,
       "effort": "1h",
-      "passes": false,
+      "passes": true,
       "category": "database",
       "files": [
         "supabase/migrations/reports.sql",
@@ -506,7 +506,7 @@
       "priority": "P0",
       "phase": 2,
       "effort": "8h",
-      "passes": false,
+      "passes": true,
       "category": "collectors",
       "files": [
         "src/lib/collectors/meta.ts",
@@ -525,7 +525,7 @@
       "priority": "P0",
       "phase": 2,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "collectors",
       "files": [
         "src/lib/collectors/normalize-meta.ts"
@@ -542,7 +542,7 @@
       "priority": "P0",
       "phase": 2,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "collectors",
       "files": [
         "src/lib/collectors/reddit.ts",
@@ -561,7 +561,7 @@
       "priority": "P0",
       "phase": 2,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "collectors",
       "files": [
         "src/lib/collectors/normalize-reddit.ts"
@@ -578,7 +578,7 @@
       "priority": "P1",
       "phase": 2,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "collectors",
       "files": [
         "src/lib/collectors/google-ads.ts"
@@ -596,7 +596,7 @@
       "priority": "P0",
       "phase": 2,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "collectors",
       "files": [
         "src/lib/collectors/ios-appstore.ts"
@@ -614,7 +614,7 @@
       "priority": "P1",
       "phase": 2,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "collectors",
       "files": [
         "src/lib/collectors/android-playstore.ts"
@@ -632,7 +632,7 @@
       "priority": "P0",
       "phase": 2,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "collectors",
       "files": [
         "src/lib/collectors/orchestrator.ts"
@@ -650,7 +650,7 @@
       "priority": "P0",
       "phase": 2,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "api",
       "files": [
         "src/app/api/runs/route.ts"
@@ -668,7 +668,7 @@
       "priority": "P0",
       "phase": 2,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "api",
       "files": [
         "src/app/api/runs/[id]/route.ts"
@@ -681,11 +681,11 @@
     {
       "id": "RUN-003",
       "name": "Run Execution Worker",
-      "description": "Background worker to execute runs (collectors → extraction → scoring)",
+      "description": "Background worker to execute runs (collectors \u2192 extraction \u2192 scoring)",
       "priority": "P0",
       "phase": 2,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "workers",
       "files": [
         "src/lib/workers/run-executor.ts"
@@ -739,7 +739,7 @@
       "priority": "P0",
       "phase": 3,
       "effort": "8h",
-      "passes": false,
+      "passes": true,
       "category": "ai",
       "files": [
         "src/lib/ai/extraction.ts",
@@ -757,7 +757,7 @@
       "priority": "P0",
       "phase": 3,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "ai",
       "files": [
         "src/lib/ai/prompts/ad-extraction.ts"
@@ -774,7 +774,7 @@
       "priority": "P0",
       "phase": 3,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "ai",
       "files": [
         "src/lib/ai/prompts/reddit-extraction.ts"
@@ -791,7 +791,7 @@
       "priority": "P0",
       "phase": 3,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "ai",
       "files": [
         "src/lib/ai/clustering.ts"
@@ -808,7 +808,7 @@
       "priority": "P0",
       "phase": 3,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "scoring",
       "files": [
         "src/lib/scoring/saturation.ts"
@@ -825,7 +825,7 @@
       "priority": "P0",
       "phase": 3,
       "effort": "1h",
-      "passes": false,
+      "passes": true,
       "category": "scoring",
       "files": [
         "src/lib/scoring/longevity.ts"
@@ -842,7 +842,7 @@
       "priority": "P0",
       "phase": 3,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "scoring",
       "files": [
         "src/lib/scoring/dissatisfaction.ts"
@@ -859,7 +859,7 @@
       "priority": "P0",
       "phase": 3,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "scoring",
       "files": [
         "src/lib/scoring/misalignment.ts"
@@ -876,7 +876,7 @@
       "priority": "P0",
       "phase": 3,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "scoring",
       "files": [
         "src/lib/scoring/opportunity.ts"
@@ -893,7 +893,7 @@
       "priority": "P0",
       "phase": 3,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "scoring",
       "files": [
         "src/lib/scoring/confidence.ts"
@@ -906,7 +906,7 @@
     {
       "id": "SCORE-007",
       "name": "Build-to-Profit Score",
-      "description": "Implement Score = (Opportunity × TAM × Margin × TimeToValue) / (CAC × Complexity × Touch)",
+      "description": "Implement Score = (Opportunity \u00d7 TAM \u00d7 Margin \u00d7 TimeToValue) / (CAC \u00d7 Complexity \u00d7 Touch)",
       "priority": "P1",
       "phase": 3,
       "effort": "3h",
@@ -927,7 +927,7 @@
       "priority": "P0",
       "phase": 3,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "analysis",
       "files": [
         "src/lib/analysis/gap-detection.ts"
@@ -945,7 +945,7 @@
       "priority": "P0",
       "phase": 3,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "analysis",
       "files": [
         "src/lib/analysis/platform-gap.ts"
@@ -979,7 +979,7 @@
       "priority": "P0",
       "phase": 3,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "ai",
       "files": [
         "src/lib/ai/concept-generator.ts"
@@ -996,7 +996,7 @@
       "priority": "P1",
       "phase": 3,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "ai",
       "files": [
         "src/lib/ai/metrics-estimator.ts"
@@ -2311,7 +2311,7 @@
     {
       "id": "BRIEF-001",
       "name": "Demand Brief Onboarding",
-      "description": "Single input → structured data extraction for niche tracking setup",
+      "description": "Single input \u2192 structured data extraction for niche tracking setup",
       "priority": "P2",
       "phase": 9,
       "effort": "6h",
@@ -3039,7 +3039,7 @@
     {
       "id": "ANALYTICS-002",
       "name": "Conversion Funnel",
-      "description": "Track signup started → completed → first run → paid conversion",
+      "description": "Track signup started \u2192 completed \u2192 first run \u2192 paid conversion",
       "priority": "P1",
       "phase": 1,
       "effort": "2h",
