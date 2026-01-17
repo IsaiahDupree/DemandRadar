@@ -407,3 +407,84 @@ ON CONFLICT (niche) DO NOTHING;
 COMMENT ON TABLE ad_strategies IS 'Library of proven ad strategies and formulas';
 COMMENT ON TABLE winning_ads_library IS 'Curated examples of winning ads with analysis';
 COMMENT ON TABLE niche_playbooks IS 'Complete marketing playbooks for each niche';
+
+-- ============================================
+-- 7. REDDIT WINNING SIGNALS TABLE
+-- Proven demand signals from Reddit
+-- ============================================
+CREATE TABLE IF NOT EXISTS reddit_winning_signals (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  
+  -- Source info
+  subreddit VARCHAR(100) NOT NULL,
+  post_title TEXT,
+  post_body TEXT,
+  permalink TEXT UNIQUE,
+  
+  -- Engagement (CRITICAL: Filter low engagement)
+  upvotes INT NOT NULL DEFAULT 0,
+  comments INT NOT NULL DEFAULT 0,
+  
+  -- Signal classification
+  signal_type VARCHAR(50) CHECK (signal_type IN ('pain_point', 'solution_request', 'alternative_search', 'recommendation', 'complaint', 'general')),
+  demand_score INT CHECK (demand_score BETWEEN 0 AND 100),
+  is_verified_demand BOOLEAN DEFAULT FALSE,
+  
+  -- Niche mapping
+  niche VARCHAR(255),
+  matched_keywords JSONB,
+  
+  -- Product opportunity
+  product_idea TEXT,
+  competitor_mentioned VARCHAR(255),
+  price_sensitivity BOOLEAN DEFAULT FALSE,
+  
+  -- Thresholds met
+  meets_upvote_threshold BOOLEAN GENERATED ALWAYS AS (upvotes >= 10) STORED,
+  meets_comment_threshold BOOLEAN GENERATED ALWAYS AS (comments >= 5) STORED,
+  is_winning_signal BOOLEAN GENERATED ALWAYS AS (
+    upvotes >= 10 AND 
+    comments >= 5 AND 
+    signal_type IN ('pain_point', 'solution_request', 'alternative_search', 'complaint') AND
+    demand_score >= 40
+  ) STORED,
+  
+  -- Timestamps
+  posted_at TIMESTAMPTZ,
+  discovered_at TIMESTAMPTZ DEFAULT NOW(),
+  
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX idx_reddit_signals_niche ON reddit_winning_signals(niche);
+CREATE INDEX idx_reddit_signals_type ON reddit_winning_signals(signal_type);
+CREATE INDEX idx_reddit_signals_winning ON reddit_winning_signals(is_winning_signal) WHERE is_winning_signal = TRUE;
+CREATE INDEX idx_reddit_signals_demand ON reddit_winning_signals(demand_score DESC);
+
+COMMENT ON TABLE reddit_winning_signals IS 'Proven demand signals from Reddit - filtered for engagement';
+
+-- ============================================
+-- 8. REDDIT SIGNAL THRESHOLDS (Reference)
+-- ============================================
+CREATE TABLE IF NOT EXISTS signal_thresholds (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  source VARCHAR(50) NOT NULL, -- 'reddit', 'meta', etc.
+  threshold_name VARCHAR(100) NOT NULL,
+  threshold_value INT NOT NULL,
+  description TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE(source, threshold_name)
+);
+
+INSERT INTO signal_thresholds (source, threshold_name, threshold_value, description) VALUES
+('reddit', 'MIN_UPVOTES', 10, 'Minimum upvotes to be considered'),
+('reddit', 'MIN_COMMENTS', 5, 'Minimum comments for engagement'),
+('reddit', 'VERIFIED_UPVOTES', 50, '50+ upvotes = verified demand'),
+('reddit', 'VERIFIED_COMMENTS', 20, '20+ comments = high engagement'),
+('reddit', 'HIGH_DEMAND_SCORE', 70, 'Score threshold for winning ideas'),
+('meta', 'MIN_RUN_DAYS', 7, 'Minimum days ad must run'),
+('meta', 'VERIFIED_RUN_DAYS', 30, '30+ days = verified winner'),
+('meta', 'MIN_IMPRESSION_LEVEL', 2, '1=low, 2=medium, 3=high, 4=very_high')
+ON CONFLICT (source, threshold_name) DO NOTHING;
+
+COMMENT ON TABLE signal_thresholds IS 'Configuration for filtering winning signals';
