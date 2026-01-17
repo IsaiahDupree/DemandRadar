@@ -476,13 +476,19 @@
       "priority": "P2",
       "sprint": 7,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "api",
       "files": [
         "src/app/api/v1/runs/route.ts",
         "src/app/api/v1/reports/route.ts",
-        "src/middleware.ts"
-      ]
+        "src/app/api/v1/reports/[id]/route.ts",
+        "src/app/api/api-keys/route.ts",
+        "src/app/api/api-keys/[id]/route.ts",
+        "src/lib/api-keys.ts",
+        "src/lib/api-auth.ts",
+        "supabase/migrations/20260117_api_keys.sql"
+      ],
+      "implemented_at": "2026-01-16T22:30:00Z"
     },
     {
       "id": "TASK-060",
