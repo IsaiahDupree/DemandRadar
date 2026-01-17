@@ -2,7 +2,7 @@
   "project": "DemandRadar",
   "description": "Market gap analysis tool for founders and marketers",
   "totalFeatures": 165,
-  "completedFeatures": 53,
+  "completedFeatures": 54,
   "integrations": {
     "openai": {
       "status": "complete",
