@@ -2260,7 +2260,7 @@
       "priority": "P3",
       "phase": 4,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
       "files": [
         "src/lib/reports/notion-export.ts"
@@ -3899,7 +3899,7 @@
       "priority": "P2",
       "phase": 4,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
       "files": [
         "src/app/api/reports/[id]/share/route.ts",
@@ -3918,7 +3918,7 @@
       "priority": "P3",
       "phase": 4,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
       "files": [
         "src/app/share/[token]/page.tsx"
@@ -3936,7 +3936,7 @@
       "priority": "P3",
       "phase": 4,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
       "files": [
         "src/lib/reports/share.ts"
@@ -4335,7 +4335,7 @@
       "priority": "P2",
       "phase": 2,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "integrations",
       "files": [
         "src/lib/integrations/discord.ts"
@@ -5124,7 +5124,7 @@
       "priority": "P2",
       "phase": 2,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "dashboard",
       "files": [
         "src/app/dashboard/brands/page.tsx"
@@ -5216,7 +5216,7 @@
       "priority": "P2",
       "phase": 2,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "dashboard",
       "files": [
         "src/app/globals.css"

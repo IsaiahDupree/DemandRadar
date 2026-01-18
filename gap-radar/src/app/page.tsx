@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { NLPSearch } from "@/components/landing/NLPSearch";
 import { TrendingTopics } from "@/components/landing/TrendingTopics";
 import { Features } from "@/components/landing/Features";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { Sparkles, ArrowRight, BarChart3, Users, Zap } from "lucide-react";
 import { trackLandingView, trackCTAClick } from "@/lib/analytics/landing";
 import { isAuthenticated, buildSignupURL, buildCreateRunURL, storePendingQuery } from "@/lib/auth/redirect";
@@ -42,6 +43,7 @@ export default function Home() {
               <span className="font-bold text-xl">DemandRadar</span>
             </div>
             <div className="flex items-center gap-4">
+              <ThemeToggle />
               <Link
                 href="/login"
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
