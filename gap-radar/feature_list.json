@@ -3,7 +3,7 @@
   "description": "Market gap analysis platform - enter a niche, get ranked market gaps backed by Meta/Google ads, Reddit sentiment, app store data, and UGC patterns with actionable recommendations",
   "version": "3.0",
   "totalFeatures": 287,
-  "completedFeatures": 175,
+  "completedFeatures": 194,
   "phases": {
     "phase1_landing": "Landing page with NLP search and live trends",
     "phase2_collectors": "Data collectors (Meta, Reddit, Google, App Stores, TikTok, Instagram)",
@@ -3805,7 +3805,7 @@
       "priority": "P1",
       "phase": 4,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
       "files": [
         "src/components/reports/BuildabilityAssessment.tsx"
@@ -3824,7 +3824,7 @@
       "priority": "P1",
       "phase": 4,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
       "files": [
         "src/components/reports/UGCWinnersPack.tsx"
@@ -3844,7 +3844,7 @@
       "priority": "P2",
       "phase": 4,
       "effort": "5h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
       "files": [
         "src/components/reports/ActionPlan.tsx"
