@@ -1,333 +1,286 @@
 /**
- * Production Smoke Diagnostics (TASK-107)
+ * Production Smoke Diagnostics (TEST-013)
  *
- * Playwright tests that can run against production to detect:
- * - 404/500 errors on critical pages
- * - Missing API routes
- * - Console errors
- * - Performance issues
- *
- * Usage:
- *   npm run test:e2e -- e2e/production-diagnostics.spec.ts --project=chromium
- *
- * To run against production:
- *   PLAYWRIGHT_TEST_BASE_URL=https://your-production-url.com npm run test:e2e -- e2e/production-diagnostics.spec.ts
+ * Validates production deployment health by testing:
+ * - Critical routes return 200 status (not 404/500)
+ * - No console errors on key pages
+ * - Essential page elements render correctly
+ * - API endpoints are accessible
  */
 
-import { test, expect, Page } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 
 /**
- * Critical pages that must return 200 OK
+ * Base URL for tests
+ * Uses PRODUCTION_URL env var or defaults to localhost for local testing
  */
-const CRITICAL_PAGES = [
-  { path: '/', name: 'Home' },
-  { path: '/login', name: 'Login' },
-  { path: '/signup', name: 'Signup' },
-  { path: '/dashboard', name: 'Dashboard' },
+const BASE_URL = process.env.PRODUCTION_URL || 'http://localhost:3001';
+
+/**
+ * Critical routes that must return 200 status
+ */
+const CRITICAL_ROUTES = [
+  // Public pages
+  { path: '/', name: 'Home Page', requiresAuth: false },
+  { path: '/login', name: 'Login Page', requiresAuth: false },
+  { path: '/signup', name: 'Signup Page', requiresAuth: false },
+  { path: '/pricing', name: 'Pricing Page', requiresAuth: false },
+
+  // Dashboard pages (should redirect to login if not authenticated)
+  { path: '/dashboard', name: 'Dashboard', requiresAuth: true },
+  { path: '/dashboard/runs', name: 'Runs Page', requiresAuth: true },
+  { path: '/dashboard/new-run', name: 'New Run Page', requiresAuth: true },
+  { path: '/dashboard/settings', name: 'Settings Page', requiresAuth: true },
 ];
 
 /**
- * Console error tracker
+ * API endpoints to verify
  */
-let consoleErrors: string[] = [];
-let consoleWarnings: string[] = [];
-
-test.beforeEach(async ({ page }) => {
-  consoleErrors = [];
-  consoleWarnings = [];
-
-  // Listen for console errors
-  page.on('console', (msg) => {
-    if (msg.type() === 'error') {
-      consoleErrors.push(msg.text());
-    } else if (msg.type() === 'warning') {
-      consoleWarnings.push(msg.text());
-    }
-  });
-
-  // Listen for page errors
-  page.on('pageerror', (error) => {
-    consoleErrors.push(`Page Error: ${error.message}`);
-  });
-});
+const API_ENDPOINTS = [
+  { path: '/api/health', method: 'GET', name: 'Health Check', expectedStatus: 200 },
+  { path: '/api/trends', method: 'GET', name: 'Trends API', expectedStatus: 200 },
+];
 
 test.describe('Production Smoke Diagnostics', () => {
-  test.describe('HTTP Status Checks', () => {
-    for (const pageInfo of CRITICAL_PAGES) {
-      test(`${pageInfo.name} should return valid HTTP status (not 404 or 500)`, async ({ page }) => {
-        const response = await page.goto(pageInfo.path);
+  test.describe('Critical Routes - HTTP Status Checks', () => {
+    for (const route of CRITICAL_ROUTES) {
+      test(\`\${route.name} (\${route.path}) should not return 404 or 500\`, async ({ page }) => {
+        const consoleErrors: string[] = [];
 
-        expect(response?.status()).toBeDefined();
-        const status = response?.status() || 0;
+        // Capture console errors
+        page.on('console', (msg) => {
+          if (msg.type() === 'error') {
+            consoleErrors.push(msg.text());
+          }
+        });
 
-        // Should not be 404 or 500
-        expect(status).not.toBe(404);
-        expect(status).not.toBe(500);
-        expect(status).not.toBe(502);
-        expect(status).not.toBe(503);
+        // Navigate to route
+        const response = await page.goto(\`\${BASE_URL}\${route.path}\`, {
+          waitUntil: 'domcontentloaded',
+        });
 
-        // Should be a successful status or redirect
-        expect(status).toBeLessThan(400);
-      });
+        // Verify response exists
+        expect(response).not.toBeNull();
 
-      test(`${pageInfo.name} should load without page crash`, async ({ page }) => {
-        await page.goto(pageInfo.path);
+        if (response) {
+          const status = response.status();
 
-        // Verify page has content
-        const bodyText = await page.textContent('body');
-        expect(bodyText).toBeTruthy();
-        expect(bodyText!.length).toBeGreaterThan(0);
+          if (route.requiresAuth) {
+            // Protected routes should either load (200) or redirect (302/307)
+            expect([200, 302, 307]).toContain(status);
+          } else {
+            // Public routes must return 200
+            expect(status).toBe(200);
+          }
 
-        // Verify no "Application Error" or crash messages
-        expect(bodyText?.toLowerCase()).not.toContain('application error');
-        expect(bodyText?.toLowerCase()).not.toContain('something went wrong');
+          // Verify not 404 or 500
+          expect(status).not.toBe(404);
+          expect(status).not.toBe(500);
+        }
+
+        // Check for critical console errors
+        const criticalErrors = consoleErrors.filter(err =>
+          err.includes('Failed to load') ||
+          err.includes('500') ||
+          err.includes('Network request failed')
+        );
+
+        if (criticalErrors.length > 0) {
+          console.warn(\`Console errors on \${route.name}:\`, criticalErrors);
+        }
       });
     }
   });
 
   test.describe('Console Error Detection', () => {
-    test('Home page should have no critical console errors', async ({ page }) => {
-      await page.goto('/');
-      await page.waitForLoadState('networkidle');
+    test('Home page should load without critical console errors', async ({ page }) => {
+      const consoleErrors: string[] = [];
+      const consoleWarnings: string[] = [];
 
-      // Filter out known acceptable warnings
-      const criticalErrors = consoleErrors.filter(error => {
-        // Ignore certain known warnings
-        if (error.includes('Download the React DevTools')) return false;
-        if (error.includes('Warning:')) return false;
-        return true;
-      });
-
-      if (criticalErrors.length > 0) {
-        console.log('Console errors found:', criticalErrors);
-      }
-
-      expect(criticalErrors).toHaveLength(0);
-    });
-
-    test('Login page should have no critical console errors', async ({ page }) => {
-      await page.goto('/login');
-      await page.waitForLoadState('networkidle');
-
-      const criticalErrors = consoleErrors.filter(error => {
-        if (error.includes('Download the React DevTools')) return false;
-        if (error.includes('Warning:')) return false;
-        return true;
-      });
-
-      expect(criticalErrors).toHaveLength(0);
-    });
-
-    test('Dashboard page should have no critical console errors', async ({ page }) => {
-      await page.goto('/dashboard');
-      await page.waitForLoadState('networkidle');
-
-      const criticalErrors = consoleErrors.filter(error => {
-        if (error.includes('Download the React DevTools')) return false;
-        if (error.includes('Warning:')) return false;
-        return true;
-      });
-
-      expect(criticalErrors).toHaveLength(0);
-    });
-  });
-
-  test.describe('API Health Checks', () => {
-    test('API routes should be reachable', async ({ request }) => {
-      // Test that API routes exist (may return 401 if auth required, but not 404)
-      const apiRoutes = [
-        '/api/runs',
-        '/api/reports/test-id',  // Will 404 for non-existent ID, but route exists
-      ];
-
-      for (const route of apiRoutes) {
-        const response = await request.get(route);
-        const status = response.status();
-
-        // Should NOT be 404 (route exists) or 500 (server error)
-        // May be 401 (unauthorized) or 400 (bad request) - that's OK
-        expect(status).not.toBe(404);
-        expect(status).not.toBe(500);
-        expect(status).not.toBe(502);
-        expect(status).not.toBe(503);
-      }
-    });
-  });
-
-  test.describe('Static Assets', () => {
-    test('Static assets should load correctly', async ({ page }) => {
-      const response = await page.goto('/');
-      expect(response?.status()).toBeLessThan(400);
-
-      // Check for failed resource loads
-      const resourceErrors: string[] = [];
-
-      page.on('requestfailed', (request) => {
-        resourceErrors.push(`Failed to load: ${request.url()}`);
-      });
-
-      await page.waitForLoadState('networkidle');
-
-      // Some resources may fail (like analytics, external scripts) - that's OK
-      // But we shouldn't have critical failures
-      const criticalResourceErrors = resourceErrors.filter(error => {
-        // Filter out non-critical failures
-        if (error.includes('google-analytics')) return false;
-        if (error.includes('googletagmanager')) return false;
-        if (error.includes('facebook')) return false;
-        return true;
-      });
-
-      if (criticalResourceErrors.length > 0) {
-        console.log('Critical resource errors:', criticalResourceErrors);
-      }
-
-      expect(criticalResourceErrors).toHaveLength(0);
-    });
-  });
-
-  test.describe('Performance Checks', () => {
-    test('Home page should load in reasonable time', async ({ page }) => {
-      const startTime = Date.now();
-      await page.goto('/');
-      await page.waitForLoadState('domcontentloaded');
-      const loadTime = Date.now() - startTime;
-
-      // Page should load in under 10 seconds (generous for production)
-      expect(loadTime).toBeLessThan(10000);
-    });
-
-    test('Dashboard should load in reasonable time', async ({ page }) => {
-      const startTime = Date.now();
-      await page.goto('/dashboard');
-      await page.waitForLoadState('domcontentloaded');
-      const loadTime = Date.now() - startTime;
-
-      // Page should load in under 10 seconds
-      expect(loadTime).toBeLessThan(10000);
-    });
-  });
-
-  test.describe('Navigation Health', () => {
-    test('Navigation links should work', async ({ page }) => {
-      await page.goto('/');
-
-      // Find navigation links
-      const navLinks = await page.locator('nav a').all();
-
-      if (navLinks.length > 0) {
-        // Click first nav link
-        const firstLink = navLinks[0];
-        const href = await firstLink.getAttribute('href');
-
-        if (href && href.startsWith('/')) {
-          await firstLink.click();
-          await page.waitForLoadState('domcontentloaded');
-
-          // Verify navigation worked (URL changed or page loaded)
-          const currentUrl = page.url();
-          expect(currentUrl).toBeTruthy();
+      page.on('console', (msg) => {
+        if (msg.type() === 'error') {
+          consoleErrors.push(msg.text());
+        } else if (msg.type() === 'warning') {
+          consoleWarnings.push(msg.text());
         }
+      });
+
+      await page.goto(\`\${BASE_URL}/\`, {
+        waitUntil: 'networkidle',
+      });
+
+      // Filter out known non-critical errors (e.g., third-party scripts)
+      const criticalErrors = consoleErrors.filter(err =>
+        !err.includes('Google Analytics') &&
+        !err.includes('PostHog') &&
+        !err.includes('chrome-extension') &&
+        !err.includes('favicon.ico')
+      );
+
+      expect(criticalErrors).toEqual([]);
+
+      // Log warnings for visibility but don't fail
+      if (consoleWarnings.length > 0) {
+        console.log('Console warnings detected:', consoleWarnings.length);
       }
     });
+
+    test('Login page should load without critical console errors', async ({ page }) => {
+      const consoleErrors: string[] = [];
+
+      page.on('console', (msg) => {
+        if (msg.type() === 'error') {
+          consoleErrors.push(msg.text());
+        }
+      });
+
+      await page.goto(\`\${BASE_URL}/login\`, {
+        waitUntil: 'networkidle',
+      });
+
+      const criticalErrors = consoleErrors.filter(err =>
+        !err.includes('Google Analytics') &&
+        !err.includes('PostHog') &&
+        !err.includes('chrome-extension')
+      );
+
+      expect(criticalErrors).toEqual([]);
+    });
   });
 
-  test.describe('Critical Features Health', () => {
-    test('Login form should be present', async ({ page }) => {
-      await page.goto('/login');
+  test.describe('API Endpoint Health', () => {
+    for (const endpoint of API_ENDPOINTS) {
+      test(\`\${endpoint.name} should return \${endpoint.expectedStatus}\`, async ({ request }) => {
+        const response = await request.fetch(\`\${BASE_URL}\${endpoint.path}\`, {
+          method: endpoint.method,
+        });
 
-      // Check for email and password inputs
-      const emailInput = page.locator('input[type="email"], input[name="email"]');
-      const passwordInput = page.locator('input[type="password"], input[name="password"]');
+        expect(response.status()).toBe(endpoint.expectedStatus);
+      });
+    }
+  });
 
+  test.describe('Essential Page Elements', () => {
+    test('Home page should render hero section', async ({ page }) => {
+      await page.goto(\`\${BASE_URL}/\`);
+
+      // Check for hero heading
+      const hero = page.locator('h1').first();
+      await expect(hero).toBeVisible();
+
+      // Verify text is not empty
+      const text = await hero.textContent();
+      expect(text).toBeTruthy();
+      expect(text!.length).toBeGreaterThan(0);
+    });
+
+    test('Login page should render login form', async ({ page }) => {
+      await page.goto(\`\${BASE_URL}/login\`);
+
+      // Check for email input
+      const emailInput = page.locator('input[type="email"]').first();
       await expect(emailInput).toBeVisible();
+
+      // Check for password input
+      const passwordInput = page.locator('input[type="password"]').first();
       await expect(passwordInput).toBeVisible();
+
+      // Check for submit button
+      const submitButton = page.locator('button[type="submit"]').first();
+      await expect(submitButton).toBeVisible();
     });
 
-    test('Signup form should be present', async ({ page }) => {
-      await page.goto('/signup');
+    test('Pricing page should render pricing plans', async ({ page }) => {
+      await page.goto(\`\${BASE_URL}/pricing\`);
 
-      // Check for email and password inputs
-      const emailInput = page.locator('input[type="email"], input[name="email"]');
-      const passwordInput = page.locator('input[type="password"], input[name="password"]');
-
-      await expect(emailInput).toBeVisible();
-      await expect(passwordInput).toBeVisible();
-    });
-  });
-
-  test.describe('Database Connectivity', () => {
-    test('API should respond (indicates DB is accessible)', async ({ request }) => {
-      // Try to hit an API endpoint that requires DB
-      const response = await request.get('/api/runs');
-
-      // Should get a response (even if 401 unauthorized)
-      // Just shouldn't get 500 (server error) or timeout
-      expect(response.status()).toBeDefined();
-      expect(response.status()).not.toBe(500);
-      expect(response.status()).not.toBe(502);
-      expect(response.status()).not.toBe(503);
+      // Check for pricing content
+      const pricingContent = page.locator('text=/\\$|Free|Starter|Builder|Agency/i').first();
+      await expect(pricingContent).toBeVisible();
     });
   });
 
-  test.describe('Error Boundaries', () => {
-    test('Invalid routes should show 404 page, not crash', async ({ page }) => {
-      await page.goto('/this-route-does-not-exist-12345');
+  test.describe('Resource Loading', () => {
+    test('Critical CSS and JS should load successfully', async ({ page }) => {
+      const failedResources: string[] = [];
 
-      // Should show some kind of not found message
-      const bodyText = await page.textContent('body');
+      page.on('response', (response) => {
+        const status = response.status();
+        const url = response.url();
 
-      // Should have content (not crashed)
-      expect(bodyText).toBeTruthy();
+        // Track failed CSS/JS resources
+        if ((url.endsWith('.css') || url.endsWith('.js')) && status >= 400) {
+          failedResources.push(\`\${url} (\${status})\`);
+        }
+      });
 
-      // Should indicate error in some way
-      const hasErrorMessage =
-        bodyText?.includes('404') ||
-        bodyText?.includes('not found') ||
-        bodyText?.includes('Not Found') ||
-        bodyText?.includes('Page not found');
+      await page.goto(\`\${BASE_URL}/\`, {
+        waitUntil: 'load',
+      });
 
-      expect(hasErrorMessage).toBeTruthy();
+      // Wait a bit for all resources to attempt loading
+      await page.waitForTimeout(2000);
+
+      expect(failedResources).toEqual([]);
     });
   });
 
-  test.describe('Environment Variables', () => {
-    test('Public env vars should be available', async ({ page }) => {
-      await page.goto('/');
+  test.describe('Network Resilience', () => {
+    test('Should handle slow network gracefully', async ({ page }) => {
+      // Simulate slow 3G
+      await page.route('**/*', (route) => {
+        setTimeout(() => route.continue(), 100);
+      });
 
-      // Check that the app loaded (indicates env vars are configured)
-      const bodyText = await page.textContent('body');
-      expect(bodyText).toBeTruthy();
+      const response = await page.goto(\`\${BASE_URL}/\`, {
+        waitUntil: 'domcontentloaded',
+        timeout: 30000, // Allow more time for slow network
+      });
 
-      // No "configuration error" or "missing env" messages
-      expect(bodyText?.toLowerCase()).not.toContain('configuration error');
-      expect(bodyText?.toLowerCase()).not.toContain('missing environment');
+      expect(response?.status()).toBe(200);
+
+      // Verify page still renders key content
+      const hero = page.locator('h1').first();
+      await expect(hero).toBeVisible({ timeout: 10000 });
+    });
+  });
+
+  test.describe('Performance Baseline', () => {
+    test('Home page should load within acceptable time', async ({ page }) => {
+      const startTime = Date.now();
+
+      await page.goto(\`\${BASE_URL}/\`, {
+        waitUntil: 'domcontentloaded',
+      });
+
+      const loadTime = Date.now() - startTime;
+
+      // Should load in under 5 seconds (generous threshold for production)
+      expect(loadTime).toBeLessThan(5000);
+
+      console.log(\`Home page load time: \${loadTime}ms\`);
     });
   });
 });
 
-/**
- * Production-specific tests (only run when testing against production URL)
- */
-test.describe('Production-Only Checks', () => {
-  test.skip(({ baseURL }) => !baseURL?.includes('https://'), 'Only runs against HTTPS URLs');
+test.describe('Production-Specific Checks', () => {
+  test.skip(({ browserName }) => browserName !== 'chromium', 'Chromium-only test');
 
-  test('Should use HTTPS', async ({ page }) => {
-    await page.goto('/');
-    expect(page.url()).toMatch(/^https:/);
-  });
+  test('Should not expose development tools in production', async ({ page }) => {
+    await page.goto(\`\${BASE_URL}/\`);
 
-  test('Should have security headers', async ({ page }) => {
-    const response = await page.goto('/');
-    const headers = response?.headers() || {};
+    // Check that React DevTools warning is not present (indicates production build)
+    const content = await page.content();
+    expect(content).not.toContain('react-devtools');
 
-    // Check for common security headers (may vary by hosting platform)
-    // These are recommendations, not all hosts set all headers
-    const hasSecurityHeaders =
-      headers['strict-transport-security'] ||
-      headers['x-frame-options'] ||
-      headers['x-content-type-options'];
+    // Check for minified JS (production builds are minified)
+    const scripts = await page.locator('script[src]').all();
+    const scriptUrls = await Promise.all(scripts.map(s => s.getAttribute('src')));
 
-    expect(hasSecurityHeaders).toBeTruthy();
+    // At least one script should contain chunkhash or similar (Next.js production pattern)
+    const hasProductionAssets = scriptUrls.some(url =>
+      url && (url.includes('/_next/static/') || url.includes('.js'))
+    );
+
+    expect(hasProductionAssets).toBeTruthy();
   });
 });

@@ -13,6 +13,7 @@ import { generateActionPlan } from '@/lib/ai/action-plan'
 import { calculateScores } from '@/lib/scoring'
 import { sendEmail } from '@/lib/email'
 import { ReportCompleteEmail } from '@/lib/email-templates'
+import { triggerWebhooks } from '@/lib/webhooks/deliver'
 
 export async function POST(
   request: NextRequest,
@@ -22,16 +23,10 @@ export async function POST(
   const supabase = await createClient()
 
   try {
-    // Update run status to running
-    await supabase
-      .from('runs')
-      .update({ status: 'running', started_at: new Date().toISOString() })
-      .eq('id', runId)
-
-    // Get run details
+    // Get run details first to get user_id
     const { data: run } = await supabase
       .from('runs')
-      .select('*')
+      .select('*, project:projects(owner_id)')
       .eq('id', runId)
       .single()
 
@@ -39,7 +34,23 @@ export async function POST(
       throw new Error('Run not found')
     }
 
+    const userId = run.project?.owner_id
     const { niche_query, seed_terms, competitors, geo } = run
+
+    // Update run status to running
+    await supabase
+      .from('runs')
+      .update({ status: 'running', started_at: new Date().toISOString() })
+      .eq('id', runId)
+
+    // Trigger run.started webhook
+    if (userId) {
+      triggerWebhooks(userId, 'run.started', {
+        runId,
+        nicheQuery: niche_query,
+        startedAt: new Date().toISOString(),
+      }).catch(err => console.error('Webhook trigger error:', err))
+    }
 
     // Step 1: Collect data from all sources in parallel
     console.log(`[Run ${runId}] Starting data collection...`)
@@ -143,11 +154,29 @@ export async function POST(
     console.log(`[Run ${runId}] Generating gap opportunities...`)
 
     const gaps = await generateGaps(clusters, allAds, redditMentions, niche_query)
-    
+
     if (gaps.length > 0) {
-      await supabase.from('gap_opportunities').insert(
+      const insertedGaps = await supabase.from('gap_opportunities').insert(
         gaps.map(gap => ({ ...gap, run_id: runId }))
-      )
+      ).select()
+
+      // Trigger gap.discovered webhook for each high-opportunity gap
+      if (userId && insertedGaps.data) {
+        const highOpportunityGaps = insertedGaps.data.filter(
+          (gap: any) => gap.opportunity_score >= 70
+        )
+
+        for (const gap of highOpportunityGaps) {
+          triggerWebhooks(userId, 'gap.discovered', {
+            runId,
+            gapId: gap.id,
+            gapType: gap.gap_type,
+            title: gap.title,
+            opportunityScore: gap.opportunity_score,
+            confidence: gap.confidence,
+          }).catch(err => console.error('Webhook trigger error:', err))
+        }
+      }
     }
 
     // Step 5: Generate concept ideas
@@ -226,6 +255,18 @@ export async function POST(
 
     console.log(`[Run ${runId}] Complete!`)
 
+    // Trigger run.completed webhook
+    if (userId) {
+      triggerWebhooks(userId, 'run.completed', {
+        runId,
+        nicheQuery: niche_query,
+        scores,
+        gapCount: gaps.length,
+        conceptCount: concepts.length,
+        finishedAt: new Date().toISOString(),
+      }).catch(err => console.error('Webhook trigger error:', err))
+    }
+
     // Step 11: Send completion email notification
     try {
       // Get user info
@@ -263,18 +304,40 @@ export async function POST(
 
   } catch (error) {
     console.error(`[Run ${runId}] Error:`, error)
-    
+
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+
     await supabase
       .from('runs')
       .update({
         status: 'failed',
         finished_at: new Date().toISOString(),
-        error: error instanceof Error ? error.message : 'Unknown error',
+        error: errorMessage,
       })
       .eq('id', runId)
 
+    // Trigger run.failed webhook
+    try {
+      const { data: run } = await supabase
+        .from('runs')
+        .select('*, project:projects(owner_id)')
+        .eq('id', runId)
+        .single()
+
+      const userId = run?.project?.owner_id
+      if (userId) {
+        triggerWebhooks(userId, 'run.failed', {
+          runId,
+          error: errorMessage,
+          failedAt: new Date().toISOString(),
+        }).catch(err => console.error('Webhook trigger error:', err))
+      }
+    } catch (webhookError) {
+      console.error('Failed to trigger run.failed webhook:', webhookError)
+    }
+
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Pipeline failed' },
+      { error: errorMessage },
       { status: 500 }
     )
   }

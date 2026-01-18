@@ -1,0 +1,474 @@
+openapi: 3.0.3
+info:
+  title: GapRadar Public API
+  description: |
+    RESTful API for programmatic access to GapRadar market gap analysis and reports.
+
+    ## Authentication
+
+    All API requests require authentication using an API key passed in the `Authorization` header:
+
+    ```
+    Authorization: Bearer dr_live_your_api_key_here
+    ```
+
+    API keys can be generated from your dashboard and are available on Agency+ plans.
+
+    ## Rate Limiting
+
+    API requests are rate limited based on your subscription plan:
+    - Agency plan: 100 requests per hour
+    - Studio plan: 500 requests per hour
+
+    Rate limit information is included in response headers:
+    - `X-RateLimit-Limit`: Maximum requests allowed per hour
+    - `X-RateLimit-Remaining`: Remaining requests in current window
+    - `X-RateLimit-Reset`: Unix timestamp when the rate limit resets
+
+    When you exceed the rate limit, you'll receive a `429 Too Many Requests` response.
+
+    ## Errors
+
+    The API uses standard HTTP response codes:
+    - `200` - Success
+    - `201` - Created
+    - `400` - Bad Request (invalid parameters)
+    - `401` - Unauthorized (missing or invalid API key)
+    - `403` - Forbidden (insufficient permissions or quota)
+    - `404` - Not Found
+    - `429` - Too Many Requests (rate limit exceeded)
+    - `500` - Internal Server Error
+
+    Error responses include a JSON body with an `error` field describing the issue.
+  version: 1.0.0
+  contact:
+    name: GapRadar Support
+    email: support@gapradar.com
+  license:
+    name: Proprietary
+servers:
+  - url: https://gapradar.com/api/v1
+    description: Production server
+  - url: http://localhost:3001/api/v1
+    description: Local development server
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API Key
+      description: API key for authenticating requests (format: dr_live_xxxxxxxx)
+
+  schemas:
+    Run:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the run
+        project_id:
+          type: string
+          format: uuid
+          description: ID of the project this run belongs to
+        niche_query:
+          type: string
+          description: The niche query being analyzed
+          example: "AI productivity tools"
+        seed_terms:
+          type: array
+          items:
+            type: string
+          description: Seed keywords for the analysis
+          example: ["AI", "productivity", "automation"]
+        competitors:
+          type: array
+          items:
+            type: string
+          description: Competitor products or brands
+          example: ["ChatGPT", "Notion AI"]
+        geo:
+          type: string
+          description: Geographic market (ISO country code)
+          example: "us"
+        status:
+          type: string
+          enum: [queued, running, complete, failed]
+          description: Current status of the analysis run
+        run_type:
+          type: string
+          enum: [light, deep]
+          description: Type of analysis (light or deep)
+        started_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: When the analysis started
+        finished_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: When the analysis completed
+        error:
+          type: string
+          nullable: true
+          description: Error message if the run failed
+        created_at:
+          type: string
+          format: date-time
+          description: When the run was created
+
+    CreateRunRequest:
+      type: object
+      required:
+        - nicheQuery
+      properties:
+        nicheQuery:
+          type: string
+          description: The niche or market to analyze
+          example: "SaaS marketing tools"
+        seedTerms:
+          type: array
+          items:
+            type: string
+          description: Optional seed keywords
+          example: ["SaaS", "marketing", "growth"]
+        competitors:
+          type: array
+          items:
+            type: string
+          description: Optional competitor names
+          example: ["HubSpot", "Mailchimp"]
+        geo:
+          type: string
+          description: Geographic market (defaults to "us")
+          default: "us"
+          example: "us"
+        runType:
+          type: string
+          enum: [light, deep]
+          description: Type of analysis (defaults to "deep")
+          default: "deep"
+
+    CreateRunResponse:
+      type: object
+      properties:
+        run:
+          $ref: '#/components/schemas/Run'
+        message:
+          type: string
+          example: "Analysis run created successfully"
+
+    ListRunsResponse:
+      type: object
+      properties:
+        runs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Run'
+
+    ListReportsResponse:
+      type: object
+      properties:
+        reports:
+          type: array
+          items:
+            $ref: '#/components/schemas/Run'
+        total:
+          type: integer
+          description: Total number of reports available
+        limit:
+          type: integer
+          description: Number of results per page
+        offset:
+          type: integer
+          description: Offset for pagination
+
+    GetReportResponse:
+      type: object
+      properties:
+        report:
+          $ref: '#/components/schemas/Run'
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+
+    RateLimitError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "Rate limit exceeded"
+        limit:
+          type: integer
+          description: Rate limit per hour
+        resetAt:
+          type: string
+          format: date-time
+          description: When the rate limit resets
+
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            missingAuth:
+              value:
+                error: "Missing Authorization header"
+            invalidFormat:
+              value:
+                error: "Invalid Authorization header format. Use: Bearer <api_key>"
+            invalidKey:
+              value:
+                error: "Invalid API key"
+            expiredKey:
+              value:
+                error: "API key has expired"
+
+    RateLimitExceeded:
+      description: Rate limit exceeded
+      headers:
+        X-RateLimit-Limit:
+          schema:
+            type: integer
+          description: Maximum requests per hour
+        X-RateLimit-Remaining:
+          schema:
+            type: integer
+          description: Remaining requests in current window
+        X-RateLimit-Reset:
+          schema:
+            type: integer
+          description: Unix timestamp when limit resets
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RateLimitError'
+
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: "Report not found"
+
+    Forbidden:
+      description: Access forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            unauthorized:
+              value:
+                error: "Unauthorized access to this report"
+            quotaExceeded:
+              value:
+                error: "Run limit reached. Please upgrade your plan."
+                runsRemaining: 0
+
+security:
+  - ApiKeyAuth: []
+
+paths:
+  /runs:
+    get:
+      summary: List all runs
+      description: Returns a list of all analysis runs for the authenticated user
+      operationId: listRuns
+      tags:
+        - Runs
+      responses:
+        '200':
+          description: List of runs retrieved successfully
+          headers:
+            X-RateLimit-Limit:
+              schema:
+                type: integer
+              description: Maximum requests per hour
+            X-RateLimit-Remaining:
+              schema:
+                type: integer
+              description: Remaining requests in current window
+            X-RateLimit-Reset:
+              schema:
+                type: integer
+              description: Unix timestamp when limit resets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListRunsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimitExceeded'
+
+    post:
+      summary: Create a new run
+      description: Creates a new market analysis run with the specified parameters
+      operationId: createRun
+      tags:
+        - Runs
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRunRequest'
+            examples:
+              minimal:
+                summary: Minimal request
+                value:
+                  nicheQuery: "AI writing assistants"
+              full:
+                summary: Full request with all options
+                value:
+                  nicheQuery: "Project management SaaS"
+                  seedTerms: ["project management", "team collaboration", "kanban"]
+                  competitors: ["Asana", "Monday.com", "ClickUp"]
+                  geo: "us"
+                  runType: "deep"
+      responses:
+        '201':
+          description: Run created successfully
+          headers:
+            X-RateLimit-Limit:
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateRunResponse'
+        '400':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                missingNiche:
+                  value:
+                    error: "nicheQuery is required"
+                noProject:
+                  value:
+                    error: "No project found. Please create a project first."
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimitExceeded'
+
+  /reports:
+    get:
+      summary: List all reports
+      description: Returns a paginated list of analysis reports (completed runs) for the authenticated user
+      operationId: listReports
+      tags:
+        - Reports
+      parameters:
+        - name: limit
+          in: query
+          description: Number of results per page (max 100)
+          schema:
+            type: integer
+            default: 50
+            minimum: 1
+            maximum: 100
+        - name: offset
+          in: query
+          description: Offset for pagination
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - name: status
+          in: query
+          description: Filter by run status
+          schema:
+            type: string
+            enum: [queued, running, complete, failed]
+      responses:
+        '200':
+          description: List of reports retrieved successfully
+          headers:
+            X-RateLimit-Limit:
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListReportsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimitExceeded'
+
+  /reports/{id}:
+    get:
+      summary: Get a specific report
+      description: Returns detailed information about a specific analysis report
+      operationId: getReport
+      tags:
+        - Reports
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Run ID (UUID)
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Report retrieved successfully
+          headers:
+            X-RateLimit-Limit:
+              schema:
+                type: integer
+            X-RateLimit-Remaining:
+              schema:
+                type: integer
+            X-RateLimit-Reset:
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetReportResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimitExceeded'
+
+tags:
+  - name: Runs
+    description: Operations for creating and managing analysis runs
+  - name: Reports
+    description: Operations for retrieving analysis reports

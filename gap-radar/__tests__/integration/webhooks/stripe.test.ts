@@ -1,6 +1,20 @@
 /**
  * @jest-environment node
  */
+
+// Polyfill for Response.json (Node.js < 18.2.0 compatibility)
+if (!Response.json) {
+  Response.json = function (data: any, init?: ResponseInit) {
+    return new Response(JSON.stringify(data), {
+      ...init,
+      headers: {
+        'Content-Type': 'application/json',
+        ...init?.headers,
+      },
+    });
+  };
+}
+
 import { POST } from '@/app/api/webhooks/stripe/route';
 import { stripe } from '@/lib/stripe';
 import { createClient } from '@/lib/supabase/server';

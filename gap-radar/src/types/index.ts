@@ -234,3 +234,51 @@ export interface PlatformPresence {
   saturationScore: number;
   topApps: AppStoreResult[];
 }
+
+export type WebhookEventType =
+  | 'run.started'
+  | 'run.completed'
+  | 'run.failed'
+  | 'gap.discovered'
+  | 'report.generated';
+
+export type WebhookDeliveryStatus = 'pending' | 'success' | 'failed';
+
+export interface WebhookConfig {
+  id: string;
+  userId: string;
+  url: string;
+  secret: string;
+  isActive: boolean;
+  events: WebhookEventType[];
+  name?: string;
+  description?: string;
+  lastTriggeredAt?: Date;
+  successCount: number;
+  failureCount: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface WebhookDelivery {
+  id: string;
+  webhookConfigId: string;
+  eventType: WebhookEventType;
+  payload: Record<string, any>;
+  status: WebhookDeliveryStatus;
+  statusCode?: number;
+  responseBody?: string;
+  errorMessage?: string;
+  attemptCount: number;
+  maxAttempts: number;
+  nextRetryAt?: Date;
+  createdAt: Date;
+  deliveredAt?: Date;
+}
+
+export interface WebhookPayload {
+  id: string;
+  event: WebhookEventType;
+  timestamp: string;
+  data: Record<string, any>;
+}

@@ -98,3 +98,27 @@ export const CREDIT_PACKAGES = {
 } as const;
 
 export type CreditPackageKey = keyof typeof CREDIT_PACKAGES;
+
+// Add-on packages for one-time purchases (BILL-010)
+export const ADDON_PACKAGES = {
+  ad_angles: {
+    name: 'Ad Angle Pack',
+    description: '10 additional ad angles for your niche',
+    price: 29,
+    priceId: process.env.STRIPE_ADDON_AD_ANGLES_PRICE_ID,
+  },
+  landing_rewrites: {
+    name: 'Landing Page Rewrites',
+    description: '5 landing page variations optimized for conversion',
+    price: 49,
+    priceId: process.env.STRIPE_ADDON_LANDING_PRICE_ID,
+  },
+  competitor_watch: {
+    name: 'Competitor Watchlist',
+    description: 'Monthly competitor monitoring and alerts',
+    price: 99,
+    priceId: process.env.STRIPE_ADDON_WATCHLIST_PRICE_ID,
+  },
+} as const;
+
+export type AddonPackageKey = keyof typeof ADDON_PACKAGES;

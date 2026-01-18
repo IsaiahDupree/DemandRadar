@@ -227,5 +227,90 @@ describe('Google Ads Collector', () => {
       expect(Array.isArray(ads)).toBe(true);
       expect(ads.length).toBeGreaterThan(0);
     });
+
+    it('parses display ads when available', async () => {
+      global.fetch = jest.fn(() =>
+        Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve({
+            inline_images: [
+              {
+                title: 'Premium Fitness App',
+                link: 'https://example.com/fitness',
+                source: 'example.com',
+                thumbnail: 'https://example.com/thumb.jpg',
+                original: 'https://example.com/image.jpg',
+              },
+            ],
+          }),
+        } as Response)
+      );
+
+      const ads = await searchGoogleAds('fitness app', { adType: 'display' });
+
+      expect(ads.length).toBeGreaterThan(0);
+      const displayAd = ads.find(ad => ad.ad_type === 'display');
+      expect(displayAd).toBeDefined();
+      expect(displayAd?.advertiser_name).toBe('example.com');
+      expect(displayAd?.raw_payload).toHaveProperty('thumbnail');
+    });
+
+    it('collects creative URLs from display ads', async () => {
+      global.fetch = jest.fn(() =>
+        Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve({
+            inline_images: [
+              {
+                title: 'Visual Ad',
+                link: 'https://brand.com/landing',
+                source: 'brand.com',
+                thumbnail: 'https://cdn.example.com/thumb.jpg',
+                original: 'https://cdn.example.com/creative.jpg',
+              },
+            ],
+          }),
+        } as Response)
+      );
+
+      const ads = await searchGoogleAds('test product', { adType: 'display' });
+
+      expect(ads.length).toBeGreaterThan(0);
+      const displayAd = ads.find(ad => ad.ad_type === 'display');
+      expect(displayAd?.raw_payload).toHaveProperty('thumbnail');
+      expect(displayAd?.raw_payload).toHaveProperty('original');
+    });
+
+    it('filters ads by type when adType option is provided', async () => {
+      global.fetch = jest.fn(() =>
+        Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve({
+            ads: [
+              {
+                title: 'Search Ad',
+                description: 'Search result',
+                advertiser: 'SearchCo',
+                displayed_link: 'www.search.com',
+              },
+            ],
+            inline_images: [
+              {
+                title: 'Display Ad',
+                link: 'https://display.com',
+                source: 'display.com',
+                thumbnail: 'https://img.com/thumb.jpg',
+              },
+            ],
+          }),
+        } as Response)
+      );
+
+      const searchAds = await searchGoogleAds('test', { adType: 'search' });
+      expect(searchAds.every(ad => ad.ad_type === 'search')).toBe(true);
+
+      const displayAds = await searchGoogleAds('test', { adType: 'display' });
+      expect(displayAds.every(ad => ad.ad_type === 'display')).toBe(true);
+    });
   });
 });

@@ -29,6 +29,14 @@ type ConceptIdea = any; // Database['public']['Tables']['concept_ideas']['Row'];
 type ConceptMetrics = any; // Database['public']['Tables']['concept_metrics']['Row'];
 type AppStoreResult = any; // Database['public']['Tables']['app_store_results']['Row'];
 
+export interface Branding {
+  companyName: string;
+  logoUrl?: string;
+  primaryColor?: string;
+  secondaryColor?: string;
+  removeBranding?: boolean;
+}
+
 export interface ReportData {
   run: Run;
   summary: ExecutiveSummary;
@@ -40,6 +48,7 @@ export interface ReportData {
   buildability: BuildabilityAssessment;
   ugc: UGCWinnersPack;
   actionPlan: ActionPlan;
+  branding?: Branding;
 }
 
 export interface ExecutiveSummary {

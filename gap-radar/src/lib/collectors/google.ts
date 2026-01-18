@@ -70,7 +70,7 @@ export async function searchGoogleAds(
     const ads: GoogleAd[] = [];
 
     // Parse paid search ads
-    if (data.ads) {
+    if (data.ads && options.adType !== 'display') {
       for (const ad of data.ads) {
         ads.push({
           source: 'google',
@@ -89,7 +89,7 @@ export async function searchGoogleAds(
     }
 
     // Parse shopping ads if available
-    if (data.shopping_results) {
+    if (data.shopping_results && options.adType !== 'display') {
       for (const item of data.shopping_results.slice(0, 10)) {
         ads.push({
           source: 'google',
@@ -99,6 +99,23 @@ export async function searchGoogleAds(
           display_url: item.link,
           final_url: item.link,
           ad_type: 'shopping',
+          keywords: [query],
+          raw_payload: item,
+        });
+      }
+    }
+
+    // Parse display ads (inline images) if available
+    if (data.inline_images && options.adType !== 'search') {
+      for (const item of data.inline_images.slice(0, 10)) {
+        ads.push({
+          source: 'google',
+          advertiser_name: item.source || extractDomain(item.link) || 'Unknown',
+          headline: item.title || '',
+          description: item.snippet || item.title || '',
+          display_url: item.source,
+          final_url: item.link,
+          ad_type: 'display',
           keywords: [query],
           raw_payload: item,
         });
@@ -205,6 +222,14 @@ function generateMockGoogleAds(query: string): GoogleAd[] {
       description: `100% free ${query}. No registration. Instant results. Works on all devices.`,
       type: 'search' as const,
     },
+    {
+      advertiser: `${query.replace(/\s/g, '')}Visual.com`,
+      headline: `${query} - Visual Solutions`,
+      description: `Premium ${query} with stunning visuals. Transform your workflow today.`,
+      type: 'display' as const,
+      thumbnail: `https://via.placeholder.com/300x250?text=${encodeURIComponent(query)}`,
+      original: `https://via.placeholder.com/800x600?text=${encodeURIComponent(query)}`,
+    },
   ];
 
   return templates.map((t, i) => ({
@@ -217,5 +242,9 @@ function generateMockGoogleAds(query: string): GoogleAd[] {
     ad_type: t.type,
     keywords: [query],
     first_seen: new Date(Date.now() - (90 - i * 15) * 24 * 60 * 60 * 1000).toISOString(),
+    raw_payload: t.type === 'display' ? {
+      thumbnail: t.thumbnail,
+      original: t.original
+    } : undefined,
   }));
 }

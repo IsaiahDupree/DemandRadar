@@ -14,8 +14,22 @@ import { Request, Response, Headers } from 'node-fetch';
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder as typeof global.TextDecoder;
 global.Request = Request as any;
-global.Response = Response as any;
 global.Headers = Headers as any;
+
+// Polyfill Response.json for Next.js compatibility
+class ExtendedResponse extends Response {
+  static json(data: any, init?: ResponseInit): Response {
+    const headers = new Headers(init?.headers);
+    headers.set('content-type', 'application/json');
+
+    return new ExtendedResponse(JSON.stringify(data), {
+      ...init,
+      headers,
+    });
+  }
+}
+
+global.Response = ExtendedResponse as any;
 
 // Mock environment variables
 process.env.OPENAI_API_KEY = 'test-openai-key';

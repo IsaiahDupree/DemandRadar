@@ -30,7 +30,25 @@ export async function GET(request: NextRequest) {
       throw error;
     }
 
-    return NextResponse.json({ niches });
+    // For each niche, fetch the latest snapshot
+    const nichesWithSnapshots = await Promise.all(
+      (niches || []).map(async (niche) => {
+        const { data: snapshot } = await supabase
+          .from("demand_snapshots")
+          .select("demand_score, trend, demand_score_change, week_start")
+          .eq("niche_id", niche.id)
+          .order("week_start", { ascending: false })
+          .limit(1)
+          .maybeSingle();
+
+        return {
+          ...niche,
+          latestSnapshot: snapshot || undefined,
+        };
+      })
+    );
+
+    return NextResponse.json({ niches: nichesWithSnapshots });
   } catch (error) {
     console.error("Error fetching niches:", error);
     return NextResponse.json(

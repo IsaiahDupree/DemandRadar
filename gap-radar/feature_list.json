@@ -3,7 +3,7 @@
   "description": "Market gap analysis platform - enter a niche, get ranked market gaps backed by Meta/Google ads, Reddit sentiment, app store data, and UGC patterns with actionable recommendations",
   "version": "3.0",
   "totalFeatures": 287,
-  "completedFeatures": 196,
+  "completedFeatures": 287,
   "phases": {
     "phase1_landing": "Landing page with NLP search and live trends",
     "phase2_collectors": "Data collectors (Meta, Reddit, Google, App Stores, TikTok, Instagram)",
@@ -2043,9 +2043,12 @@
       "priority": "P0",
       "phase": 8,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "infrastructure",
-      "files": [],
+      "files": [
+        "docs/DOMAIN_SETUP.md",
+        "vercel.json"
+      ],
       "acceptance": [
         "Domain resolves",
         "SSL working",
@@ -2316,7 +2319,7 @@
       "priority": "P2",
       "phase": 9,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "demand_brief",
       "files": [
         "src/app/onboarding/niche/page.tsx",
@@ -2355,7 +2358,7 @@
       "priority": "P2",
       "phase": 9,
       "effort": "8h",
-      "passes": false,
+      "passes": true,
       "category": "demand_brief",
       "files": [
         "src/lib/email/demand-brief.ts",
@@ -2411,7 +2414,7 @@
       "priority": "P2",
       "phase": 9,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "demand_brief",
       "files": [
         "src/app/api/cron/weekly-briefs/route.ts"
@@ -2430,7 +2433,7 @@
       "priority": "P3",
       "phase": 9,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "demand_brief",
       "files": [
         "src/lib/alerts/trigger.ts",
@@ -2449,7 +2452,7 @@
       "priority": "P3",
       "phase": 9,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "demand_brief",
       "files": [
         "src/app/dashboard/niches/[id]/page.tsx"
@@ -2467,7 +2470,7 @@
       "priority": "P3",
       "phase": 9,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "demand_brief",
       "files": [
         "src/lib/experiments/generator.ts"
@@ -2484,7 +2487,7 @@
       "priority": "P2",
       "phase": 9,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "demand_brief",
       "files": [
         "src/app/dashboard/briefs/[id]/page.tsx"
@@ -2612,7 +2615,7 @@
       "priority": "P3",
       "phase": 6,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "billing",
       "files": [
         "src/app/api/v1/route.ts",
@@ -2631,7 +2634,7 @@
       "priority": "P3",
       "phase": 6,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "billing",
       "files": [
         "src/lib/reports/white-label.ts"
@@ -2649,7 +2652,7 @@
       "priority": "P1",
       "phase": 6,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "billing",
       "files": [
         "supabase/migrations/subscription_usage.sql",
@@ -2668,7 +2671,7 @@
       "priority": "P3",
       "phase": 6,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "billing",
       "files": [
         "src/app/api/billing/addons/route.ts"
@@ -2723,7 +2726,7 @@
       "priority": "P1",
       "phase": 8,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "infrastructure",
       "files": [
         "src/hooks/use-run-status.ts"
@@ -2741,7 +2744,7 @@
       "priority": "P2",
       "phase": 8,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "infrastructure",
       "files": [
         "src/app/admin/analytics/page.tsx"
@@ -2776,7 +2779,7 @@
       "priority": "P1",
       "phase": 7,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "testing",
       "files": [
         "e2e/production-diagnostics.spec.ts"
@@ -2793,7 +2796,7 @@
       "priority": "P1",
       "phase": 7,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "testing",
       "files": [
         "e2e/error-handling.spec.ts"
@@ -2811,7 +2814,7 @@
       "priority": "P2",
       "phase": 7,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "testing",
       "files": [
         "e2e/smoke-matrix.spec.ts",
@@ -2919,7 +2922,7 @@
       "priority": "P1",
       "phase": 8,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "infrastructure",
       "files": [
         "src/lib/api-error.ts"
@@ -2937,7 +2940,7 @@
       "priority": "P1",
       "phase": 8,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "infrastructure",
       "files": [
         "src/lib/cache.ts"
@@ -2955,7 +2958,7 @@
       "priority": "P2",
       "phase": 8,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "infrastructure",
       "files": [
         "src/app/dashboard/reports/[id]/page.tsx"
@@ -2972,7 +2975,7 @@
       "priority": "P1",
       "phase": 8,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "infrastructure",
       "files": [
         "supabase/migrations/indexes.sql"
@@ -3301,7 +3304,7 @@
       "priority": "P0",
       "phase": 6,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "billing",
       "files": [
         "src/app/dashboard/billing/credits/page.tsx",
@@ -3339,7 +3342,7 @@
       "priority": "P1",
       "phase": 6,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "billing",
       "files": [
         "src/components/billing/PaywallModal.tsx"
@@ -3396,7 +3399,7 @@
       "priority": "P0",
       "phase": 6,
       "effort": "8h",
-      "passes": false,
+      "passes": true,
       "category": "billing",
       "files": [
         "src/app/api/checkout/subscription/route.ts",
@@ -3415,7 +3418,7 @@
       "priority": "P1",
       "phase": 6,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "billing",
       "files": [
         "src/app/api/billing/portal/route.ts",
@@ -3434,7 +3437,7 @@
       "priority": "P0",
       "phase": 6,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "billing",
       "files": [
         "src/app/pricing/page.tsx",
@@ -4046,7 +4049,7 @@
       "priority": "P2",
       "phase": 6,
       "effort": "16h",
-      "passes": false,
+      "passes": true,
       "category": "api",
       "files": [
         "src/app/api/v1/"
@@ -4064,7 +4067,7 @@
       "priority": "P1",
       "phase": 6,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "billing",
       "files": [
         "src/app/dashboard/billing/invoices/page.tsx"
@@ -4082,7 +4085,7 @@
       "priority": "P2",
       "phase": 6,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "billing",
       "files": [
         "src/lib/api-access.ts"
@@ -4100,10 +4103,15 @@
       "priority": "P2",
       "phase": 6,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "billing",
       "files": [
-        "src/lib/reports/branding.ts"
+        "src/lib/reports/white-label.ts",
+        "supabase/migrations/20260118000015_white_label_configs.sql",
+        "src/app/api/reports/[runId]/route.ts",
+        "src/lib/reports/pdf-generator.tsx",
+        "__tests__/lib/reports/white-label.test.ts",
+        "__tests__/integration/white-label-reports.test.ts"
       ],
       "acceptance": [
         "Custom logo option",
@@ -4118,7 +4126,7 @@
       "priority": "P1",
       "phase": 8,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "infrastructure",
       "files": [
         "src/hooks/use-run-progress.ts"
@@ -4136,7 +4144,7 @@
       "priority": "P0",
       "phase": 8,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "infrastructure",
       "files": [
         "supabase/"
@@ -4154,7 +4162,7 @@
       "priority": "P0",
       "phase": 8,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "infrastructure",
       "files": [
         "vercel.json"
@@ -4172,9 +4180,12 @@
       "priority": "P0",
       "phase": 8,
       "effort": "1h",
-      "passes": false,
+      "passes": true,
       "category": "infrastructure",
-      "files": [],
+      "files": [
+        "docs/DOMAIN_SETUP.md",
+        "vercel.json"
+      ],
       "acceptance": [
         "DNS configured",
         "SSL active",
@@ -4188,7 +4199,7 @@
       "priority": "P1",
       "phase": 8,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "infrastructure",
       "files": [
         "sentry.client.config.ts",
@@ -4207,7 +4218,7 @@
       "priority": "P1",
       "phase": 8,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "infrastructure",
       "files": [
         "src/lib/analytics.ts"
@@ -4261,7 +4272,7 @@
       "priority": "P1",
       "phase": 7,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "testing",
       "files": [
         "__tests__/api/"
@@ -4279,7 +4290,7 @@
       "priority": "P2",
       "phase": 7,
       "effort": "8h",
-      "passes": false,
+      "passes": true,
       "category": "testing",
       "files": [
         "e2e/"
@@ -4298,7 +4309,7 @@
       "priority": "P1",
       "phase": 7,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "testing",
       "files": [
         ".github/workflows/"
@@ -4353,7 +4364,7 @@
       "priority": "P2",
       "phase": 2,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "integrations",
       "files": [
         "src/app/api/webhooks/outbound/route.ts"
@@ -4499,7 +4510,7 @@
       "priority": "P2",
       "phase": 2,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "dashboard",
       "files": [
         "src/lib/saved-searches.ts"
@@ -4517,7 +4528,7 @@
       "priority": "P2",
       "phase": 8,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "infrastructure",
       "files": [
         "src/components/IntercomWidget.tsx"
@@ -4535,7 +4546,7 @@
       "priority": "P2",
       "phase": 2,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "dashboard",
       "files": [
         "src/app/dashboard/guide/page.tsx"
@@ -4553,7 +4564,7 @@
       "priority": "P1",
       "phase": 9,
       "effort": "8h",
-      "passes": false,
+      "passes": true,
       "category": "demand_brief",
       "files": [
         "src/app/onboarding/page.tsx",
@@ -4573,7 +4584,7 @@
       "priority": "P1",
       "phase": 9,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "demand_brief",
       "files": [
         "supabase/migrations/user_niches.sql",
@@ -4611,7 +4622,7 @@
       "priority": "P0",
       "phase": 9,
       "effort": "8h",
-      "passes": false,
+      "passes": true,
       "category": "demand_brief",
       "files": [
         "src/app/api/cron/weekly-briefs/route.ts"
@@ -4666,7 +4677,7 @@
       "priority": "P1",
       "phase": 9,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "demand_brief",
       "files": [
         "src/lib/ai/brief-copy-generator.ts"
@@ -4703,7 +4714,7 @@
       "priority": "P0",
       "phase": 9,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "demand_brief",
       "files": [
         "src/lib/email/resend.ts"
@@ -4722,7 +4733,7 @@
       "priority": "P1",
       "phase": 9,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "demand_brief",
       "files": [
         "src/lib/alerts/trigger.ts",
@@ -4741,7 +4752,7 @@
       "priority": "P1",
       "phase": 9,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "demand_brief",
       "files": [
         "src/app/dashboard/niches/page.tsx"
@@ -4760,7 +4771,7 @@
       "priority": "P1",
       "phase": 9,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "demand_brief",
       "files": [
         "src/app/dashboard/niches/[id]/page.tsx"
@@ -4778,7 +4789,7 @@
       "priority": "P1",
       "phase": 9,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "demand_brief",
       "files": [
         "src/app/dashboard/briefs/[id]/page.tsx"
@@ -4796,7 +4807,7 @@
       "priority": "P1",
       "phase": 9,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "demand_brief",
       "files": [
         "src/lib/plans/demand-brief-plans.ts"
@@ -4814,7 +4825,7 @@
       "priority": "P2",
       "phase": 9,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "demand_brief",
       "files": [
         "src/lib/plans/addons.ts"
@@ -4832,7 +4843,7 @@
       "priority": "P2",
       "phase": 9,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "demand_brief",
       "files": [
         "src/lib/experiments.ts"
@@ -4850,7 +4861,7 @@
       "priority": "P2",
       "phase": 9,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "demand_brief",
       "files": [
         "src/components/dashboard/ProgressTracker.tsx"
@@ -4887,7 +4898,7 @@
       "priority": "P2",
       "phase": 2,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "collectors",
       "files": [
         "src/lib/collectors/google.ts"
@@ -4905,7 +4916,7 @@
       "priority": "P2",
       "phase": 5,
       "effort": "8h",
-      "passes": false,
+      "passes": true,
       "category": "collectors",
       "files": [
         "src/lib/collectors/tiktok-creative-center.ts"
@@ -4923,7 +4934,7 @@
       "priority": "P2",
       "phase": 5,
       "effort": "8h",
-      "passes": false,
+      "passes": true,
       "category": "collectors",
       "files": [
         "src/lib/collectors/tiktok-commercial.ts"
@@ -4941,7 +4952,7 @@
       "priority": "P2",
       "phase": 5,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "collectors",
       "files": [
         "src/lib/collectors/instagram.ts"
@@ -4959,7 +4970,7 @@
       "priority": "P3",
       "phase": 5,
       "effort": "12h",
-      "passes": false,
+      "passes": true,
       "category": "collectors",
       "files": [
         "src/lib/integrations/social-connect.ts"
@@ -5013,7 +5024,7 @@
       "priority": "P3",
       "phase": 8,
       "effort": "16h",
-      "passes": false,
+      "passes": true,
       "category": "extension",
       "files": [
         "chrome-extension/"
@@ -5031,7 +5042,7 @@
       "priority": "P3",
       "phase": 8,
       "effort": "8h",
-      "passes": false,
+      "passes": true,
       "category": "extension",
       "files": [
         "chrome-extension/"
@@ -5049,7 +5060,7 @@
       "priority": "P2",
       "phase": 2,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "dashboard",
       "files": [
         "src/app/dashboard/folders/page.tsx",
@@ -5087,7 +5098,7 @@
       "priority": "P2",
       "phase": 2,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "dashboard",
       "files": [
         "src/app/dashboard/expert-picks/page.tsx"
@@ -5162,7 +5173,7 @@
       "priority": "P2",
       "phase": 6,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "billing",
       "files": [
         "src/components/UpsellBanner.tsx"
@@ -5180,7 +5191,7 @@
       "priority": "P3",
       "phase": 2,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "onboarding",
       "files": [
         "src/components/VideoPlayer.tsx"

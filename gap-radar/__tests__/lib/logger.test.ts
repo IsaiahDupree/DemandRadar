@@ -4,7 +4,10 @@
  * Tests the logger utility for structured logging with levels and context.
  */
 
-import { logger, LogLevel } from '@/lib/logger';
+import { Logger, LogLevel } from '@/lib/logger';
+
+// Create a test logger with debug level (overriding test environment default)
+const logger = new Logger({}, 'debug');
 
 describe('Logger', () => {
   let consoleLogSpy: jest.SpyInstance;

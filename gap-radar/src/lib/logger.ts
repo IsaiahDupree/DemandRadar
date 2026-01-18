@@ -33,15 +33,21 @@ class Logger {
   private context: LogContext;
   private minLevel: LogLevel;
 
-  constructor(context: LogContext = {}) {
+  constructor(context: LogContext = {}, minLevel?: LogLevel) {
     this.context = context;
-    this.minLevel = this.getMinLevelFromEnv();
+    this.minLevel = minLevel || this.getMinLevelFromEnv();
   }
 
   /**
    * Determine minimum log level based on environment
    */
   private getMinLevelFromEnv(): LogLevel {
+    // Check for explicit override via environment variable
+    const levelOverride = process.env.LOG_LEVEL as LogLevel;
+    if (levelOverride && ['debug', 'info', 'warn', 'error'].includes(levelOverride)) {
+      return levelOverride;
+    }
+
     const env = process.env.NODE_ENV;
 
     if (env === 'test') {
@@ -187,7 +193,7 @@ class Logger {
     return new Logger({
       ...this.context,
       ...context,
-    });
+    }, this.minLevel);
   }
 }
 

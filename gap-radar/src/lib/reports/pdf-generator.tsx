@@ -148,6 +148,18 @@ const styles = StyleSheet.create({
 });
 
 /**
+ * Reusable Footer Component
+ */
+const PageFooter = ({ data, pageNumber }: { data: ReportData; pageNumber: number }) => (
+  <View style={styles.footer}>
+    {!data.branding?.removeBranding && (
+      <Text>{data.branding?.companyName || 'DemandRadar'} Market Analysis Report</Text>
+    )}
+    <Text style={styles.pageNumber}>Page {pageNumber} of 9</Text>
+  </View>
+);
+
+/**
  * Page 1: Executive Summary
  */
 const ExecutiveSummaryPage = ({ data }: { data: ReportData }) => (
@@ -201,10 +213,7 @@ const ExecutiveSummaryPage = ({ data }: { data: ReportData }) => (
       </View>
     </View>
 
-    <View style={styles.footer}>
-      <Text>GapRadar Market Analysis Report</Text>
-      <Text style={styles.pageNumber}>Page 1 of 9</Text>
-    </View>
+    <PageFooter data={data} pageNumber={1} />
   </Page>
 );
 
@@ -248,9 +257,7 @@ const PaidMarketPage = ({ data }: { data: ReportData }) => (
       ))}
     </View>
 
-    <View style={styles.footer}>
-      <Text style={styles.pageNumber}>Page 2 of 9</Text>
-    </View>
+    <PageFooter data={data} pageNumber={2} />
   </Page>
 );
 
@@ -291,9 +298,7 @@ const RedditInsightsPage = ({ data }: { data: ReportData }) => (
       ))}
     </View>
 
-    <View style={styles.footer}>
-      <Text style={styles.pageNumber}>Page 3 of 9</Text>
-    </View>
+    <PageFooter data={data} pageNumber={3} />
   </Page>
 );
 
@@ -332,9 +337,7 @@ const PlatformGapPage = ({ data }: { data: ReportData }) => (
       </View>
     </View>
 
-    <View style={styles.footer}>
-      <Text style={styles.pageNumber}>Page 4 of 9</Text>
-    </View>
+    <PageFooter data={data} pageNumber={4} />
   </Page>
 );
 
@@ -367,9 +370,7 @@ const GapOpportunitiesPage = ({ data }: { data: ReportData }) => (
       )}
     </View>
 
-    <View style={styles.footer}>
-      <Text style={styles.pageNumber}>Page 5 of 9</Text>
-    </View>
+    <PageFooter data={data} pageNumber={5} />
   </Page>
 );
 
@@ -426,9 +427,7 @@ const ModeledEconomicsPage = ({ data }: { data: ReportData }) => (
       </Text>
     </View>
 
-    <View style={styles.footer}>
-      <Text style={styles.pageNumber}>Page 6 of 9</Text>
-    </View>
+    <PageFooter data={data} pageNumber={6} />
   </Page>
 );
 
@@ -469,9 +468,7 @@ const BuildabilityPage = ({ data }: { data: ReportData }) => (
       </View>
     )}
 
-    <View style={styles.footer}>
-      <Text style={styles.pageNumber}>Page 7 of 9</Text>
-    </View>
+    <PageFooter data={data} pageNumber={7} />
   </Page>
 );
 
@@ -503,9 +500,7 @@ const UGCWinnersPage = ({ data }: { data: ReportData }) => (
       ))}
     </View>
 
-    <View style={styles.footer}>
-      <Text style={styles.pageNumber}>Page 8 of 9</Text>
-    </View>
+    <PageFooter data={data} pageNumber={8} />
   </Page>
 );
 
@@ -544,8 +539,8 @@ const ActionPlanPage = ({ data }: { data: ReportData }) => (
 
     <View style={styles.footer}>
       <Text>End of Report</Text>
-      <Text style={styles.pageNumber}>Page 9 of 9</Text>
     </View>
+    <PageFooter data={data} pageNumber={9} />
   </Page>
 );
 

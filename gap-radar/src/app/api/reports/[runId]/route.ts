@@ -8,6 +8,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { calculateScores } from '@/lib/scoring';
+import { getWhiteLabelConfig, applyWhiteLabelToReport, getDefaultBranding } from '@/lib/reports/white-label';
 
 interface ReportData {
   run: {
@@ -208,6 +209,13 @@ export async function GET(
       .sort((a, b) => b.daysRunning - a.daysRunning)
       .slice(0, 5);
 
+    // Fetch white-label configuration for Studio users
+    const whiteLabelResult = await getWhiteLabelConfig(supabase, user.id);
+    const whiteLabelConfig = (whiteLabelResult.success && whiteLabelResult.config) ? whiteLabelResult.config : null;
+
+    // Get branding (either custom or default)
+    const branding = whiteLabelConfig || getDefaultBranding();
+
     const reportData: ReportData = {
       run: {
         id: run.id,
@@ -311,7 +319,11 @@ export async function GET(
       } : null,
     };
 
-    return NextResponse.json(reportData);
+    // Apply white-label branding to report
+    const brandedReport = applyWhiteLabelToReport(reportData, whiteLabelConfig);
+
+    // Add branding info to response
+    return NextResponse.json({ ...brandedReport, branding });
   } catch (error) {
     console.error('Report data error:', error);
     return NextResponse.json(

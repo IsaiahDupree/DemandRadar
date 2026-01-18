@@ -1,20 +1,22 @@
 "use client";
 
-import { use, useState, useEffect } from "react";
+import { use, useState, useEffect, lazy, Suspense } from "react";
 import { ReportHeader } from "./components/ReportHeader";
 import { ReportNav } from "./components/ReportNav";
 import { ExecutiveSummary } from "./components/ExecutiveSummary";
-import { MarketSnapshot } from "./components/MarketSnapshot";
-import { PainMap } from "./components/PainMap";
-import { PlatformGap } from "./components/PlatformGap";
-import { GapOpportunities } from "./components/GapOpportunities";
-import { Economics } from "./components/Economics";
-import { Buildability } from "./components/Buildability";
-import { UGCPack } from "./components/UGCPack";
-import ActionPlan from "./components/ActionPlan";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Loader2 } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+
+// Lazy load heavy components for better performance
+const MarketSnapshot = lazy(() => import("./components/MarketSnapshot").then(m => ({ default: m.MarketSnapshot })));
+const PainMap = lazy(() => import("./components/PainMap").then(m => ({ default: m.PainMap })));
+const PlatformGap = lazy(() => import("./components/PlatformGap").then(m => ({ default: m.PlatformGap })));
+const GapOpportunities = lazy(() => import("./components/GapOpportunities").then(m => ({ default: m.GapOpportunities })));
+const Economics = lazy(() => import("./components/Economics").then(m => ({ default: m.Economics })));
+const Buildability = lazy(() => import("./components/Buildability").then(m => ({ default: m.Buildability })));
+const UGCPack = lazy(() => import("./components/UGCPack").then(m => ({ default: m.UGCPack })));
+const ActionPlan = lazy(() => import("./components/ActionPlan"));
 
 interface ReportData {
   run: {
@@ -117,6 +119,27 @@ interface ReportData {
   } | null;
 }
 
+// Loading skeleton for lazy-loaded components
+function ComponentLoadingSkeleton() {
+  return (
+    <Card>
+      <CardHeader>
+        <div className="flex items-center space-x-2">
+          <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+          <CardTitle className="text-muted-foreground">Loading section...</CardTitle>
+        </div>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-3">
+          <div className="h-4 bg-muted animate-pulse rounded" />
+          <div className="h-4 bg-muted animate-pulse rounded w-5/6" />
+          <div className="h-4 bg-muted animate-pulse rounded w-4/6" />
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
 export default function ReportPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const [activeSection, setActiveSection] = useState("summary");
@@ -190,44 +213,60 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
         )}
 
         {activeSection === "market" && (
-          <MarketSnapshot
-            marketSnapshot={reportData.marketSnapshot}
-            summary={reportData.summary}
-          />
+          <Suspense fallback={<ComponentLoadingSkeleton />}>
+            <MarketSnapshot
+              marketSnapshot={reportData.marketSnapshot}
+              summary={reportData.summary}
+            />
+          </Suspense>
         )}
 
         {activeSection === "pain" && (
-          <PainMap
-            painMap={reportData.painMap}
-            summary={reportData.summary}
-          />
+          <Suspense fallback={<ComponentLoadingSkeleton />}>
+            <PainMap
+              painMap={reportData.painMap}
+              summary={reportData.summary}
+            />
+          </Suspense>
         )}
 
         {activeSection === "platform" && (
-          <PlatformGap
-            gaps={reportData.gaps}
-            summary={reportData.summary}
-          />
+          <Suspense fallback={<ComponentLoadingSkeleton />}>
+            <PlatformGap
+              gaps={reportData.gaps}
+              summary={reportData.summary}
+            />
+          </Suspense>
         )}
 
         {activeSection === "gaps" && (
-          <GapOpportunities gaps={reportData.gaps} />
+          <Suspense fallback={<ComponentLoadingSkeleton />}>
+            <GapOpportunities gaps={reportData.gaps} />
+          </Suspense>
         )}
 
         {activeSection === "economics" && (
-          <Economics economics={reportData.economics} />
+          <Suspense fallback={<ComponentLoadingSkeleton />}>
+            <Economics economics={reportData.economics} />
+          </Suspense>
         )}
 
         {activeSection === "buildability" && (
-          <Buildability buildability={reportData.buildability} />
+          <Suspense fallback={<ComponentLoadingSkeleton />}>
+            <Buildability buildability={reportData.buildability} />
+          </Suspense>
         )}
 
         {activeSection === "ugc" && (
-          <UGCPack ugc={reportData.ugc} />
+          <Suspense fallback={<ComponentLoadingSkeleton />}>
+            <UGCPack ugc={reportData.ugc} />
+          </Suspense>
         )}
 
         {activeSection === "action" && (
-          <ActionPlan actionPlan={reportData.actionPlan} />
+          <Suspense fallback={<ComponentLoadingSkeleton />}>
+            <ActionPlan actionPlan={reportData.actionPlan} />
+          </Suspense>
         )}
       </div>
     </div>

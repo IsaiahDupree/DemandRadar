@@ -3,7 +3,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Download, ExternalLink, Loader2, Receipt } from "lucide-react";
+import { Download, ExternalLink, Loader2, Receipt, Settings } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import Link from "next/link";
@@ -24,6 +24,7 @@ interface Invoice {
 export default function BillingPage() {
   const [invoices, setInvoices] = useState<Invoice[]>([]);
   const [loading, setLoading] = useState(true);
+  const [portalLoading, setPortalLoading] = useState(false);
 
   useEffect(() => {
     fetchInvoices();
@@ -77,6 +78,34 @@ export default function BillingPage() {
     );
   }
 
+  async function openBillingPortal() {
+    setPortalLoading(true);
+    try {
+      const response = await fetch('/api/billing/portal', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          returnUrl: window.location.href,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        window.location.href = data.url;
+      } else {
+        const errorData = await response.json();
+        toast.error(errorData.error || 'Failed to open billing portal');
+        setPortalLoading(false);
+      }
+    } catch (error) {
+      console.error('Error opening billing portal:', error);
+      toast.error('Failed to open billing portal');
+      setPortalLoading(false);
+    }
+  }
+
   return (
     <div className="space-y-6 max-w-6xl">
       <div className="flex items-center justify-between">
@@ -92,6 +121,49 @@ export default function BillingPage() {
           </Link>
         </Button>
       </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Settings className="h-5 w-5" />
+            Subscription Management
+          </CardTitle>
+          <CardDescription>
+            Manage your subscription, payment methods, and billing details
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <p className="text-sm text-muted-foreground">
+              Access the Stripe Customer Portal to:
+            </p>
+            <ul className="text-sm text-muted-foreground space-y-2 ml-4 list-disc">
+              <li>Update your payment method</li>
+              <li>View and download all invoices</li>
+              <li>Update billing information</li>
+              <li>Manage your subscription</li>
+              <li>View payment history</li>
+            </ul>
+            <Button
+              onClick={openBillingPortal}
+              disabled={portalLoading}
+              className="w-full sm:w-auto"
+            >
+              {portalLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Opening Portal...
+                </>
+              ) : (
+                <>
+                  <Settings className="mr-2 h-4 w-4" />
+                  Manage Subscription
+                </>
+              )}
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
 
       <Card>
         <CardHeader>

@@ -27,6 +27,13 @@ jest.mock('next/navigation', () => ({
 describe('Comparison View (UI-002)', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    // Reset the useSearchParams mock to default behavior
+    jest.spyOn(require('next/navigation'), 'useSearchParams').mockReturnValue({
+      get: jest.fn((key: string) => {
+        if (key === 'runs') return '1,2';
+        return null;
+      }),
+    });
   });
 
   describe('Initial render', () => {
@@ -108,11 +115,18 @@ describe('Comparison View (UI-002)', () => {
       }
     });
 
-    it('should limit selection to maximum 4 runs', () => {
+    it('should limit selection to maximum 4 runs', async () => {
+      // Override to show selection mode (no runs in URL)
+      jest.spyOn(require('next/navigation'), 'useSearchParams').mockReturnValue({
+        get: jest.fn(() => null),
+      });
+
       render(<ComparePage />);
 
-      // Should show max selection limit message
-      expect(screen.getByText(/maximum/i) || screen.getByText(/up to 4 runs/i)).toBeInTheDocument();
+      // Wait for the component to render after Suspense resolves
+      await waitFor(() => {
+        expect(screen.getByText(/maximum/i)).toBeInTheDocument();
+      });
     });
   });
 
@@ -228,8 +242,9 @@ describe('Comparison View (UI-002)', () => {
     it('should show status for each run', () => {
       render(<ComparePage />);
 
-      // Should display run statuses
-      expect(screen.getByText(/complete|running|queued|failed/i)).toBeInTheDocument();
+      // Should display run statuses (multiple instances expected)
+      const statuses = screen.getAllByText(/complete|running|queued|failed/i);
+      expect(statuses.length).toBeGreaterThan(0);
     });
   });
 
