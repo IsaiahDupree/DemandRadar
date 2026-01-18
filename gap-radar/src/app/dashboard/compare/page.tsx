@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -53,7 +53,7 @@ function getHighlightClass(value: number, allValues: number[], higherIsBetter: b
   }
 }
 
-export default function ComparePage() {
+function ComparePageContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [selectedRunIds, setSelectedRunIds] = useState<string[]>([]);
@@ -410,5 +410,13 @@ export default function ComparePage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function ComparePage() {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center p-8">Loading...</div>}>
+      <ComparePageContent />
+    </Suspense>
   );
 }
