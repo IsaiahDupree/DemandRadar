@@ -2,7 +2,7 @@
   "framework": "nextjs",
   "buildCommand": "next build",
   "devCommand": "next dev --port ${PORT:-3945}",
-  "installCommand": "npm install",
+  "installCommand": "npm install --legacy-peer-deps",
   "outputDirectory": ".next",
   "regions": ["iad1"],
   "github": {
