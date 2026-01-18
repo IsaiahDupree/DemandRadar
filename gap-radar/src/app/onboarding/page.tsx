@@ -33,7 +33,7 @@ export default function OnboardingPage() {
   const [nicheConfig, setNicheConfig] = useState<NicheConfig | null>(null);
 
   const totalSteps = 3;
-  const progress = (step / totalSteps) * 100;
+  const progress = ((step - 1) / totalSteps) * 100;
 
   // Step 1: Extract niche data from user's offering description
   const handleExtractNiche = async () => {
@@ -109,6 +109,12 @@ export default function OnboardingPage() {
     }
   };
 
+  const handleSkip = () => {
+    // Skip onboarding and redirect to dashboard
+    toast.info("You can start onboarding anytime from your dashboard");
+    router.push("/dashboard/new-run");
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-muted/20 py-12 px-4">
       <div className="mx-auto max-w-4xl space-y-8">
@@ -151,7 +157,13 @@ export default function OnboardingPage() {
                 onSubmit={handleExtractNiche}
               />
 
-              <div className="flex justify-end">
+              <div className="flex justify-between">
+                <Button
+                  variant="ghost"
+                  onClick={handleSkip}
+                >
+                  Skip for now
+                </Button>
                 <Button
                   onClick={handleExtractNiche}
                   disabled={!offeringText.trim() || isExtracting}

@@ -1,0 +1,1162 @@
+{
+  "project": "GapRadar (Market Gap Analysis Platform)",
+  "description": "Enter a niche → get ranked market gaps backed by Meta/Google ads, Reddit sentiment, app store data, and UGC patterns with actionable recommendations",
+  "version": "1.0.0",
+  "totalFeatures": 41,
+  "completedFeatures": 41,
+  "currentPhase": "Phase 4: Reports - COMPLETE",
+  "phases": {
+    "phase1_landing": "Landing page with NLP search and live trends",
+    "phase2_collectors": "Data collectors (Meta, Reddit, Google, App Stores, TikTok, Instagram)",
+    "phase3_analysis": "LLM extraction, clustering, scoring, and gap detection",
+    "phase4_reports": "Report generation, PDF export, and share links"
+  },
+  "features": [
+    {
+      "id": "LAND-001",
+      "name": "Landing Page Hero Section",
+      "description": "Hero with value prop, headline, and short explanation of GapRadar",
+      "priority": "P0",
+      "phase": 1,
+      "effort": "2h",
+      "passes": true,
+      "category": "landing",
+      "files": [
+        "src/app/page.tsx"
+      ],
+      "acceptance": [
+        "Hero renders with headline and value prop",
+        "CTA buttons visible (Sign In, Get Started)",
+        "Navigation bar with logo and branding",
+        "Stats section showing key metrics"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "Implemented in src/app/page.tsx with hero section, value prop, CTA buttons, and stats"
+      }
+    },
+    {
+      "id": "LAND-002",
+      "name": "NLP Search Input Component",
+      "description": "Natural language input that accepts niche, competitor, or pain statement",
+      "priority": "P0",
+      "phase": 1,
+      "effort": "4h",
+      "passes": true,
+      "category": "landing",
+      "files": [
+        "src/components/landing/NLPSearch.tsx"
+      ],
+      "acceptance": [
+        "Input accepts text",
+        "Shows suggestions within 300ms",
+        "Keyboard navigable",
+        "Placeholder rotates through examples",
+        "Submit routes to signup if not authenticated"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "Implemented with rotating placeholders, suggestion dropdown, and auth routing"
+      }
+    },
+    {
+      "id": "LAND-003",
+      "name": "NLP Client-Side Suggestions",
+      "description": "Category inference, query refinements, confidence indicator - all client-side heuristics",
+      "priority": "P0",
+      "phase": 1,
+      "effort": "4h",
+      "passes": true,
+      "category": "landing",
+      "files": [
+        "src/lib/nlp/heuristics.ts",
+        "src/lib/nlp/categories.ts",
+        "src/lib/nlp/index.ts"
+      ],
+      "acceptance": [
+        "Suggestions appear as user types",
+        "Category inference works (10+ categories)",
+        "Confidence 0-100 shown",
+        "Query refinements (best, 2025, for B2B, etc.)",
+        "Deduplication and sorting by confidence"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "Full heuristic NLP system with category detection, refinements, expansions, and confidence scoring"
+      }
+    },
+    {
+      "id": "LAND-004",
+      "name": "Trending Topics API",
+      "description": "GET /api/trends endpoint with caching and rate limiting",
+      "priority": "P0",
+      "phase": 1,
+      "effort": "6h",
+      "passes": true,
+      "category": "api",
+      "files": [
+        "src/app/api/trends/route.ts"
+      ],
+      "acceptance": [
+        "Returns 9-12 trends within 1s",
+        "5-minute cache TTL (Next.js revalidate)",
+        "Fallback on error (curated trends)",
+        "Reddit data fetching from 4 subreddits",
+        "Topic extraction with NLP heuristics",
+        "No API keys in response"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "Fetches from r/entrepreneur, r/startups, r/SaaS, r/smallbusiness with fallback curated trends"
+      }
+    },
+    {
+      "id": "LAND-005",
+      "name": "Reddit Trends Fetcher",
+      "description": "Fetch hot posts from r/entrepreneur, r/startups, r/SaaS, r/smallbusiness",
+      "priority": "P0",
+      "phase": 1,
+      "effort": "4h",
+      "passes": true,
+      "category": "trends",
+      "files": [
+        "src/app/api/trends/route.ts"
+      ],
+      "acceptance": [
+        "Fetches from 4 subreddits",
+        "Extracts topics from titles",
+        "Calculates growth based on recency",
+        "Analyzes sentiment (positive/negative/neutral)",
+        "Deduplicates topics"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "Integrated into /api/trends endpoint with topic extraction and sentiment analysis"
+      }
+    },
+    {
+      "id": "LAND-006",
+      "name": "Trending Topics Grid UI",
+      "description": "Display 9-12 trending topic cards with all required fields",
+      "priority": "P0",
+      "phase": 1,
+      "effort": "3h",
+      "passes": true,
+      "category": "landing",
+      "files": [
+        "src/components/landing/TrendingTopics.tsx"
+      ],
+      "acceptance": [
+        "Grid displays 9-12 cards",
+        "Each card shows: topic, category, volume, growth, sentiment, sources, relatedTerms, opportunityScore",
+        "Cards are clickable and prefill search",
+        "Loading skeleton state",
+        "Updated timestamp visible"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "Component implemented with all data-testid attributes, displays all required fields, includes loading state"
+      }
+    },
+    {
+      "id": "LAND-007",
+      "name": "Features Section",
+      "description": "Feature highlights showing how the product works",
+      "priority": "P1",
+      "phase": 1,
+      "effort": "2h",
+      "passes": true,
+      "category": "landing",
+      "files": [
+        "src/components/landing/Features.tsx"
+      ],
+      "acceptance": [
+        "Features section visible",
+        "Multiple feature items displayed",
+        "Icons and descriptions for each feature"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "Component implemented with 8 feature cards, icons, gradient colors, and data-testid attributes"
+      }
+    },
+    {
+      "id": "LAND-008",
+      "name": "How It Works Section",
+      "description": "3-step process explaining how GapRadar works",
+      "priority": "P1",
+      "phase": 1,
+      "effort": "2h",
+      "passes": true,
+      "category": "landing",
+      "files": [
+        "src/app/page.tsx"
+      ],
+      "acceptance": [
+        "Shows 3 numbered steps",
+        "Clear explanations for each step",
+        "Visual hierarchy"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "Implemented in main page.tsx with numbered steps"
+      }
+    },
+    {
+      "id": "LAND-009",
+      "name": "Social Proof Section",
+      "description": "Testimonials and user count",
+      "priority": "P2",
+      "phase": 1,
+      "effort": "2h",
+      "passes": true,
+      "category": "landing",
+      "files": [
+        "src/app/page.tsx"
+      ],
+      "acceptance": [
+        "Testimonial quote visible",
+        "Attribution (name, company)",
+        "Trust indicators"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "Sample testimonial from Sarah Chen included"
+      }
+    },
+    {
+      "id": "LAND-010",
+      "name": "CTA Footer Section",
+      "description": "Final call-to-action with signup link",
+      "priority": "P0",
+      "phase": 1,
+      "effort": "1h",
+      "passes": true,
+      "category": "landing",
+      "files": [
+        "src/app/page.tsx"
+      ],
+      "acceptance": [
+        "CTA section visible",
+        "Get Started button",
+        "Value prop reinforcement"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "CTA footer section implemented with data-testid, gradient background, dual CTAs"
+      }
+    },
+    {
+      "id": "LAND-011",
+      "name": "Landing Page SEO",
+      "description": "Meta tags, OpenGraph, Twitter cards",
+      "priority": "P1",
+      "phase": 1,
+      "effort": "2h",
+      "passes": true,
+      "category": "seo",
+      "files": [
+        "src/app/layout.tsx",
+        "src/app/page.tsx"
+      ],
+      "acceptance": [
+        "Title tag present (>10 chars)",
+        "Meta description (>50 chars)",
+        "OpenGraph tags (title, description, image)",
+        "Twitter card tags",
+        "Proper H1/H2 hierarchy"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "Complete SEO metadata in layout.tsx with title, description, keywords, OpenGraph, Twitter cards, robots, and proper H1/H2 hierarchy in page.tsx"
+      }
+    },
+    {
+      "id": "LAND-012",
+      "name": "Landing Page Analytics",
+      "description": "Track landing views, CTA clicks, NLP searches, trend clicks",
+      "priority": "P1",
+      "phase": 1,
+      "effort": "3h",
+      "passes": true,
+      "category": "analytics",
+      "files": [
+        "src/lib/analytics/landing.ts"
+      ],
+      "acceptance": [
+        "Landing view tracking",
+        "CTA click tracking",
+        "NLP search tracking",
+        "Trend click tracking"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "Analytics functions implemented and integrated"
+      }
+    },
+    {
+      "id": "LAND-013",
+      "name": "Authentication Redirect Flow",
+      "description": "Preserve query and route to signup/login, or create run if authenticated",
+      "priority": "P0",
+      "phase": 1,
+      "effort": "3h",
+      "passes": true,
+      "category": "auth",
+      "files": [
+        "src/lib/auth/redirect.ts"
+      ],
+      "acceptance": [
+        "Query preserved in URL or localStorage",
+        "Routes to signup if not authenticated",
+        "Routes to create run if authenticated",
+        "Query restored after auth"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "Redirect utilities implemented with query preservation"
+      }
+    },
+    {
+      "id": "LAND-014",
+      "name": "Landing Page Accessibility",
+      "description": "Keyboard navigation, focus states, ARIA labels, color contrast",
+      "priority": "P1",
+      "phase": 1,
+      "effort": "2h",
+      "passes": true,
+      "category": "accessibility",
+      "files": [
+        "src/components/landing/NLPSearch.tsx",
+        "src/components/landing/TrendingTopics.tsx"
+      ],
+      "acceptance": [
+        "NLP suggestions keyboard navigable",
+        "Visible focus states",
+        "Interactive cards have button/link semantics",
+        "ARIA labels where needed",
+        "Color contrast compliant"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "NLP search has full keyboard navigation (ArrowUp/Down, Enter, Escape), trend cards use button semantics with aria-labels and focus rings, focus states visible throughout"
+      }
+    },
+    {
+      "id": "LAND-015",
+      "name": "E2E Tests for Landing Page",
+      "description": "Playwright tests for all landing page features",
+      "priority": "P0",
+      "phase": 1,
+      "effort": "4h",
+      "passes": true,
+      "category": "testing",
+      "files": [
+        "e2e/landing-page.spec.ts",
+        "e2e/trends-api.spec.ts",
+        "playwright.config.ts"
+      ],
+      "acceptance": [
+        "Hero section tests",
+        "NLP search tests",
+        "Trending topics tests",
+        "SEO tests",
+        "Accessibility tests",
+        "Performance tests",
+        "API response tests"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "All 15 landing page E2E tests passing. Updated Playwright config to use correct port (3945), fixed test assertions for Button asChild components, added proper timeouts for trends API calls"
+      }
+    },
+    {
+      "id": "DB-001",
+      "name": "Database Schema Migrations",
+      "description": "Create all database tables with RLS policies for GapRadar",
+      "priority": "P0",
+      "phase": 2,
+      "effort": "6h",
+      "passes": true,
+      "category": "database",
+      "files": [
+        "supabase/migrations/20260116000000_initial_schema.sql"
+      ],
+      "acceptance": [
+        "All tables created (projects, runs, ad_creatives, reddit_mentions, extractions, clusters, gap_opportunities, reports, app_store_results, concept_ideas, concept_metrics, ugc_assets, ugc_metrics, ugc_patterns, ugc_recommendations)",
+        "RLS policies enabled on all tables",
+        "Owner-based access control implemented",
+        "Foreign keys properly set up",
+        "Indexes created for query performance"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "All tables already created in initial migration with complete RLS policies, foreign keys, and indexes. Schema matches PRD requirements exactly."
+      }
+    },
+    {
+      "id": "COLL-001",
+      "name": "Meta Ads Library Collector",
+      "description": "Fetch ads from Meta Ads Library API and normalize to ad_creatives table",
+      "priority": "P0",
+      "phase": 2,
+      "effort": "8h",
+      "passes": true,
+      "category": "collector",
+      "files": [
+        "src/lib/collectors/meta.ts"
+      ],
+      "acceptance": [
+        "Fetches ads for given niche/keywords",
+        "Extracts advertiser, creative text, CTA, landing URL, dates",
+        "Calculates longevity (days_running)",
+        "Normalizes to ad_creatives schema",
+        "Handles rate limiting with exponential backoff",
+        "Returns structured AdCreative[] array"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "Full Meta Ads collector with API integration, mock data fallback, and proper normalization"
+      }
+    },
+    {
+      "id": "COLL-002",
+      "name": "Reddit Data API Collector",
+      "description": "Fetch Reddit posts and comments via Reddit Data API",
+      "priority": "P0",
+      "phase": 2,
+      "effort": "6h",
+      "passes": true,
+      "category": "collector",
+      "files": [
+        "src/lib/collectors/reddit.ts"
+      ],
+      "acceptance": [
+        "Fetches posts/comments for given keywords",
+        "Extracts title, text, score, subreddit, permalink",
+        "Respects 100 queries/min rate limit",
+        "Normalizes to reddit_mentions schema",
+        "Returns structured RedditMention[] array",
+        "Implements caching to avoid redundant calls"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "Reddit collector using public JSON API with rate limiting, deduplication, and mock fallback"
+      }
+    },
+    {
+      "id": "COLL-003",
+      "name": "Google Ads Transparency Collector",
+      "description": "Fetch Google ads via SerpApi or similar service",
+      "priority": "P1",
+      "phase": 2,
+      "effort": "6h",
+      "passes": true,
+      "category": "collector",
+      "files": [
+        "src/lib/collectors/google.ts"
+      ],
+      "acceptance": [
+        "Fetches Google ads for keywords",
+        "Extracts advertiser, creative text, themes",
+        "Normalizes to ad_creatives schema with source='google'",
+        "Handles API rate limits",
+        "Returns structured AdCreative[] array"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "Google Ads collector integrated in execute pipeline, uses SerpAPI with mock fallback"
+      }
+    },
+    {
+      "id": "COLL-004",
+      "name": "iOS App Store Collector",
+      "description": "Fetch iOS apps via Apple iTunes Search API",
+      "priority": "P0",
+      "phase": 2,
+      "effort": "4h",
+      "passes": true,
+      "category": "collector",
+      "files": [
+        "src/lib/collectors/appstore.ts"
+      ],
+      "acceptance": [
+        "Fetches iOS apps for keywords",
+        "Extracts app name, developer, rating, review count, description",
+        "Normalizes to app_store_results schema with platform='ios'",
+        "No auth required (free API)",
+        "Returns structured AppStoreResult[] array"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "iTunes Search API integration with full data extraction and normalization"
+      }
+    },
+    {
+      "id": "COLL-005",
+      "name": "Android Play Store Collector",
+      "description": "Fetch Android apps via SerpApi or similar service",
+      "priority": "P0",
+      "phase": 2,
+      "effort": "4h",
+      "passes": true,
+      "category": "collector",
+      "files": [
+        "src/lib/collectors/appstore.ts"
+      ],
+      "acceptance": [
+        "Fetches Android apps for keywords",
+        "Extracts app name, developer, rating, review count, description",
+        "Normalizes to app_store_results schema with platform='android'",
+        "Handles API rate limits",
+        "Returns structured AppStoreResult[] array"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "SerpAPI Play Store integration with mock fallback for development"
+      }
+    },
+    {
+      "id": "COLL-006",
+      "name": "Collector Orchestrator",
+      "description": "Orchestrate all data collectors for a run",
+      "priority": "P0",
+      "phase": 2,
+      "effort": "6h",
+      "passes": true,
+      "category": "orchestrator",
+      "files": [
+        "src/lib/orchestrator/run-orchestrator.ts"
+      ],
+      "acceptance": [
+        "Runs all collectors in parallel where possible",
+        "Updates run status (queued -> running -> complete/failed)",
+        "Stores collected data to database",
+        "Handles partial failures gracefully",
+        "Returns summary of collected data counts",
+        "Logs progress and errors"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "Full orchestrator with parallel collection, graceful error handling, and database persistence"
+      }
+    },
+    {
+      "id": "COLL-007",
+      "name": "Run Creation API",
+      "description": "POST /api/runs endpoint to create and start a new analysis run",
+      "priority": "P0",
+      "phase": 2,
+      "effort": "4h",
+      "passes": true,
+      "category": "api",
+      "files": [
+        "src/app/api/runs/route.ts"
+      ],
+      "acceptance": [
+        "Creates run in database with status='queued'",
+        "Validates niche_query, seed_terms, competitors, geo",
+        "Starts collector orchestrator",
+        "Returns run ID and status",
+        "Requires authentication",
+        "Rate limits per user"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "POST endpoint with authentication, usage limits, validation, and async execution trigger"
+      }
+    },
+    {
+      "id": "COLL-008",
+      "name": "Run Status API",
+      "description": "GET /api/runs/:id endpoint to check run progress",
+      "priority": "P0",
+      "phase": 2,
+      "effort": "2h",
+      "passes": true,
+      "category": "api",
+      "files": [
+        "src/app/api/runs/[id]/route.ts"
+      ],
+      "acceptance": [
+        "Returns run status, progress, and error if any",
+        "Shows data collection counts (ads, mentions, apps)",
+        "Requires authentication and ownership check",
+        "Returns 404 for non-existent or unauthorized runs"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "GET endpoint with full run data including all related entities, authentication, and ownership validation"
+      }
+    },
+    {
+      "id": "AI-001",
+      "name": "LLM Extraction Service",
+      "description": "Extract offers, claims, angles, objections, desired features, and sentiment from ads and Reddit mentions using OpenAI",
+      "priority": "P0",
+      "phase": 3,
+      "effort": "8h",
+      "passes": true,
+      "category": "ai",
+      "files": [
+        "src/lib/ai/extractor.ts"
+      ],
+      "acceptance": [
+        "Extracts from ads: offers, claims, angles",
+        "Extracts from Reddit: objections, desired_features, sentiment",
+        "Batch processes multiple items",
+        "Returns structured Extraction[] array",
+        "Mock fallback when OpenAI unavailable"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "Full LLM extraction with OpenAI GPT-4o-mini, batch processing, and mock generation fallback"
+      }
+    },
+    {
+      "id": "AI-002",
+      "name": "Clustering Service",
+      "description": "Group similar angles, objections, and features into clusters with frequency and intensity scores",
+      "priority": "P0",
+      "phase": 3,
+      "effort": "6h",
+      "passes": true,
+      "category": "ai",
+      "files": [
+        "src/lib/ai/extractor.ts"
+      ],
+      "acceptance": [
+        "Clusters angles, objections, features separately",
+        "Returns label, examples, frequency, intensity for each cluster",
+        "Keyword-based grouping (v1)",
+        "Sorted by frequency descending"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "Simple keyword-based clustering with frequency and intensity calculation"
+      }
+    },
+    {
+      "id": "SCORE-001",
+      "name": "Saturation Score Formula",
+      "description": "Calculate ad saturation score: 100 * sigmoid(0.6*log1p(A) + 0.3*log1p(C) + 0.8*R)",
+      "priority": "P0",
+      "phase": 3,
+      "effort": "2h",
+      "passes": true,
+      "category": "scoring",
+      "files": [
+        "src/lib/scoring/formulas.ts"
+      ],
+      "acceptance": [
+        "Returns 0-100 score",
+        "Increases with more advertisers and creatives",
+        "Handles zero inputs gracefully"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "Implemented with tests passing"
+      }
+    },
+    {
+      "id": "SCORE-002",
+      "name": "Longevity Score Formula",
+      "description": "Calculate longevity signal: clamp(100 * log1p(days_running) / log1p(180), 0, 100)",
+      "priority": "P0",
+      "phase": 3,
+      "effort": "2h",
+      "passes": true,
+      "category": "scoring",
+      "files": [
+        "src/lib/scoring/formulas.ts"
+      ],
+      "acceptance": [
+        "Returns 0 for 0 days",
+        "Returns ~100 for 180+ days",
+        "Increases monotonically"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "Implemented with tests passing, includes average calculation helper"
+      }
+    },
+    {
+      "id": "SCORE-003",
+      "name": "Dissatisfaction Score Formula",
+      "description": "Calculate Reddit dissatisfaction: 100 * sigmoid(0.5*log1p(F) + 0.7*I + 0.6*S + 0.2*log1p(W))",
+      "priority": "P0",
+      "phase": 3,
+      "effort": "2h",
+      "passes": true,
+      "category": "scoring",
+      "files": [
+        "src/lib/scoring/formulas.ts"
+      ],
+      "acceptance": [
+        "Returns 0-100 score",
+        "Increases with higher dissatisfaction signals",
+        "Combines frequency, intensity, sentiment, weighted score"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "Implemented with tests passing"
+      }
+    },
+    {
+      "id": "SCORE-004",
+      "name": "Misalignment Score Formula",
+      "description": "Calculate gap misalignment: 100 * (0.5*(1 - P) + 0.3*M + 0.2*T)",
+      "priority": "P0",
+      "phase": 3,
+      "effort": "2h",
+      "passes": true,
+      "category": "scoring",
+      "files": [
+        "src/lib/scoring/formulas.ts"
+      ],
+      "acceptance": [
+        "Returns 0 when everything aligns",
+        "Returns high score when promises don't match needs",
+        "Weights promise coverage at 50%"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "Implemented with tests passing"
+      }
+    },
+    {
+      "id": "SCORE-005",
+      "name": "Opportunity Score Formula",
+      "description": "Calculate opportunity: 0.35*longevity + 0.35*dissatisfaction + 0.30*misalignment - 0.15*saturation",
+      "priority": "P0",
+      "phase": 3,
+      "effort": "2h",
+      "passes": true,
+      "category": "scoring",
+      "files": [
+        "src/lib/scoring/formulas.ts"
+      ],
+      "acceptance": [
+        "Combines all factors correctly",
+        "Decreases with higher saturation",
+        "Clamped to 0-100 range"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "Implemented with tests passing"
+      }
+    },
+    {
+      "id": "SCORE-006",
+      "name": "Confidence Score Formula",
+      "description": "Calculate confidence: clamp(0.4*data_sufficiency + 0.4*cross_source + 0.2*recency, 0, 1)",
+      "priority": "P0",
+      "phase": 3,
+      "effort": "2h",
+      "passes": true,
+      "category": "scoring",
+      "files": [
+        "src/lib/scoring/formulas.ts"
+      ],
+      "acceptance": [
+        "Returns 0-1 range",
+        "Weights data sufficiency and alignment equally at 40%",
+        "Includes helpers for data sufficiency, cross-source alignment, recency"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "Implemented with helpers and tests passing"
+      }
+    },
+    {
+      "id": "GAP-001",
+      "name": "Gap Detection Engine",
+      "description": "Identify market gaps from clusters and evidence using LLM analysis",
+      "priority": "P0",
+      "phase": 3,
+      "effort": "8h",
+      "passes": true,
+      "category": "ai",
+      "files": [
+        "src/lib/ai/gap-generator.ts"
+      ],
+      "acceptance": [
+        "Generates 3-5 gap opportunities",
+        "Each gap has type, title, problem, evidence, recommendation, scores",
+        "Analyzes ad angles vs Reddit objections/features",
+        "Mock fallback when OpenAI unavailable"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "LLM-powered gap detection with mock generation fallback"
+      }
+    },
+    {
+      "id": "CONCEPT-001",
+      "name": "Concept Idea Generator",
+      "description": "Generate vetted product concepts from gaps with platform recommendations and MVP specs",
+      "priority": "P0",
+      "phase": 3,
+      "effort": "8h",
+      "passes": true,
+      "category": "ai",
+      "files": [
+        "src/lib/ai/concept-generator.ts"
+      ],
+      "acceptance": [
+        "Generates 2-3 concept ideas",
+        "Platform recommendation (web/mobile/hybrid) based on saturation",
+        "Business model classification (B2B/B2C)",
+        "MVP spec with must-haves, non-goals, differentiator",
+        "Estimated metrics (CPC, CAC, TAM, difficulty)"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "Full concept generation with metrics estimation and platform analysis"
+      }
+    },
+    {
+      "id": "GAP-003",
+      "name": "3% Better Plan Generator",
+      "description": "Generate actionable product/offer/copy changes for each gap opportunity",
+      "priority": "P0",
+      "phase": 3,
+      "effort": "8h",
+      "passes": true,
+      "category": "ai",
+      "files": [
+        "src/lib/ai/three-percent-better.ts"
+      ],
+      "acceptance": [
+        "Product changes with effort/impact ratings",
+        "Offer changes (pricing, guarantees, trials)",
+        "Copy changes with before/after examples",
+        "MVP spec tied to objections",
+        "Expected impact with confidence scores",
+        "Consolidated plan across all gaps"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "Complete 3% better plan generation with consolidated action plan, all tests passing"
+      }
+    },
+    {
+      "id": "REPORT-001",
+      "name": "Report Data Aggregator Service",
+      "description": "Aggregate all run data into comprehensive report structure",
+      "priority": "P0",
+      "phase": 4,
+      "effort": "8h",
+      "passes": true,
+      "category": "reports",
+      "files": [
+        "src/lib/reports/generator.ts"
+      ],
+      "acceptance": [
+        "Fetches all run data (ads, reddit, clusters, gaps, concepts)",
+        "Builds executive summary with top gaps and platform recommendation",
+        "Builds paid market snapshot with top advertisers and angles",
+        "Builds Reddit insights with objections and features",
+        "Builds platform existence gap analysis",
+        "Builds modeled economics from concept metrics",
+        "Builds buildability assessment",
+        "Builds UGC winners pack",
+        "Builds action plan with 7-day and 30-day roadmaps"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "Full report generator service with all 9 report sections implemented"
+      }
+    },
+    {
+      "id": "REPORT-002",
+      "name": "Report Data API",
+      "description": "GET /api/reports/[runId] endpoint to fetch report data",
+      "priority": "P0",
+      "phase": 4,
+      "effort": "4h",
+      "passes": true,
+      "category": "api",
+      "files": [
+        "src/app/api/reports/[runId]/route.ts"
+      ],
+      "acceptance": [
+        "Returns complete report data structure",
+        "Includes scores, summary, market snapshot, pain map",
+        "Includes gaps, concepts, economics, buildability",
+        "Includes UGC pack and action plan",
+        "Requires authentication and ownership verification",
+        "Returns 404 for non-existent runs"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "Report data API with full data aggregation and access control"
+      }
+    },
+    {
+      "id": "REPORT-003",
+      "name": "PDF Export Service",
+      "description": "Generate professional PDF reports using @react-pdf/renderer",
+      "priority": "P0",
+      "phase": 4,
+      "effort": "10h",
+      "passes": true,
+      "category": "reports",
+      "files": [
+        "src/lib/report-generator.tsx"
+      ],
+      "acceptance": [
+        "Generates multi-page PDF with all report sections",
+        "Professional styling with brand colors",
+        "Page 1: Executive Summary with scores and top 3 gaps",
+        "Page 2: Market Snapshot with advertisers, angles, longest-running ads",
+        "Page 3: User Pain Map with objections, features, friction points",
+        "Page 4: Detailed Gap Opportunities",
+        "Page 5: Product Concepts & Economics",
+        "Page 6: UGC Winners Pack (if data available)",
+        "Footer with page numbers and branding"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "Complete PDF generator with 6-page professional report layout"
+      }
+    },
+    {
+      "id": "REPORT-004",
+      "name": "PDF Download API",
+      "description": "GET /api/reports/[runId]/pdf endpoint to download PDF",
+      "priority": "P0",
+      "phase": 4,
+      "effort": "2h",
+      "passes": true,
+      "category": "api",
+      "files": [
+        "src/app/api/reports/[runId]/pdf/route.ts"
+      ],
+      "acceptance": [
+        "Fetches report data from main API",
+        "Generates PDF using report-generator",
+        "Returns PDF with proper Content-Type headers",
+        "Proper filename with niche and date",
+        "Requires authentication"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "PDF download endpoint with proper headers and authentication"
+      }
+    },
+    {
+      "id": "REPORT-005",
+      "name": "CSV Export Endpoint",
+      "description": "GET /api/reports/[runId]/export/csv for CSV data export",
+      "priority": "P1",
+      "phase": 4,
+      "effort": "3h",
+      "passes": true,
+      "category": "api",
+      "files": [
+        "src/app/api/reports/[runId]/export/csv/route.ts"
+      ],
+      "acceptance": [
+        "Exports all report data in CSV format",
+        "Includes scores, advertisers, angles, objections, features",
+        "Includes gap opportunities with all fields",
+        "Includes product concepts and economics",
+        "Includes UGC hooks if available",
+        "Proper CSV escaping for quotes and commas",
+        "Proper filename generation"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "CSV export with comprehensive data sections and proper formatting"
+      }
+    },
+    {
+      "id": "REPORT-006",
+      "name": "JSON Export Endpoint",
+      "description": "GET /api/reports/[runId]/export/json for complete data dump",
+      "priority": "P1",
+      "phase": 4,
+      "effort": "2h",
+      "passes": true,
+      "category": "api",
+      "files": [
+        "src/app/api/reports/[runId]/export/json/route.ts"
+      ],
+      "acceptance": [
+        "Exports complete run data in structured JSON",
+        "Includes meta information (export date, version)",
+        "Includes all raw data (ads, mentions, clusters, extractions)",
+        "Includes all insights (gaps, concepts, UGC, action plans)",
+        "Includes statistics summary",
+        "Proper JSON formatting with indentation",
+        "Proper filename generation"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "Complete JSON export with all run data and metadata"
+      }
+    },
+    {
+      "id": "REPORT-007",
+      "name": "Report UI - Executive Summary",
+      "description": "Executive summary component with scores and top gaps",
+      "priority": "P0",
+      "phase": 4,
+      "effort": "4h",
+      "passes": true,
+      "category": "ui",
+      "files": [
+        "src/app/dashboard/reports/[id]/components/ExecutiveSummary.tsx"
+      ],
+      "acceptance": [
+        "Displays opportunity score prominently",
+        "Shows confidence percentage",
+        "Displays all key scores (saturation, longevity, dissatisfaction, misalignment)",
+        "Shows top 3 gap opportunities",
+        "Platform recommendation with reasoning",
+        "Data summary with counts"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "Executive summary component with score cards and gap highlights"
+      }
+    },
+    {
+      "id": "REPORT-008",
+      "name": "Report UI - Market Snapshot",
+      "description": "Market snapshot with advertisers, angles, and longevity data",
+      "priority": "P0",
+      "phase": 4,
+      "effort": "3h",
+      "passes": true,
+      "category": "ui",
+      "files": [
+        "src/app/dashboard/reports/[id]/components/MarketSnapshot.tsx"
+      ],
+      "acceptance": [
+        "Top advertisers table with ad counts",
+        "Top marketing angles with frequency bars",
+        "Longest-running ads with days running",
+        "Market share percentages",
+        "Visual charts and graphs"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "Market snapshot component with tables and visualizations"
+      }
+    },
+    {
+      "id": "REPORT-009",
+      "name": "Report UI - Pain Map",
+      "description": "User pain map with objections and feature requests",
+      "priority": "P0",
+      "phase": 4,
+      "effort": "3h",
+      "passes": true,
+      "category": "ui",
+      "files": [
+        "src/app/dashboard/reports/[id]/components/PainMap.tsx"
+      ],
+      "acceptance": [
+        "Top objections with frequency and intensity",
+        "Top feature requests with frequency",
+        "Pricing friction points",
+        "Trust and credibility concerns",
+        "Visual indicators for severity"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "Pain map component with objections and feature analysis"
+      }
+    },
+    {
+      "id": "REPORT-010",
+      "name": "Report UI - Gap Opportunities",
+      "description": "Detailed gap opportunities with recommendations",
+      "priority": "P0",
+      "phase": 4,
+      "effort": "3h",
+      "passes": true,
+      "category": "ui",
+      "files": [
+        "src/app/dashboard/reports/[id]/components/GapOpportunities.tsx"
+      ],
+      "acceptance": [
+        "All gaps displayed with ranking",
+        "Gap type badges (product, offer, positioning, trust, pricing)",
+        "Problem statements",
+        "Recommendations with action items",
+        "Opportunity scores and confidence levels"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "Gap opportunities component with detailed cards"
+      }
+    },
+    {
+      "id": "REPORT-011",
+      "name": "Report UI - Economics & Buildability",
+      "description": "Economic estimates and buildability assessment",
+      "priority": "P0",
+      "phase": 4,
+      "effort": "4h",
+      "passes": true,
+      "category": "ui",
+      "files": [
+        "src/app/dashboard/reports/[id]/components/Economics.tsx",
+        "src/app/dashboard/reports/[id]/components/Buildability.tsx"
+      ],
+      "acceptance": [
+        "CPC, CAC, TAM ranges displayed",
+        "Budget scenario calculators (1k, 10k spend)",
+        "Implementation difficulty scores",
+        "Time to MVP estimates",
+        "Human touch level indicators",
+        "Autonomous suitability ratings"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "Economics and buildability components with ranges and estimates"
+      }
+    },
+    {
+      "id": "REPORT-012",
+      "name": "Report UI - Action Plan",
+      "description": "7-day and 30-day action plans with quick wins",
+      "priority": "P0",
+      "phase": 4,
+      "effort": "3h",
+      "passes": true,
+      "category": "ui",
+      "files": [
+        "src/app/dashboard/reports/[id]/components/ActionPlan.tsx"
+      ],
+      "acceptance": [
+        "7-day action items with tasks",
+        "30-day roadmap with weekly breakdowns",
+        "Quick wins section",
+        "Key risks identified",
+        "Next steps summary",
+        "Progress tracking UI"
+      ],
+      "implementation": {
+        "status": "complete",
+        "notes": "Action plan component with timeline and task tracking"
+      }
+    }
+  ],
+  "nextSteps": [
+    "✅ Phase 1 Complete! All 15 landing page features implemented and tested",
+    "✅ Phase 2 Complete! All 8 database and collector features implemented",
+    "✅ Phase 3 Complete! All 6 analysis engine features implemented",
+    "✅ Phase 4 Complete! All 12 report features implemented and tested",
+    "🎉 GapRadar MVP Complete! All 41 features across 4 phases delivered",
+    "🚀 Ready for production deployment and user testing"
+  ],
+  "technicalDebt": [
+    "NLP v2: Upgrade to server-powered NLP with embeddings",
+    "Trends v2: Add ProductHunt and Google Trends sources",
+    "Performance: Optimize trend fetching with better caching strategy"
+  ]
+}

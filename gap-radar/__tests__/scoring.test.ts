@@ -4,6 +4,7 @@
  */
 
 import { describe, it, expect } from '@jest/globals';
+import { calculateBuildToProfitScore, type BuildToProfitInputs } from '../src/lib/scoring/build-to-profit';
 
 // These will be implemented in src/lib/scoring/
 // For now, define the expected interfaces
@@ -276,5 +277,116 @@ describe('UGC Scoring', () => {
     const highShares = calculateConnectedUGC(100, 50, 50, 50);
     const lowShares = calculateConnectedUGC(20, 50, 50, 50);
     expect(highShares).toBeGreaterThan(lowShares);
+  });
+});
+
+describe('Build-to-Profit Score', () => {
+  // Formula: Score = (Opportunity × TAM_factor × Margin_factor × TimeToValue_factor) / (CAC_proxy × Complexity × Touch_factor)
+
+  it('returns positive score', () => {
+    const score = calculateBuildToProfitScore({
+      opportunity: 75,
+      tamFactor: 0.8,
+      marginFactor: 0.7,
+      timeToValueFactor: 0.9,
+      cacProxy: 0.5,
+      complexity: 0.4,
+      touchFactor: 0.3,
+    });
+    expect(score).toBeGreaterThan(0);
+    expect(Number.isFinite(score)).toBe(true);
+  });
+
+  it('increases with higher opportunity score', () => {
+    const base = {
+      tamFactor: 0.8,
+      marginFactor: 0.7,
+      timeToValueFactor: 0.9,
+      cacProxy: 0.5,
+      complexity: 0.4,
+      touchFactor: 0.3,
+    };
+
+    const lowOpp = calculateBuildToProfitScore({ ...base, opportunity: 30 });
+    const highOpp = calculateBuildToProfitScore({ ...base, opportunity: 90 });
+
+    expect(highOpp).toBeGreaterThan(lowOpp);
+  });
+
+  it('increases with larger TAM', () => {
+    const base = {
+      opportunity: 75,
+      marginFactor: 0.7,
+      timeToValueFactor: 0.9,
+      cacProxy: 0.5,
+      complexity: 0.4,
+      touchFactor: 0.3,
+    };
+
+    const smallTAM = calculateBuildToProfitScore({ ...base, tamFactor: 0.2 });
+    const largeTAM = calculateBuildToProfitScore({ ...base, tamFactor: 0.9 });
+
+    expect(largeTAM).toBeGreaterThan(smallTAM);
+  });
+
+  it('decreases with higher complexity', () => {
+    const base = {
+      opportunity: 75,
+      tamFactor: 0.8,
+      marginFactor: 0.7,
+      timeToValueFactor: 0.9,
+      cacProxy: 0.5,
+      touchFactor: 0.3,
+    };
+
+    const lowComplexity = calculateBuildToProfitScore({ ...base, complexity: 0.2 });
+    const highComplexity = calculateBuildToProfitScore({ ...base, complexity: 0.9 });
+
+    expect(lowComplexity).toBeGreaterThan(highComplexity);
+  });
+
+  it('decreases with higher CAC', () => {
+    const base = {
+      opportunity: 75,
+      tamFactor: 0.8,
+      marginFactor: 0.7,
+      timeToValueFactor: 0.9,
+      complexity: 0.4,
+      touchFactor: 0.3,
+    };
+
+    const lowCAC = calculateBuildToProfitScore({ ...base, cacProxy: 0.2 });
+    const highCAC = calculateBuildToProfitScore({ ...base, cacProxy: 0.9 });
+
+    expect(lowCAC).toBeGreaterThan(highCAC);
+  });
+
+  it('decreases with higher human touch requirement', () => {
+    const base = {
+      opportunity: 75,
+      tamFactor: 0.8,
+      marginFactor: 0.7,
+      timeToValueFactor: 0.9,
+      cacProxy: 0.5,
+      complexity: 0.4,
+    };
+
+    const lowTouch = calculateBuildToProfitScore({ ...base, touchFactor: 0.1 });
+    const highTouch = calculateBuildToProfitScore({ ...base, touchFactor: 0.9 });
+
+    expect(lowTouch).toBeGreaterThan(highTouch);
+  });
+
+  it('handles edge case with all zeros except opportunity', () => {
+    const score = calculateBuildToProfitScore({
+      opportunity: 50,
+      tamFactor: 0,
+      marginFactor: 0,
+      timeToValueFactor: 0,
+      cacProxy: 0.5,
+      complexity: 0.5,
+      touchFactor: 0.5,
+    });
+    expect(score).toBe(0);
   });
 });

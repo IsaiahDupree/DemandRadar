@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import type { RealtimeChannel } from '@supabase/supabase-js';
+import { trackFirstRunCompleted, hasCompletedStage, markStageCompleted } from '@/lib/analytics/funnel';
 
 export interface RunStatus {
   id: string;
@@ -30,6 +31,7 @@ export function useRunStatus({
   const [run, setRun] = useState<RunStatus | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [hasTrackedCompletion, setHasTrackedCompletion] = useState(false);
 
   useEffect(() => {
     const supabase = createClient();
@@ -118,6 +120,26 @@ export function useRunStatus({
       }
     };
   }, [runId, enableRealtime, pollingInterval]);
+
+  // Track first run completion
+  useEffect(() => {
+    if (!run || hasTrackedCompletion) return;
+
+    // Check if this is the first run and it just completed
+    if (
+      run.status === 'complete' &&
+      hasCompletedStage('first_run_started') &&
+      !hasCompletedStage('first_run_completed')
+    ) {
+      const duration = run.started_at && run.finished_at
+        ? new Date(run.finished_at).getTime() - new Date(run.started_at).getTime()
+        : undefined;
+
+      trackFirstRunCompleted(run.id, duration);
+      markStageCompleted('first_run_completed');
+      setHasTrackedCompletion(true);
+    }
+  }, [run, hasTrackedCompletion]);
 
   // Calculate progress percentage based on status
   const progressPercentage = run

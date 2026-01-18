@@ -2,8 +2,8 @@
   "project": "DemandRadar (GapRadar)",
   "description": "Market gap analysis platform - enter a niche, get ranked market gaps backed by Meta/Google ads, Reddit sentiment, app store data, and UGC patterns with actionable recommendations",
   "version": "3.0",
-  "totalFeatures": 250,
-  "completedFeatures": 55,
+  "totalFeatures": 287,
+  "completedFeatures": 175,
   "phases": {
     "phase1_landing": "Landing page with NLP search and live trends",
     "phase2_collectors": "Data collectors (Meta, Reddit, Google, App Stores, TikTok, Instagram)",
@@ -147,7 +147,7 @@
     },
     {
       "id": "LAND-008",
-      "name": "Trend Card Click \u2192 Prefill Search",
+      "name": "Trend Card Click → Prefill Search",
       "description": "Clicking a trend card prefills the NLP search input",
       "priority": "P1",
       "phase": 1,
@@ -681,7 +681,7 @@
     {
       "id": "RUN-003",
       "name": "Run Execution Worker",
-      "description": "Background worker to execute runs (collectors \u2192 extraction \u2192 scoring)",
+      "description": "Background worker to execute runs (collectors → extraction → scoring)",
       "priority": "P0",
       "phase": 2,
       "effort": "6h",
@@ -703,7 +703,7 @@
       "priority": "P0",
       "phase": 2,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "dashboard",
       "files": [
         "src/app/dashboard/new-run/page.tsx"
@@ -721,7 +721,7 @@
       "priority": "P1",
       "phase": 2,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "dashboard",
       "files": [
         "src/app/dashboard/runs/page.tsx"
@@ -906,11 +906,11 @@
     {
       "id": "SCORE-007",
       "name": "Build-to-Profit Score",
-      "description": "Implement Score = (Opportunity \u00d7 TAM \u00d7 Margin \u00d7 TimeToValue) / (CAC \u00d7 Complexity \u00d7 Touch)",
+      "description": "Implement Score = (Opportunity × TAM × Margin × TimeToValue) / (CAC × Complexity × Touch)",
       "priority": "P1",
       "phase": 3,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "scoring",
       "files": [
         "src/lib/scoring/build-to-profit.ts"
@@ -1014,7 +1014,7 @@
       "priority": "P0",
       "phase": 4,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
       "files": [
         "src/lib/reports/aggregator.ts"
@@ -1031,7 +1031,7 @@
       "priority": "P0",
       "phase": 4,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
       "files": [
         "src/components/reports/ExecutiveSummary.tsx"
@@ -1048,7 +1048,7 @@
       "priority": "P0",
       "phase": 4,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
       "files": [
         "src/components/reports/PaidMarketSnapshot.tsx"
@@ -1066,7 +1066,7 @@
       "priority": "P0",
       "phase": 4,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
       "files": [
         "src/components/reports/CustomerVoice.tsx"
@@ -1084,7 +1084,7 @@
       "priority": "P0",
       "phase": 4,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
       "files": [
         "src/components/reports/PlatformGap.tsx"
@@ -1102,7 +1102,7 @@
       "priority": "P0",
       "phase": 4,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
       "files": [
         "src/components/reports/GapOpportunities.tsx"
@@ -1120,7 +1120,7 @@
       "priority": "P1",
       "phase": 4,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
       "files": [
         "src/components/reports/ModeledEconomics.tsx"
@@ -1138,7 +1138,7 @@
       "priority": "P1",
       "phase": 4,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
       "files": [
         "src/components/reports/Buildability.tsx"
@@ -1155,7 +1155,7 @@
       "priority": "P0",
       "phase": 4,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
       "files": [
         "src/components/reports/ActionPlan.tsx"
@@ -1172,7 +1172,7 @@
       "priority": "P0",
       "phase": 4,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
       "files": [
         "src/app/dashboard/reports/[id]/page.tsx"
@@ -1189,7 +1189,7 @@
       "priority": "P0",
       "phase": 4,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
       "files": [
         "src/lib/reports/pdf-generator.ts",
@@ -1208,7 +1208,7 @@
       "priority": "P0",
       "phase": 4,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
       "files": [
         "src/app/api/reports/[id]/export/route.ts"
@@ -1225,7 +1225,7 @@
       "priority": "P2",
       "phase": 5,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "collectors",
       "files": [
         "src/lib/collectors/tiktok-creative.ts"
@@ -1242,7 +1242,7 @@
       "priority": "P2",
       "phase": 5,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "collectors",
       "files": [
         "src/lib/collectors/tiktok-trends.ts"
@@ -1259,7 +1259,7 @@
       "priority": "P2",
       "phase": 5,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "ai",
       "files": [
         "src/lib/ai/ugc-patterns.ts"
@@ -1276,7 +1276,7 @@
       "priority": "P2",
       "phase": 5,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "scoring",
       "files": [
         "src/lib/scoring/ugc.ts"
@@ -1293,7 +1293,7 @@
       "priority": "P2",
       "phase": 5,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "ai",
       "files": [
         "src/lib/ai/ugc-recommendations.ts"
@@ -1311,7 +1311,7 @@
       "priority": "P2",
       "phase": 5,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
       "files": [
         "src/components/reports/UGCWinnersPack.tsx"
@@ -1328,7 +1328,7 @@
       "priority": "P1",
       "phase": 6,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "billing",
       "files": [
         "src/lib/stripe/checkout.ts",
@@ -1346,7 +1346,7 @@
       "priority": "P1",
       "phase": 6,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "billing",
       "files": [
         "src/app/pricing/page.tsx"
@@ -1363,7 +1363,7 @@
       "priority": "P1",
       "phase": 6,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "billing",
       "files": [
         "src/lib/billing/credits.ts",
@@ -1382,7 +1382,7 @@
       "priority": "P2",
       "phase": 6,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "billing",
       "files": [
         "src/lib/billing/one-off.ts"
@@ -1399,7 +1399,7 @@
       "priority": "P2",
       "phase": 6,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "billing",
       "files": [
         "src/app/dashboard/billing/page.tsx",
@@ -1417,7 +1417,7 @@
       "priority": "P1",
       "phase": 6,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "billing",
       "files": [
         "src/components/billing/UsageTracker.tsx"
@@ -1434,7 +1434,7 @@
       "priority": "P1",
       "phase": 2,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "collectors",
       "files": [
         "src/lib/collectors/android-playstore.ts"
@@ -1452,7 +1452,7 @@
       "priority": "P2",
       "phase": 2,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "collectors",
       "files": [
         "src/lib/collectors/youtube.ts"
@@ -1470,7 +1470,7 @@
       "priority": "P1",
       "phase": 2,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "collectors",
       "files": [
         "src/lib/collectors/dedup.ts"
@@ -1487,7 +1487,7 @@
       "priority": "P1",
       "phase": 3,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "ai",
       "files": [
         "src/lib/ai/action-plan.ts"
@@ -1505,7 +1505,7 @@
       "priority": "P1",
       "phase": 3,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "ai",
       "files": [
         "src/lib/ai/ad-concepts.ts"
@@ -1523,7 +1523,7 @@
       "priority": "P2",
       "phase": 3,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "ai",
       "files": [
         "src/lib/ai/landing-page.ts"
@@ -1541,7 +1541,7 @@
       "priority": "P1",
       "phase": 3,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "ai",
       "files": [
         "src/lib/ai/keywords.ts"
@@ -1559,7 +1559,7 @@
       "priority": "P0",
       "phase": 4,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
       "files": [
         "src/app/dashboard/reports/[id]/page.tsx",
@@ -1578,7 +1578,7 @@
       "priority": "P0",
       "phase": 4,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
       "files": [
         "src/app/dashboard/reports/[id]/components/ReportHeader.tsx"
@@ -1596,7 +1596,7 @@
       "priority": "P0",
       "phase": 4,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
       "files": [
         "src/app/dashboard/reports/[id]/components/PainMap.tsx"
@@ -1614,7 +1614,7 @@
       "priority": "P0",
       "phase": 4,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
       "files": [
         "src/app/dashboard/reports/[id]/components/MarketSnapshot.tsx"
@@ -1632,7 +1632,7 @@
       "priority": "P2",
       "phase": 4,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
       "files": [
         "src/app/api/reports/[id]/share/route.ts",
@@ -1651,7 +1651,7 @@
       "priority": "P3",
       "phase": 4,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
       "files": [
         "src/app/share/[token]/password/page.tsx"
@@ -1668,7 +1668,7 @@
       "priority": "P3",
       "phase": 4,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
       "files": [
         "src/lib/reports/share.ts"
@@ -1685,7 +1685,7 @@
       "priority": "P1",
       "phase": 4,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
       "files": [
         "src/lib/reports/cache.ts"
@@ -1702,7 +1702,7 @@
       "priority": "P1",
       "phase": 4,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "dashboard",
       "files": [
         "src/components/runs/RunProgress.tsx"
@@ -1720,7 +1720,7 @@
       "priority": "P2",
       "phase": 4,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "dashboard",
       "files": [
         "src/app/dashboard/compare/page.tsx"
@@ -1738,7 +1738,7 @@
       "priority": "P2",
       "phase": 4,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "dashboard",
       "files": [
         "src/app/dashboard/layout.tsx"
@@ -1756,7 +1756,7 @@
       "priority": "P0",
       "phase": 4,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "api",
       "files": [
         "src/app/api/reports/[id]/pdf/route.ts",
@@ -1775,7 +1775,7 @@
       "priority": "P1",
       "phase": 2,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "api",
       "files": [
         "src/app/api/google-ads/route.ts"
@@ -1793,7 +1793,7 @@
       "priority": "P1",
       "phase": 5,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "api",
       "files": [
         "src/app/api/ugc/tiktok/route.ts"
@@ -1811,7 +1811,7 @@
       "priority": "P1",
       "phase": 7,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "testing",
       "files": [
         "src/lib/test/mocks.ts"
@@ -1828,7 +1828,7 @@
       "priority": "P0",
       "phase": 7,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "testing",
       "files": [
         "src/lib/collectors/__tests__/reddit.test.ts"
@@ -1846,7 +1846,7 @@
       "priority": "P0",
       "phase": 7,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "testing",
       "files": [
         "src/lib/collectors/__tests__/meta.test.ts"
@@ -1864,7 +1864,7 @@
       "priority": "P1",
       "phase": 7,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "testing",
       "files": [
         "src/lib/collectors/__tests__/appstore.test.ts"
@@ -1881,7 +1881,7 @@
       "priority": "P1",
       "phase": 7,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "testing",
       "files": [
         "src/lib/ai/__tests__/extractor.test.ts"
@@ -1899,7 +1899,7 @@
       "priority": "P1",
       "phase": 7,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "testing",
       "files": [
         "src/lib/ai/__tests__/gap-generator.test.ts"
@@ -1917,7 +1917,7 @@
       "priority": "P1",
       "phase": 7,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "testing",
       "files": [
         "src/app/api/__tests__/integration.test.ts"
@@ -1935,7 +1935,7 @@
       "priority": "P1",
       "phase": 7,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "testing",
       "files": [
         "src/lib/__tests__/pipeline.test.ts"
@@ -1953,7 +1953,7 @@
       "priority": "P2",
       "phase": 7,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "testing",
       "files": [
         "e2e/auth.spec.ts"
@@ -1971,7 +1971,7 @@
       "priority": "P2",
       "phase": 7,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "testing",
       "files": [
         "e2e/runs.spec.ts"
@@ -1989,7 +1989,7 @@
       "priority": "P1",
       "phase": 7,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "testing",
       "files": [
         ".github/workflows/test.yml"
@@ -2007,7 +2007,7 @@
       "priority": "P0",
       "phase": 8,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "infrastructure",
       "files": [
         "supabase/migrations/"
@@ -2025,7 +2025,7 @@
       "priority": "P0",
       "phase": 8,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "infrastructure",
       "files": [
         "vercel.json"
@@ -2078,7 +2078,7 @@
       "priority": "P1",
       "phase": 8,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "infrastructure",
       "files": [
         "src/lib/logger.ts"
@@ -2096,7 +2096,7 @@
       "priority": "P0",
       "phase": 8,
       "effort": "1h",
-      "passes": false,
+      "passes": true,
       "category": "infrastructure",
       "files": [
         "src/app/api/health/route.ts"
@@ -2113,7 +2113,7 @@
       "priority": "P2",
       "phase": 1,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "nlp",
       "files": [
         "src/app/api/nlp/suggestions/route.ts",
@@ -2132,7 +2132,7 @@
       "priority": "P2",
       "phase": 1,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "nlp",
       "files": [
         "src/lib/nlp/entities.ts"
@@ -2150,7 +2150,7 @@
       "priority": "P2",
       "phase": 1,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "trends",
       "files": [
         "src/lib/trends/producthunt.ts"
@@ -2167,7 +2167,7 @@
       "priority": "P2",
       "phase": 1,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "trends",
       "files": [
         "src/lib/trends/google-trends.ts"
@@ -2185,7 +2185,7 @@
       "priority": "P1",
       "phase": 3,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "scoring",
       "files": [
         "src/lib/scoring/build-to-profit.ts"
@@ -2203,7 +2203,7 @@
       "priority": "P2",
       "phase": 1,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "auth",
       "files": [
         "src/app/login/page.tsx",
@@ -2222,7 +2222,7 @@
       "priority": "P1",
       "phase": 1,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "auth",
       "files": [
         "src/app/reset-password/page.tsx",
@@ -2278,7 +2278,7 @@
       "priority": "P1",
       "phase": 1,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "onboarding",
       "files": [
         "src/lib/demo/niches.ts",
@@ -2297,7 +2297,7 @@
       "priority": "P1",
       "phase": 1,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "onboarding",
       "files": [
         "src/app/onboarding/page.tsx",
@@ -2312,7 +2312,7 @@
     {
       "id": "BRIEF-001",
       "name": "Demand Brief Onboarding",
-      "description": "Single input \u2192 structured data extraction for niche tracking setup",
+      "description": "Single input → structured data extraction for niche tracking setup",
       "priority": "P2",
       "phase": 9,
       "effort": "6h",
@@ -2502,7 +2502,7 @@
       "priority": "P1",
       "phase": 4,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
       "files": [
         "src/app/dashboard/reports/[id]/components/Economics.tsx"
@@ -2520,7 +2520,7 @@
       "priority": "P1",
       "phase": 4,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
       "files": [
         "src/app/dashboard/reports/[id]/components/Buildability.tsx"
@@ -2538,7 +2538,7 @@
       "priority": "P1",
       "phase": 4,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
       "files": [
         "src/app/dashboard/reports/[id]/components/UGCPack.tsx"
@@ -2557,7 +2557,7 @@
       "priority": "P2",
       "phase": 4,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
       "files": [
         "src/app/dashboard/reports/[id]/components/ActionPlan.tsx"
@@ -2575,7 +2575,7 @@
       "priority": "P0",
       "phase": 4,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
       "files": [
         "src/app/dashboard/reports/[id]/components/PlatformGap.tsx"
@@ -2593,7 +2593,7 @@
       "priority": "P0",
       "phase": 4,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
       "files": [
         "src/app/dashboard/reports/[id]/components/GapList.tsx"
@@ -2830,7 +2830,7 @@
       "priority": "P1",
       "phase": 2,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "collectors",
       "files": [
         "src/app/api/runs/[id]/execute/route.ts"
@@ -2848,7 +2848,7 @@
       "priority": "P1",
       "phase": 2,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "collectors",
       "files": [
         "src/app/api/runs/[id]/execute/route.ts"
@@ -2866,7 +2866,7 @@
       "priority": "P2",
       "phase": 3,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "scoring",
       "files": [
         "src/lib/scoring/ugc-score.ts"
@@ -2883,7 +2883,7 @@
       "priority": "P2",
       "phase": 3,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "scoring",
       "files": [
         "src/lib/scoring/ugc-score.ts"
@@ -2989,7 +2989,7 @@
       "priority": "P2",
       "phase": 1,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "seo",
       "files": [
         "src/app/layout.tsx",
@@ -3008,7 +3008,7 @@
       "priority": "P3",
       "phase": 1,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "seo",
       "files": [
         "src/app/page.tsx"
@@ -3026,7 +3026,7 @@
       "priority": "P1",
       "phase": 1,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "analytics",
       "files": [
         "src/lib/analytics.ts"
@@ -3040,11 +3040,11 @@
     {
       "id": "ANALYTICS-002",
       "name": "Conversion Funnel",
-      "description": "Track signup started \u2192 completed \u2192 first run \u2192 paid conversion",
+      "description": "Track signup started → completed → first run → paid conversion",
       "priority": "P1",
       "phase": 1,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "analytics",
       "files": [
         "src/lib/analytics.ts"
@@ -3061,10 +3061,18 @@
       "priority": "P0",
       "phase": 2,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "dashboard",
-      "files": ["src/app/dashboard/layout.tsx", "src/components/dashboard/Sidebar.tsx", "src/components/dashboard/Header.tsx"],
-      "acceptance": ["Sidebar with navigation items", "Responsive layout", "User menu in header"]
+      "files": [
+        "src/app/dashboard/layout.tsx",
+        "src/components/dashboard/Sidebar.tsx",
+        "src/components/dashboard/Header.tsx"
+      ],
+      "acceptance": [
+        "Sidebar with navigation items",
+        "Responsive layout",
+        "User menu in header"
+      ]
     },
     {
       "id": "DASH-002",
@@ -3073,10 +3081,18 @@
       "priority": "P0",
       "phase": 2,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "dashboard",
-      "files": ["src/app/dashboard/page.tsx", "src/components/dashboard/RecentRuns.tsx", "src/components/dashboard/UsageStats.tsx"],
-      "acceptance": ["Shows recent analysis runs", "Displays usage/credits", "Quick action buttons"]
+      "files": [
+        "src/app/dashboard/page.tsx",
+        "src/components/dashboard/RecentRuns.tsx",
+        "src/components/dashboard/UsageStats.tsx"
+      ],
+      "acceptance": [
+        "Shows recent analysis runs",
+        "Displays usage/credits",
+        "Quick action buttons"
+      ]
     },
     {
       "id": "DASH-003",
@@ -3085,10 +3101,19 @@
       "priority": "P0",
       "phase": 2,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "dashboard",
-      "files": ["src/components/dashboard/FilterPanel.tsx", "src/components/dashboard/FilterAccordion.tsx"],
-      "acceptance": ["Accordion expand/collapse", "Multi-select checkboxes", "Score range slider", "Clear all button", "Filter count badges"]
+      "files": [
+        "src/components/dashboard/FilterPanel.tsx",
+        "src/components/dashboard/FilterAccordion.tsx"
+      ],
+      "acceptance": [
+        "Accordion expand/collapse",
+        "Multi-select checkboxes",
+        "Score range slider",
+        "Clear all button",
+        "Filter count badges"
+      ]
     },
     {
       "id": "DASH-004",
@@ -3097,10 +3122,19 @@
       "priority": "P0",
       "phase": 2,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "dashboard",
-      "files": ["src/components/dashboard/ResultsGrid.tsx", "src/components/dashboard/GapCard.tsx"],
-      "acceptance": ["Card grid layout", "Score badges", "Source icons", "Hover states", "Click to detail"]
+      "files": [
+        "src/components/dashboard/ResultsGrid.tsx",
+        "src/components/dashboard/GapCard.tsx"
+      ],
+      "acceptance": [
+        "Card grid layout",
+        "Score badges",
+        "Source icons",
+        "Hover states",
+        "Click to detail"
+      ]
     },
     {
       "id": "DASH-005",
@@ -3109,10 +3143,18 @@
       "priority": "P0",
       "phase": 2,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "dashboard",
-      "files": ["src/components/dashboard/GapCard.tsx"],
-      "acceptance": ["Opportunity score display", "Confidence indicator", "Source badges", "Save/bookmark action", "View detail action"]
+      "files": [
+        "src/components/dashboard/GapCard.tsx"
+      ],
+      "acceptance": [
+        "Opportunity score display",
+        "Confidence indicator",
+        "Source badges",
+        "Save/bookmark action",
+        "View detail action"
+      ]
     },
     {
       "id": "DASH-006",
@@ -3121,10 +3163,20 @@
       "priority": "P0",
       "phase": 2,
       "effort": "8h",
-      "passes": false,
+      "passes": true,
       "category": "dashboard",
-      "files": ["src/components/dashboard/DetailModal.tsx", "src/components/dashboard/EvidenceSection.tsx"],
-      "acceptance": ["Modal opens on card click", "Full gap details", "Evidence from sources", "Related terms", "Recommended actions", "Export options"]
+      "files": [
+        "src/components/dashboard/DetailModal.tsx",
+        "src/components/dashboard/EvidenceSection.tsx"
+      ],
+      "acceptance": [
+        "Modal opens on card click",
+        "Full gap details",
+        "Evidence from sources",
+        "Related terms",
+        "Recommended actions",
+        "Export options"
+      ]
     },
     {
       "id": "DASH-007",
@@ -3133,10 +3185,18 @@
       "priority": "P1",
       "phase": 2,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "dashboard",
-      "files": ["src/app/dashboard/runs/page.tsx", "src/components/dashboard/RunList.tsx"],
-      "acceptance": ["Paginated run list", "Status badges", "Click to view results", "Delete action"]
+      "files": [
+        "src/app/dashboard/runs/page.tsx",
+        "src/components/dashboard/RunList.tsx"
+      ],
+      "acceptance": [
+        "Paginated run list",
+        "Status badges",
+        "Click to view results",
+        "Delete action"
+      ]
     },
     {
       "id": "DASH-008",
@@ -3145,10 +3205,16 @@
       "priority": "P1",
       "phase": 2,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "dashboard",
-      "files": ["src/app/dashboard/saved/page.tsx"],
-      "acceptance": ["List saved gaps", "Remove from saved", "Export saved list"]
+      "files": [
+        "src/app/dashboard/saved/page.tsx"
+      ],
+      "acceptance": [
+        "List saved gaps",
+        "Remove from saved",
+        "Export saved list"
+      ]
     },
     {
       "id": "ONBOARD-001",
@@ -3157,10 +3223,18 @@
       "priority": "P1",
       "phase": 2,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "onboarding",
-      "files": ["src/components/onboarding/Checklist.tsx", "src/lib/onboarding.ts"],
-      "acceptance": ["Step-by-step checklist", "Progress percentage", "Dismiss option", "Persists state"]
+      "files": [
+        "src/components/onboarding/Checklist.tsx",
+        "src/lib/onboarding.ts"
+      ],
+      "acceptance": [
+        "Step-by-step checklist",
+        "Progress percentage",
+        "Dismiss option",
+        "Persists state"
+      ]
     },
     {
       "id": "ONBOARD-002",
@@ -3169,10 +3243,17 @@
       "priority": "P1",
       "phase": 2,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "onboarding",
-      "files": ["src/components/onboarding/FirstRunWizard.tsx"],
-      "acceptance": ["Multi-step wizard", "Example queries provided", "Skippable", "Marks as complete"]
+      "files": [
+        "src/components/onboarding/FirstRunWizard.tsx"
+      ],
+      "acceptance": [
+        "Multi-step wizard",
+        "Example queries provided",
+        "Skippable",
+        "Marks as complete"
+      ]
     },
     {
       "id": "CREDIT-001",
@@ -3181,10 +3262,19 @@
       "priority": "P0",
       "phase": 6,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "billing",
-      "files": ["src/lib/credits.ts", "src/app/api/credits/route.ts", "supabase/migrations/credits.sql"],
-      "acceptance": ["Credit balance stored", "Deduction on run", "Insufficient credits check", "Balance API"]
+      "files": [
+        "src/lib/credits.ts",
+        "src/app/api/credits/route.ts",
+        "supabase/migrations/credits.sql"
+      ],
+      "acceptance": [
+        "Credit balance stored",
+        "Deduction on run",
+        "Insufficient credits check",
+        "Balance API"
+      ]
     },
     {
       "id": "CREDIT-002",
@@ -3193,10 +3283,16 @@
       "priority": "P0",
       "phase": 6,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "billing",
-      "files": ["src/components/billing/CreditsDisplay.tsx"],
-      "acceptance": ["Shows current balance", "Low balance warning", "Link to buy more"]
+      "files": [
+        "src/components/billing/CreditsDisplay.tsx"
+      ],
+      "acceptance": [
+        "Shows current balance",
+        "Low balance warning",
+        "Link to buy more"
+      ]
     },
     {
       "id": "CREDIT-003",
@@ -3207,8 +3303,15 @@
       "effort": "6h",
       "passes": false,
       "category": "billing",
-      "files": ["src/app/dashboard/billing/credits/page.tsx", "src/app/api/checkout/credits/route.ts"],
-      "acceptance": ["Credit package options", "Stripe checkout", "Credits added on success"]
+      "files": [
+        "src/app/dashboard/billing/credits/page.tsx",
+        "src/app/api/checkout/credits/route.ts"
+      ],
+      "acceptance": [
+        "Credit package options",
+        "Stripe checkout",
+        "Credits added on success"
+      ]
     },
     {
       "id": "PAYWALL-001",
@@ -3219,8 +3322,15 @@
       "effort": "4h",
       "passes": false,
       "category": "billing",
-      "files": ["src/lib/feature-gates.ts", "src/components/billing/UpgradePrompt.tsx"],
-      "acceptance": ["Feature check function", "Upgrade modal on blocked action", "Graceful degradation"]
+      "files": [
+        "src/lib/feature-gates.ts",
+        "src/components/billing/UpgradePrompt.tsx"
+      ],
+      "acceptance": [
+        "Feature check function",
+        "Upgrade modal on blocked action",
+        "Graceful degradation"
+      ]
     },
     {
       "id": "PAYWALL-002",
@@ -3231,8 +3341,14 @@
       "effort": "3h",
       "passes": false,
       "category": "billing",
-      "files": ["src/components/billing/PaywallModal.tsx"],
-      "acceptance": ["Plan comparison", "CTA to upgrade", "Feature list"]
+      "files": [
+        "src/components/billing/PaywallModal.tsx"
+      ],
+      "acceptance": [
+        "Plan comparison",
+        "CTA to upgrade",
+        "Feature list"
+      ]
     },
     {
       "id": "REPORT-UI-001",
@@ -3241,10 +3357,18 @@
       "priority": "P0",
       "phase": 4,
       "effort": "8h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
-      "files": ["src/app/dashboard/reports/[id]/page.tsx", "src/components/reports/ReportViewer.tsx"],
-      "acceptance": ["All report sections render", "Charts display", "Navigation between sections", "Print-friendly"]
+      "files": [
+        "src/app/dashboard/reports/[id]/page.tsx",
+        "src/components/reports/ReportViewer.tsx"
+      ],
+      "acceptance": [
+        "All report sections render",
+        "Charts display",
+        "Navigation between sections",
+        "Print-friendly"
+      ]
     },
     {
       "id": "REPORT-UI-002",
@@ -3253,10 +3377,17 @@
       "priority": "P1",
       "phase": 4,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
-      "files": ["src/app/api/reports/[id]/share/route.ts", "src/app/share/[token]/page.tsx"],
-      "acceptance": ["Generate unique token", "Public view page", "Expiration option"]
+      "files": [
+        "src/app/api/reports/[id]/share/route.ts",
+        "src/app/share/[token]/page.tsx"
+      ],
+      "acceptance": [
+        "Generate unique token",
+        "Public view page",
+        "Expiration option"
+      ]
     },
     {
       "id": "STRIPE-001",
@@ -3267,8 +3398,15 @@
       "effort": "8h",
       "passes": false,
       "category": "billing",
-      "files": ["src/app/api/checkout/subscription/route.ts", "src/app/api/webhooks/stripe/route.ts"],
-      "acceptance": ["Checkout session created", "Webhook handles subscription events", "User plan updated"]
+      "files": [
+        "src/app/api/checkout/subscription/route.ts",
+        "src/app/api/webhooks/stripe/route.ts"
+      ],
+      "acceptance": [
+        "Checkout session created",
+        "Webhook handles subscription events",
+        "User plan updated"
+      ]
     },
     {
       "id": "STRIPE-002",
@@ -3279,8 +3417,15 @@
       "effort": "2h",
       "passes": false,
       "category": "billing",
-      "files": ["src/app/api/billing/portal/route.ts", "src/app/dashboard/billing/page.tsx"],
-      "acceptance": ["Portal session created", "Redirect to Stripe portal", "Update payment method"]
+      "files": [
+        "src/app/api/billing/portal/route.ts",
+        "src/app/dashboard/billing/page.tsx"
+      ],
+      "acceptance": [
+        "Portal session created",
+        "Redirect to Stripe portal",
+        "Update payment method"
+      ]
     },
     {
       "id": "STRIPE-003",
@@ -3291,8 +3436,16 @@
       "effort": "4h",
       "passes": false,
       "category": "billing",
-      "files": ["src/app/pricing/page.tsx", "src/components/pricing/PlanCard.tsx"],
-      "acceptance": ["Plan tiers displayed", "Feature comparison", "Monthly/annual toggle", "CTA buttons"]
+      "files": [
+        "src/app/pricing/page.tsx",
+        "src/components/pricing/PlanCard.tsx"
+      ],
+      "acceptance": [
+        "Plan tiers displayed",
+        "Feature comparison",
+        "Monthly/annual toggle",
+        "CTA buttons"
+      ]
     },
     {
       "id": "HOOKD-001",
@@ -3301,10 +3454,19 @@
       "priority": "P1",
       "phase": 2,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "dashboard",
-      "files": ["src/app/dashboard/ads/page.tsx", "src/components/dashboard/AdGrid.tsx", "src/components/dashboard/AdCard.tsx"],
-      "acceptance": ["Grid of ad cards", "Thumbnail preview", "Metrics display", "Filter integration"]
+      "files": [
+        "src/app/dashboard/ads/page.tsx",
+        "src/components/dashboard/AdGrid.tsx",
+        "src/components/dashboard/AdCard.tsx"
+      ],
+      "acceptance": [
+        "Grid of ad cards",
+        "Thumbnail preview",
+        "Metrics display",
+        "Filter integration"
+      ]
     },
     {
       "id": "HOOKD-002",
@@ -3313,10 +3475,17 @@
       "priority": "P1",
       "phase": 2,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "dashboard",
-      "files": ["src/components/dashboard/AdDetailModal.tsx"],
-      "acceptance": ["Full ad preview", "All metadata displayed", "Performance metrics", "Save/export options"]
+      "files": [
+        "src/components/dashboard/AdDetailModal.tsx"
+      ],
+      "acceptance": [
+        "Full ad preview",
+        "All metadata displayed",
+        "Performance metrics",
+        "Save/export options"
+      ]
     },
     {
       "id": "HOOKD-003",
@@ -3325,10 +3494,17 @@
       "priority": "P1",
       "phase": 2,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "dashboard",
-      "files": ["src/components/dashboard/SearchWithFilters.tsx"],
-      "acceptance": ["Search input", "Quick filter chips", "Clear all", "Active filter count"]
+      "files": [
+        "src/components/dashboard/SearchWithFilters.tsx"
+      ],
+      "acceptance": [
+        "Search input",
+        "Quick filter chips",
+        "Clear all",
+        "Active filter count"
+      ]
     },
     {
       "id": "DC-030",
@@ -3337,10 +3513,16 @@
       "priority": "P1",
       "phase": 2,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "collectors",
-      "files": ["src/lib/collectors/playstore.ts"],
-      "acceptance": ["Fetches app metadata", "Rating and review count", "Category extraction"]
+      "files": [
+        "src/lib/collectors/playstore.ts"
+      ],
+      "acceptance": [
+        "Fetches app metadata",
+        "Rating and review count",
+        "Category extraction"
+      ]
     },
     {
       "id": "DC-031",
@@ -3349,10 +3531,16 @@
       "priority": "P1",
       "phase": 2,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "collectors",
-      "files": ["src/lib/collectors/web-competitors.ts"],
-      "acceptance": ["Returns top web competitors", "Extracts key features", "Pricing data when available"]
+      "files": [
+        "src/lib/collectors/web-competitors.ts"
+      ],
+      "acceptance": [
+        "Returns top web competitors",
+        "Extracts key features",
+        "Pricing data when available"
+      ]
     },
     {
       "id": "DC-044",
@@ -3363,8 +3551,14 @@
       "effort": "6h",
       "passes": false,
       "category": "collectors",
-      "files": ["src/lib/collectors/youtube.ts"],
-      "acceptance": ["API authentication", "Video search by keyword", "Metrics extraction"]
+      "files": [
+        "src/lib/collectors/youtube.ts"
+      ],
+      "acceptance": [
+        "API authentication",
+        "Video search by keyword",
+        "Metrics extraction"
+      ]
     },
     {
       "id": "DC-045",
@@ -3375,8 +3569,14 @@
       "effort": "3h",
       "passes": false,
       "category": "collectors",
-      "files": ["src/lib/collectors/youtube.ts"],
-      "acceptance": ["Keyword search", "Filter by recency", "View count extraction"]
+      "files": [
+        "src/lib/collectors/youtube.ts"
+      ],
+      "acceptance": [
+        "Keyword search",
+        "Filter by recency",
+        "View count extraction"
+      ]
     },
     {
       "id": "DC-046",
@@ -3387,8 +3587,14 @@
       "effort": "4h",
       "passes": false,
       "category": "collectors",
-      "files": ["src/lib/collectors/youtube.ts"],
-      "acceptance": ["Channel metadata", "Subscriber count", "Content frequency analysis"]
+      "files": [
+        "src/lib/collectors/youtube.ts"
+      ],
+      "acceptance": [
+        "Channel metadata",
+        "Subscriber count",
+        "Content frequency analysis"
+      ]
     },
     {
       "id": "AI-020",
@@ -3397,10 +3603,17 @@
       "priority": "P1",
       "phase": 3,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "ai",
-      "files": ["src/lib/ai/action-plan-generator.ts"],
-      "acceptance": ["7-day quick wins", "30-day roadmap", "Priority ordering", "Effort estimates"]
+      "files": [
+        "src/lib/ai/action-plan-generator.ts"
+      ],
+      "acceptance": [
+        "7-day quick wins",
+        "30-day roadmap",
+        "Priority ordering",
+        "Effort estimates"
+      ]
     },
     {
       "id": "SC-007",
@@ -3409,10 +3622,16 @@
       "priority": "P1",
       "phase": 3,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "scoring",
-      "files": ["src/lib/scoring.ts"],
-      "acceptance": ["Formula implemented", "Returns 0-100 score", "Considers all factors"]
+      "files": [
+        "src/lib/scoring.ts"
+      ],
+      "acceptance": [
+        "Formula implemented",
+        "Returns 0-100 score",
+        "Considers all factors"
+      ]
     },
     {
       "id": "SC-009",
@@ -3421,10 +3640,16 @@
       "priority": "P2",
       "phase": 3,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "scoring",
-      "files": ["src/lib/scoring.ts"],
-      "acceptance": ["Formula implemented", "Recency weighting", "Relevance calculation"]
+      "files": [
+        "src/lib/scoring.ts"
+      ],
+      "acceptance": [
+        "Formula implemented",
+        "Recency weighting",
+        "Relevance calculation"
+      ]
     },
     {
       "id": "SC-010",
@@ -3433,10 +3658,16 @@
       "priority": "P2",
       "phase": 3,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "scoring",
-      "files": ["src/lib/scoring.ts"],
-      "acceptance": ["Formula implemented", "Rate calculations", "Velocity tracking"]
+      "files": [
+        "src/lib/scoring.ts"
+      ],
+      "acceptance": [
+        "Formula implemented",
+        "Rate calculations",
+        "Velocity tracking"
+      ]
     },
     {
       "id": "RG-004",
@@ -3445,10 +3676,16 @@
       "priority": "P1",
       "phase": 4,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
-      "files": ["src/lib/reports/cache.ts"],
-      "acceptance": ["Cache hit/miss logic", "TTL configuration", "Invalidation on data change"]
+      "files": [
+        "src/lib/reports/cache.ts"
+      ],
+      "acceptance": [
+        "Cache hit/miss logic",
+        "TTL configuration",
+        "Invalidation on data change"
+      ]
     },
     {
       "id": "RG-005",
@@ -3457,10 +3694,16 @@
       "priority": "P0",
       "phase": 4,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
-      "files": ["src/components/reports/ExecutiveSummary.tsx"],
-      "acceptance": ["Opportunity score display", "Top gaps listed", "Platform recommendation"]
+      "files": [
+        "src/components/reports/ExecutiveSummary.tsx"
+      ],
+      "acceptance": [
+        "Opportunity score display",
+        "Top gaps listed",
+        "Platform recommendation"
+      ]
     },
     {
       "id": "RG-006",
@@ -3469,10 +3712,17 @@
       "priority": "P0",
       "phase": 4,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
-      "files": ["src/components/reports/PaidMarketSnapshot.tsx"],
-      "acceptance": ["Advertiser table", "Angle examples", "Longevity signals", "Offer patterns"]
+      "files": [
+        "src/components/reports/PaidMarketSnapshot.tsx"
+      ],
+      "acceptance": [
+        "Advertiser table",
+        "Angle examples",
+        "Longevity signals",
+        "Offer patterns"
+      ]
     },
     {
       "id": "RG-007",
@@ -3481,10 +3731,17 @@
       "priority": "P0",
       "phase": 4,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
-      "files": ["src/components/reports/UserPainMap.tsx"],
-      "acceptance": ["Ranked objections", "Feature requests", "Quotes/snippets", "Switching triggers"]
+      "files": [
+        "src/components/reports/UserPainMap.tsx"
+      ],
+      "acceptance": [
+        "Ranked objections",
+        "Feature requests",
+        "Quotes/snippets",
+        "Switching triggers"
+      ]
     },
     {
       "id": "RG-008",
@@ -3493,10 +3750,16 @@
       "priority": "P0",
       "phase": 4,
       "effort": "5h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
-      "files": ["src/components/reports/PlatformGap.tsx"],
-      "acceptance": ["Platform scores", "Top apps per platform", "Launch surface recommendation"]
+      "files": [
+        "src/components/reports/PlatformGap.tsx"
+      ],
+      "acceptance": [
+        "Platform scores",
+        "Top apps per platform",
+        "Launch surface recommendation"
+      ]
     },
     {
       "id": "RG-009",
@@ -3505,10 +3768,17 @@
       "priority": "P0",
       "phase": 4,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
-      "files": ["src/components/reports/GapOpportunities.tsx"],
-      "acceptance": ["Gap cards", "Evidence display", "3% better recommendation", "Impact estimate"]
+      "files": [
+        "src/components/reports/GapOpportunities.tsx"
+      ],
+      "acceptance": [
+        "Gap cards",
+        "Evidence display",
+        "3% better recommendation",
+        "Impact estimate"
+      ]
     },
     {
       "id": "RG-010",
@@ -3517,10 +3787,16 @@
       "priority": "P1",
       "phase": 4,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
-      "files": ["src/components/reports/ModeledEconomics.tsx"],
-      "acceptance": ["Range displays", "Budget scenarios", "Interactive sensitivity sliders"]
+      "files": [
+        "src/components/reports/ModeledEconomics.tsx"
+      ],
+      "acceptance": [
+        "Range displays",
+        "Budget scenarios",
+        "Interactive sensitivity sliders"
+      ]
     },
     {
       "id": "RG-011",
@@ -3531,8 +3807,15 @@
       "effort": "4h",
       "passes": false,
       "category": "reports",
-      "files": ["src/components/reports/BuildabilityAssessment.tsx"],
-      "acceptance": ["Difficulty score", "MVP estimate", "Autonomous suitability", "Risk flags"]
+      "files": [
+        "src/components/reports/BuildabilityAssessment.tsx"
+      ],
+      "acceptance": [
+        "Difficulty score",
+        "MVP estimate",
+        "Autonomous suitability",
+        "Risk flags"
+      ]
     },
     {
       "id": "RG-012",
@@ -3543,8 +3826,16 @@
       "effort": "6h",
       "passes": false,
       "category": "reports",
-      "files": ["src/components/reports/UGCWinnersPack.tsx"],
-      "acceptance": ["UGC grid", "Pattern breakdown", "10 hooks", "5 scripts", "Shot list"]
+      "files": [
+        "src/components/reports/UGCWinnersPack.tsx"
+      ],
+      "acceptance": [
+        "UGC grid",
+        "Pattern breakdown",
+        "10 hooks",
+        "5 scripts",
+        "Shot list"
+      ]
     },
     {
       "id": "RG-013",
@@ -3555,8 +3846,15 @@
       "effort": "5h",
       "passes": false,
       "category": "reports",
-      "files": ["src/components/reports/ActionPlan.tsx"],
-      "acceptance": ["Timeline view", "Prioritized actions", "Ad concepts", "Keywords list"]
+      "files": [
+        "src/components/reports/ActionPlan.tsx"
+      ],
+      "acceptance": [
+        "Timeline view",
+        "Prioritized actions",
+        "Ad concepts",
+        "Keywords list"
+      ]
     },
     {
       "id": "RG-014",
@@ -3565,10 +3863,16 @@
       "priority": "P0",
       "phase": 4,
       "effort": "8h",
-      "passes": false,
+      "passes": true,
       "category": "reports",
-      "files": ["src/lib/reports/pdf-generator.ts"],
-      "acceptance": ["All sections included", "Professional formatting", "Charts render correctly"]
+      "files": [
+        "src/lib/reports/pdf-generator.ts"
+      ],
+      "acceptance": [
+        "All sections included",
+        "Professional formatting",
+        "Charts render correctly"
+      ]
     },
     {
       "id": "RG-015",
@@ -3577,10 +3881,16 @@
       "priority": "P0",
       "phase": 4,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "api",
-      "files": ["src/app/api/reports/[id]/pdf/route.ts"],
-      "acceptance": ["Returns PDF blob", "Proper headers", "Authentication required"]
+      "files": [
+        "src/app/api/reports/[id]/pdf/route.ts"
+      ],
+      "acceptance": [
+        "Returns PDF blob",
+        "Proper headers",
+        "Authentication required"
+      ]
     },
     {
       "id": "RG-016",
@@ -3591,8 +3901,15 @@
       "effort": "4h",
       "passes": false,
       "category": "reports",
-      "files": ["src/app/api/reports/[id]/share/route.ts", "src/app/share/[token]/page.tsx"],
-      "acceptance": ["Unique token generation", "Public view page", "Read-only access"]
+      "files": [
+        "src/app/api/reports/[id]/share/route.ts",
+        "src/app/share/[token]/page.tsx"
+      ],
+      "acceptance": [
+        "Unique token generation",
+        "Public view page",
+        "Read-only access"
+      ]
     },
     {
       "id": "RG-017",
@@ -3603,8 +3920,14 @@
       "effort": "3h",
       "passes": false,
       "category": "reports",
-      "files": ["src/app/share/[token]/page.tsx"],
-      "acceptance": ["Password prompt", "Session persistence", "Secure comparison"]
+      "files": [
+        "src/app/share/[token]/page.tsx"
+      ],
+      "acceptance": [
+        "Password prompt",
+        "Session persistence",
+        "Secure comparison"
+      ]
     },
     {
       "id": "RG-018",
@@ -3615,8 +3938,14 @@
       "effort": "2h",
       "passes": false,
       "category": "reports",
-      "files": ["src/lib/reports/share.ts"],
-      "acceptance": ["Expiration date option", "Expired link handling", "Renewal option"]
+      "files": [
+        "src/lib/reports/share.ts"
+      ],
+      "acceptance": [
+        "Expiration date option",
+        "Expired link handling",
+        "Renewal option"
+      ]
     },
     {
       "id": "UI-011",
@@ -3625,10 +3954,17 @@
       "priority": "P0",
       "phase": 4,
       "effort": "8h",
-      "passes": false,
+      "passes": true,
       "category": "dashboard",
-      "files": ["src/app/dashboard/reports/[id]/page.tsx"],
-      "acceptance": ["All 9 sections", "Section navigation", "Export buttons", "Share functionality"]
+      "files": [
+        "src/app/dashboard/reports/[id]/page.tsx"
+      ],
+      "acceptance": [
+        "All 9 sections",
+        "Section navigation",
+        "Export buttons",
+        "Share functionality"
+      ]
     },
     {
       "id": "UI-013",
@@ -3639,8 +3975,14 @@
       "effort": "8h",
       "passes": false,
       "category": "dashboard",
-      "files": ["src/app/dashboard/compare/page.tsx"],
-      "acceptance": ["Select runs to compare", "Side-by-side layout", "Highlight differences"]
+      "files": [
+        "src/app/dashboard/compare/page.tsx"
+      ],
+      "acceptance": [
+        "Select runs to compare",
+        "Side-by-side layout",
+        "Highlight differences"
+      ]
     },
     {
       "id": "UI-014",
@@ -3649,10 +3991,17 @@
       "priority": "P1",
       "phase": 2,
       "effort": "6h",
-      "passes": false,
+      "passes": true,
       "category": "dashboard",
-      "files": ["src/components/dashboard/RunProgress.tsx"],
-      "acceptance": ["Stage indicators", "Real-time updates", "Error display", "Estimated time"]
+      "files": [
+        "src/components/dashboard/RunProgress.tsx"
+      ],
+      "acceptance": [
+        "Stage indicators",
+        "Real-time updates",
+        "Error display",
+        "Estimated time"
+      ]
     },
     {
       "id": "API-008",
@@ -3661,10 +4010,16 @@
       "priority": "P0",
       "phase": 4,
       "effort": "3h",
-      "passes": false,
+      "passes": true,
       "category": "api",
-      "files": ["src/app/api/reports/[id]/pdf/route.ts"],
-      "acceptance": ["PDF generation", "Proper content-type", "Error handling"]
+      "files": [
+        "src/app/api/reports/[id]/pdf/route.ts"
+      ],
+      "acceptance": [
+        "PDF generation",
+        "Proper content-type",
+        "Error handling"
+      ]
     },
     {
       "id": "API-009",
@@ -3673,10 +4028,16 @@
       "priority": "P2",
       "phase": 4,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "api",
-      "files": ["src/app/api/share/[token]/route.ts"],
-      "acceptance": ["Token validation", "Expiration check", "Public data only"]
+      "files": [
+        "src/app/api/share/[token]/route.ts"
+      ],
+      "acceptance": [
+        "Token validation",
+        "Expiration check",
+        "Public data only"
+      ]
     },
     {
       "id": "API-010",
@@ -3687,8 +4048,14 @@
       "effort": "16h",
       "passes": false,
       "category": "api",
-      "files": ["src/app/api/v1/"],
-      "acceptance": ["API key authentication", "Rate limiting", "OpenAPI documentation"]
+      "files": [
+        "src/app/api/v1/"
+      ],
+      "acceptance": [
+        "API key authentication",
+        "Rate limiting",
+        "OpenAPI documentation"
+      ]
     },
     {
       "id": "PAY-007",
@@ -3699,8 +4066,14 @@
       "effort": "4h",
       "passes": false,
       "category": "billing",
-      "files": ["src/app/dashboard/billing/invoices/page.tsx"],
-      "acceptance": ["Invoice list", "Download PDFs", "Payment status"]
+      "files": [
+        "src/app/dashboard/billing/invoices/page.tsx"
+      ],
+      "acceptance": [
+        "Invoice list",
+        "Download PDFs",
+        "Payment status"
+      ]
     },
     {
       "id": "PAY-008",
@@ -3711,8 +4084,14 @@
       "effort": "4h",
       "passes": false,
       "category": "billing",
-      "files": ["src/lib/api-access.ts"],
-      "acceptance": ["Plan check", "API key generation", "Usage tracking"]
+      "files": [
+        "src/lib/api-access.ts"
+      ],
+      "acceptance": [
+        "Plan check",
+        "API key generation",
+        "Usage tracking"
+      ]
     },
     {
       "id": "PAY-009",
@@ -3723,8 +4102,14 @@
       "effort": "3h",
       "passes": false,
       "category": "billing",
-      "files": ["src/lib/reports/branding.ts"],
-      "acceptance": ["Custom logo option", "Remove footer branding", "Custom colors"]
+      "files": [
+        "src/lib/reports/branding.ts"
+      ],
+      "acceptance": [
+        "Custom logo option",
+        "Remove footer branding",
+        "Custom colors"
+      ]
     },
     {
       "id": "INF-007",
@@ -3735,8 +4120,14 @@
       "effort": "4h",
       "passes": false,
       "category": "infrastructure",
-      "files": ["src/hooks/use-run-progress.ts"],
-      "acceptance": ["Subscribe to run changes", "Real-time UI updates", "Cleanup on unmount"]
+      "files": [
+        "src/hooks/use-run-progress.ts"
+      ],
+      "acceptance": [
+        "Subscribe to run changes",
+        "Real-time UI updates",
+        "Cleanup on unmount"
+      ]
     },
     {
       "id": "INF-008",
@@ -3747,8 +4138,14 @@
       "effort": "4h",
       "passes": false,
       "category": "infrastructure",
-      "files": ["supabase/"],
-      "acceptance": ["Project created", "Migrations applied", "RLS policies active"]
+      "files": [
+        "supabase/"
+      ],
+      "acceptance": [
+        "Project created",
+        "Migrations applied",
+        "RLS policies active"
+      ]
     },
     {
       "id": "INF-009",
@@ -3759,8 +4156,14 @@
       "effort": "2h",
       "passes": false,
       "category": "infrastructure",
-      "files": ["vercel.json"],
-      "acceptance": ["Build succeeds", "Environment variables set", "Preview deployments work"]
+      "files": [
+        "vercel.json"
+      ],
+      "acceptance": [
+        "Build succeeds",
+        "Environment variables set",
+        "Preview deployments work"
+      ]
     },
     {
       "id": "INF-010",
@@ -3772,7 +4175,11 @@
       "passes": false,
       "category": "infrastructure",
       "files": [],
-      "acceptance": ["DNS configured", "SSL active", "Redirects work"]
+      "acceptance": [
+        "DNS configured",
+        "SSL active",
+        "Redirects work"
+      ]
     },
     {
       "id": "INF-013",
@@ -3783,8 +4190,15 @@
       "effort": "3h",
       "passes": false,
       "category": "infrastructure",
-      "files": ["sentry.client.config.ts", "sentry.server.config.ts"],
-      "acceptance": ["Errors captured", "Source maps uploaded", "Alerts configured"]
+      "files": [
+        "sentry.client.config.ts",
+        "sentry.server.config.ts"
+      ],
+      "acceptance": [
+        "Errors captured",
+        "Source maps uploaded",
+        "Alerts configured"
+      ]
     },
     {
       "id": "INF-014",
@@ -3795,8 +4209,14 @@
       "effort": "6h",
       "passes": false,
       "category": "infrastructure",
-      "files": ["src/lib/analytics.ts"],
-      "acceptance": ["Event tracking", "Funnel visualization", "Dashboard integration"]
+      "files": [
+        "src/lib/analytics.ts"
+      ],
+      "acceptance": [
+        "Event tracking",
+        "Funnel visualization",
+        "Dashboard integration"
+      ]
     },
     {
       "id": "TEST-003",
@@ -3805,10 +4225,16 @@
       "priority": "P1",
       "phase": 7,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "testing",
-      "files": ["__tests__/collectors/"],
-      "acceptance": ["All collectors tested", "Mock API responses", ">80% coverage"]
+      "files": [
+        "__tests__/collectors/"
+      ],
+      "acceptance": [
+        "All collectors tested",
+        "Mock API responses",
+        ">80% coverage"
+      ]
     },
     {
       "id": "TEST-004",
@@ -3817,10 +4243,16 @@
       "priority": "P1",
       "phase": 7,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "testing",
-      "files": ["__tests__/ai/"],
-      "acceptance": ["All AI modules tested", "Mock OpenAI responses", "Edge cases covered"]
+      "files": [
+        "__tests__/ai/"
+      ],
+      "acceptance": [
+        "All AI modules tested",
+        "Mock OpenAI responses",
+        "Edge cases covered"
+      ]
     },
     {
       "id": "TEST-005",
@@ -3831,8 +4263,14 @@
       "effort": "4h",
       "passes": false,
       "category": "testing",
-      "files": ["__tests__/api/"],
-      "acceptance": ["All routes tested", "Auth scenarios", "Error responses"]
+      "files": [
+        "__tests__/api/"
+      ],
+      "acceptance": [
+        "All routes tested",
+        "Auth scenarios",
+        "Error responses"
+      ]
     },
     {
       "id": "TEST-006",
@@ -3843,8 +4281,15 @@
       "effort": "8h",
       "passes": false,
       "category": "testing",
-      "files": ["e2e/"],
-      "acceptance": ["Signup flow", "Create run flow", "View report flow", "Checkout flow"]
+      "files": [
+        "e2e/"
+      ],
+      "acceptance": [
+        "Signup flow",
+        "Create run flow",
+        "View report flow",
+        "Checkout flow"
+      ]
     },
     {
       "id": "TEST-007",
@@ -3855,8 +4300,14 @@
       "effort": "2h",
       "passes": false,
       "category": "testing",
-      "files": [".github/workflows/"],
-      "acceptance": ["Tests run on PR", "Lint checks", "Build verification"]
+      "files": [
+        ".github/workflows/"
+      ],
+      "acceptance": [
+        "Tests run on PR",
+        "Lint checks",
+        "Build verification"
+      ]
     },
     {
       "id": "INTEG-001",
@@ -3867,8 +4318,15 @@
       "effort": "4h",
       "passes": false,
       "category": "integrations",
-      "files": ["src/lib/integrations/slack.ts", "src/app/dashboard/integrations/page.tsx"],
-      "acceptance": ["OAuth flow", "Channel selection", "Message templates"]
+      "files": [
+        "src/lib/integrations/slack.ts",
+        "src/app/dashboard/integrations/page.tsx"
+      ],
+      "acceptance": [
+        "OAuth flow",
+        "Channel selection",
+        "Message templates"
+      ]
     },
     {
       "id": "INTEG-002",
@@ -3879,8 +4337,14 @@
       "effort": "4h",
       "passes": false,
       "category": "integrations",
-      "files": ["src/lib/integrations/discord.ts"],
-      "acceptance": ["Webhook setup", "Channel selection", "Rich embeds"]
+      "files": [
+        "src/lib/integrations/discord.ts"
+      ],
+      "acceptance": [
+        "Webhook setup",
+        "Channel selection",
+        "Rich embeds"
+      ]
     },
     {
       "id": "INTEG-003",
@@ -3891,8 +4355,14 @@
       "effort": "3h",
       "passes": false,
       "category": "integrations",
-      "files": ["src/app/api/webhooks/outbound/route.ts"],
-      "acceptance": ["Webhook URL config", "Event selection", "Secret signing"]
+      "files": [
+        "src/app/api/webhooks/outbound/route.ts"
+      ],
+      "acceptance": [
+        "Webhook URL config",
+        "Event selection",
+        "Secret signing"
+      ]
     },
     {
       "id": "NLP-V2-001",
@@ -3901,10 +4371,17 @@
       "priority": "P2",
       "phase": 1,
       "effort": "8h",
-      "passes": false,
+      "passes": true,
       "category": "nlp",
-      "files": ["src/app/api/nlp/suggestions/route.ts", "src/lib/nlp/embeddings.ts"],
-      "acceptance": ["Embedding-based expansion", "Competitor recognition", "Query rewrite"]
+      "files": [
+        "src/app/api/nlp/suggestions/route.ts",
+        "src/lib/nlp/embeddings.ts"
+      ],
+      "acceptance": [
+        "Embedding-based expansion",
+        "Competitor recognition",
+        "Query rewrite"
+      ]
     },
     {
       "id": "NLP-V2-002",
@@ -3913,10 +4390,16 @@
       "priority": "P2",
       "phase": 1,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "nlp",
-      "files": ["src/lib/nlp/entity-recognition.ts"],
-      "acceptance": ["Brand detection", "Product type inference", "Competitor matching"]
+      "files": [
+        "src/lib/nlp/entity-recognition.ts"
+      ],
+      "acceptance": [
+        "Brand detection",
+        "Product type inference",
+        "Competitor matching"
+      ]
     },
     {
       "id": "TRENDS-V2-001",
@@ -3925,10 +4408,16 @@
       "priority": "P2",
       "phase": 1,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "landing",
-      "files": ["src/lib/trends/producthunt.ts"],
-      "acceptance": ["API integration", "Topic extraction", "Source attribution"]
+      "files": [
+        "src/lib/trends/producthunt.ts"
+      ],
+      "acceptance": [
+        "API integration",
+        "Topic extraction",
+        "Source attribution"
+      ]
     },
     {
       "id": "TRENDS-V2-002",
@@ -3937,10 +4426,16 @@
       "priority": "P2",
       "phase": 1,
       "effort": "4h",
-      "passes": false,
+      "passes": true,
       "category": "landing",
-      "files": ["src/lib/trends/google-trends.ts"],
-      "acceptance": ["API integration", "Interest over time", "Related topics"]
+      "files": [
+        "src/lib/trends/google-trends.ts"
+      ],
+      "acceptance": [
+        "API integration",
+        "Interest over time",
+        "Related topics"
+      ]
     },
     {
       "id": "EMPTY-001",
@@ -3949,10 +4444,16 @@
       "priority": "P1",
       "phase": 2,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "components",
-      "files": ["src/components/ui/EmptyState.tsx"],
-      "acceptance": ["Illustration slot", "Headline/description props", "Primary/secondary CTA"]
+      "files": [
+        "src/components/ui/EmptyState.tsx"
+      ],
+      "acceptance": [
+        "Illustration slot",
+        "Headline/description props",
+        "Primary/secondary CTA"
+      ]
     },
     {
       "id": "SKELETON-001",
@@ -3961,10 +4462,16 @@
       "priority": "P1",
       "phase": 2,
       "effort": "2h",
-      "passes": false,
+      "passes": true,
       "category": "components",
-      "files": ["src/components/ui/Skeleton.tsx"],
-      "acceptance": ["Card skeleton", "List skeleton", "Report section skeleton"]
+      "files": [
+        "src/components/ui/Skeleton.tsx"
+      ],
+      "acceptance": [
+        "Card skeleton",
+        "List skeleton",
+        "Report section skeleton"
+      ]
     },
     {
       "id": "DISCOVER-001",
@@ -3973,10 +4480,17 @@
       "priority": "P0",
       "phase": 2,
       "effort": "8h",
-      "passes": false,
+      "passes": true,
       "category": "dashboard",
-      "files": ["src/app/dashboard/discover/page.tsx"],
-      "acceptance": ["Gap card grid", "Filter panel", "Search bar", "View toggles"]
+      "files": [
+        "src/app/dashboard/discover/page.tsx"
+      ],
+      "acceptance": [
+        "Gap card grid",
+        "Filter panel",
+        "Search bar",
+        "View toggles"
+      ]
     },
     {
       "id": "DISCOVER-002",
@@ -3987,8 +4501,14 @@
       "effort": "3h",
       "passes": false,
       "category": "dashboard",
-      "files": ["src/lib/saved-searches.ts"],
-      "acceptance": ["Save search button", "Saved searches dropdown", "Delete saved search"]
+      "files": [
+        "src/lib/saved-searches.ts"
+      ],
+      "acceptance": [
+        "Save search button",
+        "Saved searches dropdown",
+        "Delete saved search"
+      ]
     },
     {
       "id": "HELP-001",
@@ -3999,8 +4519,14 @@
       "effort": "2h",
       "passes": false,
       "category": "infrastructure",
-      "files": ["src/components/IntercomWidget.tsx"],
-      "acceptance": ["Widget loads", "User identification", "Message history"]
+      "files": [
+        "src/components/IntercomWidget.tsx"
+      ],
+      "acceptance": [
+        "Widget loads",
+        "User identification",
+        "Message history"
+      ]
     },
     {
       "id": "HELP-002",
@@ -4011,12 +4537,707 @@
       "effort": "4h",
       "passes": false,
       "category": "dashboard",
-      "files": ["src/app/dashboard/guide/page.tsx"],
-      "acceptance": ["Feature documentation", "Video embeds", "Best practices"]
+      "files": [
+        "src/app/dashboard/guide/page.tsx"
+      ],
+      "acceptance": [
+        "Feature documentation",
+        "Video embeds",
+        "Best practices"
+      ]
+    },
+    {
+      "id": "BRIEF-001",
+      "name": "Demand Brief Onboarding Flow",
+      "description": "Single-input onboarding that auto-extracts niche, category, competitors, keywords",
+      "priority": "P1",
+      "phase": 9,
+      "effort": "8h",
+      "passes": false,
+      "category": "demand_brief",
+      "files": [
+        "src/app/onboarding/page.tsx",
+        "src/lib/ai/niche-extractor.ts"
+      ],
+      "acceptance": [
+        "Single text input",
+        "AI auto-extraction",
+        "Preview screen",
+        "Editable fields"
+      ]
+    },
+    {
+      "id": "BRIEF-002",
+      "name": "User Niche Configuration Storage",
+      "description": "Store user's tracked niches with keywords, competitors, and settings",
+      "priority": "P1",
+      "phase": 9,
+      "effort": "4h",
+      "passes": false,
+      "category": "demand_brief",
+      "files": [
+        "supabase/migrations/user_niches.sql",
+        "src/lib/niches.ts"
+      ],
+      "acceptance": [
+        "user_niches table",
+        "CRUD operations",
+        "Multiple niches per user"
+      ]
+    },
+    {
+      "id": "BRIEF-003",
+      "name": "Weekly Demand Score Calculation",
+      "description": "Calculate demand score: 30% ads + 25% intent + 20% velocity + 15% pain + 10% competition",
+      "priority": "P0",
+      "phase": 9,
+      "effort": "6h",
+      "passes": false,
+      "category": "demand_brief",
+      "files": [
+        "src/lib/scoring/demand-score.ts"
+      ],
+      "acceptance": [
+        "Formula implemented",
+        "0-100 score",
+        "Trend tracking",
+        "Companion metrics"
+      ]
+    },
+    {
+      "id": "BRIEF-004",
+      "name": "Weekly Signal Collection Pipeline",
+      "description": "Cron job to collect weekly signals (ads, search, UGC, forums, competitors)",
+      "priority": "P0",
+      "phase": 9,
+      "effort": "8h",
+      "passes": false,
+      "category": "demand_brief",
+      "files": [
+        "src/app/api/cron/weekly-briefs/route.ts"
+      ],
+      "acceptance": [
+        "Collects all signal types",
+        "Deduplication",
+        "Error handling",
+        "Rate limiting"
+      ]
+    },
+    {
+      "id": "BRIEF-005",
+      "name": "Demand Snapshot Storage",
+      "description": "Store weekly snapshots with scores, signals, and generated content",
+      "priority": "P0",
+      "phase": 9,
+      "effort": "3h",
+      "passes": false,
+      "category": "demand_brief",
+      "files": [
+        "supabase/migrations/demand_snapshots.sql"
+      ],
+      "acceptance": [
+        "demand_snapshots table",
+        "JSONB signal storage",
+        "Historical queries"
+      ]
+    },
+    {
+      "id": "BRIEF-006",
+      "name": "AI Play Generator",
+      "description": "Generate 3 actionable plays (product, offer, distribution) from weekly signals",
+      "priority": "P0",
+      "phase": 9,
+      "effort": "4h",
+      "passes": false,
+      "category": "demand_brief",
+      "files": [
+        "src/lib/ai/play-generator.ts"
+      ],
+      "acceptance": [
+        "3 plays per brief",
+        "Evidence-backed",
+        "Priority ordered"
+      ]
+    },
+    {
+      "id": "BRIEF-007",
+      "name": "AI Copy Generator for Briefs",
+      "description": "Generate ad hooks, subject lines, and landing page copy from signals",
+      "priority": "P1",
+      "phase": 9,
+      "effort": "4h",
+      "passes": false,
+      "category": "demand_brief",
+      "files": [
+        "src/lib/ai/brief-copy-generator.ts"
+      ],
+      "acceptance": [
+        "3 ad hooks",
+        "3 subject lines",
+        "1 landing paragraph"
+      ]
+    },
+    {
+      "id": "BRIEF-008",
+      "name": "Demand Brief Email Template",
+      "description": "React Email template for weekly demand brief with all sections",
+      "priority": "P0",
+      "phase": 9,
+      "effort": "6h",
+      "passes": false,
+      "category": "demand_brief",
+      "files": [
+        "src/lib/email/templates/demand-brief.tsx"
+      ],
+      "acceptance": [
+        "Score section",
+        "What Changed section",
+        "Plays section",
+        "Copy section"
+      ]
+    },
+    {
+      "id": "BRIEF-009",
+      "name": "Resend Email Integration",
+      "description": "Send weekly demand briefs via Resend email service",
+      "priority": "P0",
+      "phase": 9,
+      "effort": "3h",
+      "passes": false,
+      "category": "demand_brief",
+      "files": [
+        "src/lib/email/resend.ts"
+      ],
+      "acceptance": [
+        "Resend SDK setup",
+        "Send function",
+        "Error handling",
+        "Delivery tracking"
+      ]
+    },
+    {
+      "id": "BRIEF-010",
+      "name": "Between-Brief Alerts",
+      "description": "Real-time alerts for significant events (price drops, trend spikes, new angles)",
+      "priority": "P1",
+      "phase": 9,
+      "effort": "6h",
+      "passes": false,
+      "category": "demand_brief",
+      "files": [
+        "src/lib/alerts/trigger.ts",
+        "src/app/api/alerts/route.ts"
+      ],
+      "acceptance": [
+        "Alert types defined",
+        "Urgency levels",
+        "Email delivery"
+      ]
+    },
+    {
+      "id": "BRIEF-011",
+      "name": "My Niches Dashboard Page",
+      "description": "Manage tracked niches with status, scores, and settings",
+      "priority": "P1",
+      "phase": 9,
+      "effort": "6h",
+      "passes": false,
+      "category": "demand_brief",
+      "files": [
+        "src/app/dashboard/niches/page.tsx"
+      ],
+      "acceptance": [
+        "Niche list",
+        "Score badges",
+        "Edit/delete actions",
+        "Add new CTA"
+      ]
+    },
+    {
+      "id": "BRIEF-012",
+      "name": "Niche Detail Page",
+      "description": "View niche history, trends, and settings",
+      "priority": "P1",
+      "phase": 9,
+      "effort": "6h",
+      "passes": false,
+      "category": "demand_brief",
+      "files": [
+        "src/app/dashboard/niches/[id]/page.tsx"
+      ],
+      "acceptance": [
+        "Score chart over time",
+        "Historical snapshots",
+        "Settings panel"
+      ]
+    },
+    {
+      "id": "BRIEF-013",
+      "name": "Web Brief Viewer",
+      "description": "Web version of email brief with full interactivity",
+      "priority": "P1",
+      "phase": 9,
+      "effort": "6h",
+      "passes": false,
+      "category": "demand_brief",
+      "files": [
+        "src/app/dashboard/briefs/[id]/page.tsx"
+      ],
+      "acceptance": [
+        "All email sections",
+        "Interactive charts",
+        "Export options"
+      ]
+    },
+    {
+      "id": "BRIEF-014",
+      "name": "Demand Brief Subscription Tiers",
+      "description": "Starter (1 niche), Builder (3 niches), Agency (10-25 niches) plans",
+      "priority": "P1",
+      "phase": 9,
+      "effort": "4h",
+      "passes": false,
+      "category": "demand_brief",
+      "files": [
+        "src/lib/plans/demand-brief-plans.ts"
+      ],
+      "acceptance": [
+        "Tier enforcement",
+        "Niche limits",
+        "Price configuration"
+      ]
+    },
+    {
+      "id": "BRIEF-015",
+      "name": "Demand Brief Add-Ons",
+      "description": "Optional add-ons: Ad Angle Pack, Landing Page Rewrites, Competitor Watchlists",
+      "priority": "P2",
+      "phase": 9,
+      "effort": "4h",
+      "passes": false,
+      "category": "demand_brief",
+      "files": [
+        "src/lib/plans/addons.ts"
+      ],
+      "acceptance": [
+        "Add-on purchase flow",
+        "Feature unlocking",
+        "Stripe integration"
+      ]
+    },
+    {
+      "id": "BRIEF-016",
+      "name": "Experiment Loop Feature",
+      "description": "Weekly experiment suggestions and results tracking",
+      "priority": "P2",
+      "phase": 9,
+      "effort": "4h",
+      "passes": false,
+      "category": "demand_brief",
+      "files": [
+        "src/lib/experiments.ts"
+      ],
+      "acceptance": [
+        "Experiment suggestions",
+        "Results tracking",
+        "Email integration"
+      ]
+    },
+    {
+      "id": "BRIEF-017",
+      "name": "Progress Tracking Dashboard",
+      "description": "Show niche evolution over time with milestones",
+      "priority": "P2",
+      "phase": 9,
+      "effort": "4h",
+      "passes": false,
+      "category": "demand_brief",
+      "files": [
+        "src/components/dashboard/ProgressTracker.tsx"
+      ],
+      "acceptance": [
+        "Score evolution chart",
+        "Milestone markers",
+        "Insights timeline"
+      ]
+    },
+    {
+      "id": "GOOGLE-001",
+      "name": "Google Ads Search Collection",
+      "description": "Collect Google search ads via SerpAPI for niche analysis",
+      "priority": "P1",
+      "phase": 2,
+      "effort": "6h",
+      "passes": true,
+      "category": "collectors",
+      "files": [
+        "src/lib/collectors/google.ts"
+      ],
+      "acceptance": [
+        "SerpAPI integration",
+        "Ad text extraction",
+        "Advertiser info",
+        "Keyword association"
+      ]
+    },
+    {
+      "id": "GOOGLE-002",
+      "name": "Google Display Ads Collection",
+      "description": "Collect Google display/shopping ads for visual analysis",
+      "priority": "P2",
+      "phase": 2,
+      "effort": "4h",
+      "passes": false,
+      "category": "collectors",
+      "files": [
+        "src/lib/collectors/google.ts"
+      ],
+      "acceptance": [
+        "Shopping results",
+        "Display ads",
+        "Creative URLs"
+      ]
+    },
+    {
+      "id": "UGC-COLLECT-001",
+      "name": "TikTok Creative Center Integration",
+      "description": "Collect top ads from TikTok Creative Center (requires approval)",
+      "priority": "P2",
+      "phase": 5,
+      "effort": "8h",
+      "passes": false,
+      "category": "collectors",
+      "files": [
+        "src/lib/collectors/tiktok-creative-center.ts"
+      ],
+      "acceptance": [
+        "API authentication",
+        "Top ads fetching",
+        "Trend discovery"
+      ]
+    },
+    {
+      "id": "UGC-COLLECT-002",
+      "name": "TikTok Commercial Content API",
+      "description": "Access TikTok commercial API for ad metadata and reach",
+      "priority": "P2",
+      "phase": 5,
+      "effort": "8h",
+      "passes": false,
+      "category": "collectors",
+      "files": [
+        "src/lib/collectors/tiktok-commercial.ts"
+      ],
+      "acceptance": [
+        "Commercial API access",
+        "Reach metrics",
+        "First/last shown dates"
+      ]
+    },
+    {
+      "id": "UGC-COLLECT-003",
+      "name": "Instagram Hashtag Search",
+      "description": "Search Instagram by hashtag for UGC content discovery",
+      "priority": "P2",
+      "phase": 5,
+      "effort": "6h",
+      "passes": false,
+      "category": "collectors",
+      "files": [
+        "src/lib/collectors/instagram.ts"
+      ],
+      "acceptance": [
+        "Graph API integration",
+        "Hashtag search",
+        "Post extraction"
+      ]
+    },
+    {
+      "id": "UGC-COLLECT-004",
+      "name": "Connected Account Insights",
+      "description": "OAuth connection for user's own TikTok/Instagram insights",
+      "priority": "P3",
+      "phase": 5,
+      "effort": "12h",
+      "passes": false,
+      "category": "collectors",
+      "files": [
+        "src/lib/integrations/social-connect.ts"
+      ],
+      "acceptance": [
+        "OAuth flows",
+        "Account linking",
+        "Metrics sync"
+      ]
+    },
+    {
+      "id": "EXPORT-001",
+      "name": "CSV Export",
+      "description": "Export run data and reports as CSV files",
+      "priority": "P1",
+      "phase": 4,
+      "effort": "3h",
+      "passes": true,
+      "category": "reports",
+      "files": [
+        "src/app/api/exports/[runId]/csv/route.ts"
+      ],
+      "acceptance": [
+        "All data tables",
+        "Proper formatting",
+        "Download headers"
+      ]
+    },
+    {
+      "id": "EXPORT-002",
+      "name": "JSON Export",
+      "description": "Export run data and reports as JSON files",
+      "priority": "P1",
+      "phase": 4,
+      "effort": "2h",
+      "passes": true,
+      "category": "reports",
+      "files": [
+        "src/app/api/exports/[runId]/json/route.ts"
+      ],
+      "acceptance": [
+        "Full data structure",
+        "Proper typing",
+        "Download headers"
+      ]
+    },
+    {
+      "id": "CHROME-001",
+      "name": "Chrome Extension - Core",
+      "description": "Chrome extension for saving gaps/opportunities while browsing",
+      "priority": "P3",
+      "phase": 8,
+      "effort": "16h",
+      "passes": false,
+      "category": "extension",
+      "files": [
+        "chrome-extension/"
+      ],
+      "acceptance": [
+        "Manifest v3",
+        "Auth integration",
+        "Save functionality"
+      ]
+    },
+    {
+      "id": "CHROME-002",
+      "name": "Chrome Extension - Quick Analysis",
+      "description": "Trigger quick analysis from any webpage",
+      "priority": "P3",
+      "phase": 8,
+      "effort": "8h",
+      "passes": false,
+      "category": "extension",
+      "files": [
+        "chrome-extension/"
+      ],
+      "acceptance": [
+        "Context menu",
+        "URL analysis",
+        "Results popup"
+      ]
+    },
+    {
+      "id": "FOLDERS-001",
+      "name": "Folders & Collections",
+      "description": "Organize saved gaps and reports into user-created folders",
+      "priority": "P2",
+      "phase": 2,
+      "effort": "6h",
+      "passes": false,
+      "category": "dashboard",
+      "files": [
+        "src/app/dashboard/folders/page.tsx",
+        "supabase/migrations/folders.sql"
+      ],
+      "acceptance": [
+        "Create/rename/delete folders",
+        "Move items between folders",
+        "Folder counts"
+      ]
+    },
+    {
+      "id": "FAVORITES-001",
+      "name": "Favorite Searches",
+      "description": "Save and quick-access favorite search queries with one click",
+      "priority": "P2",
+      "phase": 2,
+      "effort": "3h",
+      "passes": false,
+      "category": "dashboard",
+      "files": [
+        "src/lib/favorites.ts",
+        "src/components/FavoriteSearches.tsx"
+      ],
+      "acceptance": [
+        "Star button on search",
+        "Favorites dropdown",
+        "Quick access"
+      ]
+    },
+    {
+      "id": "EXPERT-001",
+      "name": "Expert Picks / Curated Collections",
+      "description": "Curated gap collections by experts (seasonal, niche-specific)",
+      "priority": "P2",
+      "phase": 2,
+      "effort": "6h",
+      "passes": false,
+      "category": "dashboard",
+      "files": [
+        "src/app/dashboard/expert-picks/page.tsx"
+      ],
+      "acceptance": [
+        "Collection list",
+        "Expert attribution",
+        "Copy to saved"
+      ]
+    },
+    {
+      "id": "BRAND-001",
+      "name": "Brand/Competitor Detail Page",
+      "description": "Detailed view of a single competitor with all their ads and gaps",
+      "priority": "P1",
+      "phase": 2,
+      "effort": "6h",
+      "passes": true,
+      "category": "dashboard",
+      "files": [
+        "src/app/dashboard/brands/[id]/page.tsx"
+      ],
+      "acceptance": [
+        "Brand info",
+        "Ad grid",
+        "Gap list",
+        "Track button"
+      ]
+    },
+    {
+      "id": "BRAND-002",
+      "name": "Brand Leaderboard",
+      "description": "Leaderboard of brands by activity, gaps found, or user saves",
+      "priority": "P2",
+      "phase": 2,
+      "effort": "4h",
+      "passes": false,
+      "category": "dashboard",
+      "files": [
+        "src/app/dashboard/brands/page.tsx"
+      ],
+      "acceptance": [
+        "Sortable columns",
+        "Metrics display",
+        "Click to detail"
+      ]
+    },
+    {
+      "id": "COMPETITOR-001",
+      "name": "Competitor Tracker",
+      "description": "Track specific competitors over time with alerts on changes",
+      "priority": "P1",
+      "phase": 2,
+      "effort": "8h",
+      "passes": true,
+      "category": "dashboard",
+      "files": [
+        "src/app/dashboard/competitors/page.tsx",
+        "supabase/migrations/tracked_competitors.sql"
+      ],
+      "acceptance": [
+        "Add competitor",
+        "Track changes",
+        "Pricing alerts",
+        "Feature alerts"
+      ]
+    },
+    {
+      "id": "UPSELL-001",
+      "name": "Persistent Upsell Banner",
+      "description": "Dismissible upgrade banner with contextual messaging",
+      "priority": "P2",
+      "phase": 6,
+      "effort": "2h",
+      "passes": false,
+      "category": "billing",
+      "files": [
+        "src/components/UpsellBanner.tsx"
+      ],
+      "acceptance": [
+        "Contextual message",
+        "Dismiss with cookie",
+        "CTA to pricing"
+      ]
+    },
+    {
+      "id": "VIDEO-001",
+      "name": "Video Course Integration",
+      "description": "Educational video content in onboarding and success guide",
+      "priority": "P3",
+      "phase": 2,
+      "effort": "4h",
+      "passes": false,
+      "category": "onboarding",
+      "files": [
+        "src/components/VideoPlayer.tsx"
+      ],
+      "acceptance": [
+        "Video embeds",
+        "Progress tracking",
+        "Course structure"
+      ]
+    },
+    {
+      "id": "MOBILE-001",
+      "name": "Mobile Responsive Dashboard",
+      "description": "Full mobile responsiveness for all dashboard pages",
+      "priority": "P1",
+      "phase": 2,
+      "effort": "8h",
+      "passes": false,
+      "category": "dashboard",
+      "files": [
+        "src/app/dashboard/"
+      ],
+      "acceptance": [
+        "All pages responsive",
+        "Touch-friendly",
+        "Mobile navigation"
+      ]
+    },
+    {
+      "id": "DARK-001",
+      "name": "Dark Mode Support",
+      "description": "Full dark mode support across all pages",
+      "priority": "P2",
+      "phase": 2,
+      "effort": "4h",
+      "passes": false,
+      "category": "dashboard",
+      "files": [
+        "src/app/globals.css"
+      ],
+      "acceptance": [
+        "Theme toggle",
+        "System preference detection",
+        "Consistent colors"
+      ]
     }
   ],
   "phases_extended": {
     "phase9_demand_brief": "Weekly Demand Brief subscription product"
   },
-  "lastUpdated": "2026-01-17T19:00:00.000Z"
+  "lastUpdated": "2026-01-17T19:05:00.000Z",
+  "currentPhase": "Phase 4: Reports - COMPLETE",
+  "nextSteps": [
+    "✅ Phase 1 Complete! All 15 landing page features implemented and tested",
+    "✅ Phase 2 Complete! All 8 database and collector features implemented",
+    "✅ Phase 3 Complete! All 6 analysis engine features implemented",
+    "✅ Phase 4 Complete! All 28 report features implemented",
+    "🎉 GapRadar MVP Complete! Ready for deployment and user testing"
+  ]
 }

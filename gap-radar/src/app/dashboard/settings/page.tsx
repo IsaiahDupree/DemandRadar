@@ -197,10 +197,10 @@ export default function SettingsPage() {
   const currentPlan = subscriptionData?.plan || 'free';
   const planInfo = PLANS[currentPlan as keyof typeof PLANS] || PLANS.free;
   return (
-    <div className="space-y-6 max-w-4xl">
+    <div className="space-y-4 sm:space-y-6 max-w-4xl">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Settings</h1>
-        <p className="text-muted-foreground">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Settings</h1>
+        <p className="text-sm sm:text-base text-muted-foreground">
           Manage your account, integrations, and preferences
         </p>
       </div>
@@ -208,17 +208,17 @@ export default function SettingsPage() {
       {/* Plan & Usage */}
       <Card>
         <CardHeader>
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <CardTitle className="flex items-center gap-2">
-                <CreditCard className="h-5 w-5" />
+              <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                <CreditCard className="h-4 w-4 sm:h-5 sm:w-5" />
                 Plan & Usage
               </CardTitle>
-              <CardDescription>
+              <CardDescription className="text-xs sm:text-sm">
                 Your current subscription and usage
               </CardDescription>
             </div>
-            <Badge className="bg-primary/10 text-primary border-0">
+            <Badge className="bg-primary/10 text-primary border-0 w-fit">
               {loading ? 'Loading...' : `${planInfo.name} Plan`}
             </Badge>
           </div>
@@ -230,18 +230,18 @@ export default function SettingsPage() {
             </div>
           ) : (
             <>
-              <div className="grid gap-4 md:grid-cols-3">
-                <div className="p-4 border rounded-lg">
-                  <p className="text-sm text-muted-foreground">Monthly Runs</p>
-                  <p className="text-2xl font-bold">
+              <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+                <div className="p-3 sm:p-4 border rounded-lg">
+                  <p className="text-xs sm:text-sm text-muted-foreground">Monthly Runs</p>
+                  <p className="text-xl sm:text-2xl font-bold">
                     {subscriptionData?.runsUsed || 0} / {subscriptionData?.runsLimit || 0}
                   </p>
                   <p className="text-xs text-muted-foreground">
                     {(subscriptionData?.runsLimit || 0) - (subscriptionData?.runsUsed || 0)} remaining
                   </p>
                 </div>
-                <div className="p-4 border rounded-lg">
-                  <p className="text-sm text-muted-foreground">Current Plan</p>
+                <div className="p-3 sm:p-4 border rounded-lg">
+                  <p className="text-xs sm:text-sm text-muted-foreground">Current Plan</p>
                   <p className="text-2xl font-bold">{planInfo.name}</p>
                   <p className="text-xs text-muted-foreground">
                     ${planInfo.price}/month

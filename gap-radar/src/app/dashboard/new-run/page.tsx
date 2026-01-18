@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,14 +14,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { 
-  Search, 
-  Plus, 
-  X, 
-  Zap, 
-  Clock, 
-  Globe, 
-  Smartphone, 
+import {
+  Search,
+  Plus,
+  X,
+  Zap,
+  Clock,
+  Globe,
+  Smartphone,
   MonitorSmartphone,
   MessageSquare,
   ShoppingBag,
@@ -30,6 +30,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { trackFirstRunStarted, hasCompletedStage, markStageCompleted } from "@/lib/analytics/funnel";
 
 const dataSources = [
   { id: "meta", name: "Meta Ads Library", icon: ShoppingBag, description: "Facebook & Instagram ads" },
@@ -51,6 +52,12 @@ export default function NewRunPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [runType, setRunType] = useState("deep");
   const [geo, setGeo] = useState("us");
+  const [isFirstRun, setIsFirstRun] = useState(false);
+
+  // Check if this is the user's first run
+  useEffect(() => {
+    setIsFirstRun(!hasCompletedStage('first_run_started'));
+  }, []);
 
   const addSeedTerm = () => {
     if (newSeedTerm && !seedTerms.includes(newSeedTerm)) {
@@ -109,10 +116,16 @@ export default function NewRunPage() {
         throw new Error(data.error || 'Failed to start analysis');
       }
 
+      // Track first run if applicable
+      if (isFirstRun) {
+        trackFirstRunStarted(data.runId || data.id, nicheQuery);
+        markStageCompleted('first_run_started');
+      }
+
       toast.success("Analysis started!", {
         description: `Analyzing "${nicheQuery}" - this may take ${runType === 'deep' ? '8-12' : '3-5'} minutes`,
       });
-      
+
       router.push("/dashboard/runs");
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Failed to start analysis');

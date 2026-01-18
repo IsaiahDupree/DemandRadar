@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server';
+import { fetchProductHuntTrends } from '@/lib/trends/producthunt';
+import { fetchGoogleTrends } from '@/lib/trends/google-trends';
 
 interface TrendingTopic {
   id: string;
@@ -198,7 +200,12 @@ function calculateOpportunityScore(score: number, comments: number): number {
 
 export async function GET() {
   try {
-    const trends = await fetchRedditTrends();
+    // Fetch from Reddit, ProductHunt, and Google Trends
+    const [redditTrends, productHuntTrends, googleTrends] = await Promise.all([
+      fetchRedditTrends(),
+      fetchProductHuntTrends(),
+      fetchGoogleTrends()
+    ]);
     
     // Add some curated trending topics if Reddit data is sparse
     const curatedTrends: TrendingTopic[] = [
@@ -270,14 +277,14 @@ export async function GET() {
       },
     ];
     
-    // Merge and dedupe
-    const allTrends = [...trends];
+    // Merge Reddit, ProductHunt, Google Trends, and curated trends; dedupe
+    const allTrends = [...redditTrends, ...productHuntTrends, ...googleTrends];
     for (const curated of curatedTrends) {
       if (!allTrends.find(t => t.topic.toLowerCase().includes(curated.topic.toLowerCase().split(' ')[0]))) {
         allTrends.push(curated);
       }
     }
-    
+
     return NextResponse.json({
       trends: allTrends.sort((a, b) => b.opportunityScore - a.opportunityScore).slice(0, 12),
       lastUpdated: new Date().toISOString(),

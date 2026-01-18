@@ -1,15 +1,16 @@
 {
   "projectId": "gapradar",
   "projectRoot": "/Users/isaiahdupree/Documents/Software/WhatsCurrentlyInTheMarket/gap-radar",
-  "lastUpdated": "2026-01-17T18:50:48.437Z",
-  "sessionType": "CODING",
-  "status": "running",
+  "lastUpdated": "2026-01-18T06:15:10.910Z",
+  "sessionType": "error",
+  "status": "auth_failed",
   "stats": {
-    "total": 170,
-    "passing": 54,
-    "pending": 116,
-    "percentComplete": "31.8"
+    "total": 287,
+    "passing": 191,
+    "pending": 96,
+    "percentComplete": "66.6"
   },
-  "pid": 39118,
-  "currentSession": 4
+  "pid": 38554,
+  "message": "Invalid API key - harness stopped",
+  "errorType": "auth_error"
 }

@@ -1,10 +1,14 @@
 {
-  "totalSessions": 9,
-  "successfulSessions": 9,
-  "failedSessions": 0,
-  "totalTokens": 855443,
+  "totalSessions": 68,
+  "successfulSessions": 67,
+  "failedSessions": 1,
+  "totalTokens": 6243847,
+  "totalCostUsd": 0,
   "rateLimitHits": 0,
-  "authErrors": 0,
-  "consecutiveErrors": 0,
-  "lastSessionTime": "2026-01-17T18:33:55.487Z"
+  "authErrors": 1,
+  "consecutiveErrors": 1,
+  "lastSessionTime": "2026-01-18T06:15:10.910Z",
+  "featuresCompletedThisRun": 0,
+  "startingFeatures": 0,
+  "avgSessionDuration": 0
 }

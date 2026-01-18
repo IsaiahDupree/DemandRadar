@@ -1,3 +1,6 @@
+/**
+ * @jest-environment node
+ */
 import { POST } from '@/app/api/webhooks/stripe/route';
 import { stripe } from '@/lib/stripe';
 import { createClient } from '@/lib/supabase/server';
@@ -28,10 +31,25 @@ jest.mock('@/lib/stripe', () => ({
     };
     return limits[plan] || 2;
   }),
+  PLANS: {
+    free: { name: 'Free', price: 0, features: ['2 runs per month'] },
+    starter: { name: 'Starter', price: 29, features: ['5 runs per month'] },
+    builder: { name: 'Builder', price: 99, features: ['10 runs per month'] },
+    agency: { name: 'Agency', price: 249, features: ['35 runs per month'] },
+    studio: { name: 'Studio', price: 499, features: ['100 runs per month'] },
+  },
 }));
 
 jest.mock('@/lib/supabase/server', () => ({
   createClient: jest.fn(),
+}));
+
+jest.mock('@/lib/email', () => ({
+  sendEmail: jest.fn(() => Promise.resolve({ success: true })),
+}));
+
+jest.mock('@/lib/email-templates', () => ({
+  SubscriptionConfirmationEmail: jest.fn(() => ({})),
 }));
 
 jest.mock('next/headers', () => ({
@@ -54,7 +72,12 @@ describe('Stripe Webhook Handler', () => {
     mockSupabase = {
       from: jest.fn(() => mockSupabase),
       update: jest.fn(() => mockSupabase),
-      eq: jest.fn(() => Promise.resolve({ data: null, error: null })),
+      select: jest.fn(() => mockSupabase),
+      single: jest.fn(() => Promise.resolve({
+        data: { email: 'test@example.com', name: 'Test User' },
+        error: null
+      })),
+      eq: jest.fn(() => mockSupabase),
     };
 
     (createClient as jest.Mock).mockResolvedValue(mockSupabase);
@@ -141,6 +164,19 @@ describe('Stripe Webhook Handler', () => {
         },
       } as Stripe.Subscription;
 
+      // Mock the full Supabase chain for this test
+      const testSupabase = {
+        from: jest.fn(() => testSupabase),
+        update: jest.fn(() => testSupabase),
+        select: jest.fn(() => testSupabase),
+        eq: jest.fn(() => testSupabase),
+        single: jest.fn(() => Promise.resolve({
+          data: { email: 'test@example.com', name: 'Test User' },
+          error: null
+        })),
+      };
+      (createClient as jest.Mock).mockResolvedValue(testSupabase);
+
       (stripe.webhooks.constructEvent as jest.Mock).mockReturnValue(mockEvent);
       (stripe.subscriptions.retrieve as jest.Mock).mockResolvedValue(mockSubscription);
 
@@ -154,14 +190,14 @@ describe('Stripe Webhook Handler', () => {
 
       expect(response.status).toBe(200);
       expect(data.received).toBe(true);
-      expect(mockSupabase.from).toHaveBeenCalledWith('users');
-      expect(mockSupabase.update).toHaveBeenCalledWith({
+      expect(testSupabase.from).toHaveBeenCalledWith('users');
+      expect(testSupabase.update).toHaveBeenCalledWith({
         plan: 'builder',
         runs_limit: 10,
         runs_used: 0,
         stripe_customer_id: 'cus_test123',
       });
-      expect(mockSupabase.eq).toHaveBeenCalledWith('stripe_customer_id', 'cus_test123');
+      expect(testSupabase.eq).toHaveBeenCalledWith('stripe_customer_id', 'cus_test123');
     });
 
     it('should default to starter plan if price not found', async () => {
@@ -226,6 +262,19 @@ describe('Stripe Webhook Handler', () => {
         },
       } as Stripe.Event;
 
+      // Mock the full Supabase chain for this test
+      const testSupabase = {
+        from: jest.fn(() => testSupabase),
+        update: jest.fn(() => testSupabase),
+        select: jest.fn(() => testSupabase),
+        eq: jest.fn(() => testSupabase),
+        single: jest.fn(() => Promise.resolve({
+          data: { email: 'test@example.com', name: 'Test User' },
+          error: null
+        })),
+      };
+      (createClient as jest.Mock).mockResolvedValue(testSupabase);
+
       (stripe.webhooks.constructEvent as jest.Mock).mockReturnValue(mockEvent);
 
       const request = new Request('http://localhost/api/webhooks/stripe', {
@@ -238,11 +287,11 @@ describe('Stripe Webhook Handler', () => {
 
       expect(response.status).toBe(200);
       expect(data.received).toBe(true);
-      expect(mockSupabase.update).toHaveBeenCalledWith({
+      expect(testSupabase.update).toHaveBeenCalledWith({
         plan: 'agency',
         runs_limit: 35,
       });
-      expect(mockSupabase.eq).toHaveBeenCalledWith('stripe_customer_id', 'cus_test123');
+      expect(testSupabase.eq).toHaveBeenCalledWith('stripe_customer_id', 'cus_test123');
     });
 
     it('should handle subscription update without valid plan', async () => {

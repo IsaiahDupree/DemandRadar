@@ -16,17 +16,18 @@
  */
 
 import { createClient } from '@/lib/supabase/server';
-import type { Database } from '@/types/supabase';
+import { getCachedReport, setCachedReport, invalidateReportCache } from './cache';
+// import type { Database } from '@/types/supabase';
 
-type Run = Database['public']['Tables']['runs']['Row'];
-type AdCreative = Database['public']['Tables']['ad_creatives']['Row'];
-type RedditMention = Database['public']['Tables']['reddit_mentions']['Row'];
-type Extraction = Database['public']['Tables']['extractions']['Row'];
-type Cluster = Database['public']['Tables']['clusters']['Row'];
-type GapOpportunity = Database['public']['Tables']['gap_opportunities']['Row'];
-type ConceptIdea = Database['public']['Tables']['concept_ideas']['Row'];
-type ConceptMetrics = Database['public']['Tables']['concept_metrics']['Row'];
-type AppStoreResult = Database['public']['Tables']['app_store_results']['Row'];
+type Run = any; // Database['public']['Tables']['runs']['Row'];
+type AdCreative = any; // Database['public']['Tables']['ad_creatives']['Row'];
+type RedditMention = any; // Database['public']['Tables']['reddit_mentions']['Row'];
+type Extraction = any; // Database['public']['Tables']['extractions']['Row'];
+type Cluster = any; // Database['public']['Tables']['clusters']['Row'];
+type GapOpportunity = any; // Database['public']['Tables']['gap_opportunities']['Row'];
+type ConceptIdea = any; // Database['public']['Tables']['concept_ideas']['Row'];
+type ConceptMetrics = any; // Database['public']['Tables']['concept_metrics']['Row'];
+type AppStoreResult = any; // Database['public']['Tables']['app_store_results']['Row'];
 
 export interface ReportData {
   run: Run;
@@ -202,8 +203,15 @@ export interface ActionPlan {
 
 /**
  * Generate a complete market analysis report
+ * Uses caching to avoid recomputation (5-minute TTL)
  */
 export async function generateReport(runId: string, userId: string): Promise<ReportData> {
+  // Check cache first
+  const cached = getCachedReport<ReportData>(runId);
+  if (cached) {
+    return cached.data;
+  }
+
   const supabase = await createClient();
 
   // Fetch run and verify ownership
@@ -260,7 +268,7 @@ export async function generateReport(runId: string, userId: string): Promise<Rep
   const ugc = buildUGCWinnersPack();
   const actionPlan = buildActionPlan(gaps || [], clusters || [], run);
 
-  return {
+  const reportData: ReportData = {
     run,
     summary,
     paidMarket,
@@ -272,6 +280,11 @@ export async function generateReport(runId: string, userId: string): Promise<Rep
     ugc,
     actionPlan,
   };
+
+  // Cache the report (5-minute TTL)
+  setCachedReport(runId, reportData, { ttlMs: 5 * 60 * 1000 });
+
+  return reportData;
 }
 
 /**
@@ -794,10 +807,18 @@ function extractTopKeywords(clusters: Cluster[]): string[] {
 
   clusters.forEach(cluster => {
     const words = cluster.label.toLowerCase().split(/\s+/);
-    words.forEach(word => {
+    words.forEach((word: string) => {
       if (word.length > 4) keywords.add(word);
     });
   });
 
   return Array.from(keywords).slice(0, 20);
+}
+
+/**
+ * Invalidate cached report when run data changes
+ * Call this after updating ads, reddit mentions, extractions, etc.
+ */
+export function invalidateCachedReport(runId: string): void {
+  invalidateReportCache(runId);
 }

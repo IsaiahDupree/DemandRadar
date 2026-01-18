@@ -38,6 +38,31 @@ export {
   type DemandMetrics,
 } from './demand-score';
 
+// Re-export Build-to-Profit score
+export {
+  calculateBuildToProfitScore,
+  normalizeTAM,
+  normalizeMargin,
+  normalizeComplexity,
+  humanTouchToFactor,
+  timeToValueToFactor,
+  rankIdeasByBuildToProfit,
+  type BuildToProfitInputs,
+} from './build-to-profit';
+
+// Re-export UGC scoring functions
+export {
+  calculateUGCAdTestedScore,
+  calculateUGCTrendScore,
+  calculateUGCConnectedScore,
+  rankUGCByScore,
+  getUGCLeaderboardByHook,
+  getTopUGC,
+  type UGCAsset,
+  type UGCMetrics,
+  type UGCResult,
+} from './ugc';
+
 /**
  * Helper types for working with collector data
  */
@@ -111,28 +136,23 @@ export function calculateSaturationScoreFromData(
   // Calculate repetition index from angle clusters
   const angleClusters = clusters.filter(c => c.cluster_type === 'angle');
 
-  if (angleClusters.length === 0) {
-    // No clusters, assume moderate repetition
-    return calculateSaturationScore({
-      uniqueAdvertisers,
-      totalCreatives,
-      repetitionIndex: 0.5,
-    });
+  // Get top 3 angle clusters by frequency
+  let repetitionIndex = 0.5; // Default moderate repetition
+
+  if (angleClusters.length > 0) {
+    const top3 = angleClusters
+      .sort((a, b) => b.frequency - a.frequency)
+      .slice(0, 3);
+
+    // Repetition index = sum of top 3 frequencies / total frequencies
+    const top3Freq = top3.reduce((sum, c) => sum + c.frequency, 0);
+    const totalFreq = angleClusters.reduce((sum, c) => sum + c.frequency, 0);
+
+    repetitionIndex = totalFreq > 0 ? top3Freq / totalFreq : 0.5;
   }
 
-  // Get top 3 angle clusters by frequency
-  const top3 = angleClusters
-    .sort((a, b) => b.frequency - a.frequency)
-    .slice(0, 3);
-
-  // Repetition index = sum of top 3 frequencies / total frequencies
-  const top3Freq = top3.reduce((sum, c) => sum + c.frequency, 0);
-  const totalFreq = angleClusters.reduce((sum, c) => sum + c.frequency, 0);
-
-  const repetitionIndex = totalFreq > 0 ? top3Freq / totalFreq : 0.5;
-
-  const { calculateSaturationScore } = require('./formulas');
-  return calculateSaturationScore({
+  const { calculateSaturationScore: calcSat } = require('./formulas');
+  return calcSat({
     uniqueAdvertisers,
     totalCreatives,
     repetitionIndex,
@@ -365,127 +385,4 @@ export function calculateScores(
   };
 }
 
-/**
- * UGC Scoring Functions (from PRD §5.H)
- */
-
-interface UGCAsset {
-  first_shown?: string;
-  last_shown?: string;
-  posted_at?: string;
-}
-
-interface UGCMetrics {
-  views?: number;
-  likes?: number;
-  comments?: number;
-  shares?: number;
-  reach_unique_users?: number;
-}
-
-/**
- * Ad-tested UGC score
- * Formula: 0.45*Longevity + 0.35*Reach + 0.20*EngagementProxy
- */
-export function calculateUGCAdTestedScore(
-  asset: UGCAsset,
-  metrics: UGCMetrics
-): number {
-  // Longevity (days shown)
-  let longevity = 0;
-  if (asset.first_shown && asset.last_shown) {
-    const firstShown = new Date(asset.first_shown);
-    const lastShown = new Date(asset.last_shown);
-    const daysShown = (lastShown.getTime() - firstShown.getTime()) / (1000 * 60 * 60 * 24);
-    longevity = Math.min(daysShown / 60, 1) * 100; // Normalize to 60 days
-  }
-
-  // Reach (unique users reached)
-  let reach = 0;
-  if (metrics.reach_unique_users) {
-    reach = Math.min(metrics.reach_unique_users / 100000, 1) * 100; // Normalize to 100k
-  } else if (metrics.views) {
-    // Fallback to views if reach not available
-    reach = Math.min(metrics.views / 200000, 1) * 100; // Normalize to 200k views
-  }
-
-  // Engagement proxy (likes + comments + shares)
-  let engagement = 0;
-  const totalEngagement =
-    (metrics.likes || 0) + (metrics.comments || 0) * 2 + (metrics.shares || 0) * 3;
-
-  engagement = Math.min(totalEngagement / 10000, 1) * 100; // Normalize to 10k engagement
-
-  // Weighted score
-  const score = 0.45 * longevity + 0.35 * reach + 0.20 * engagement;
-
-  return Math.round(score * 10) / 10;
-}
-
-/**
- * Trend UGC score
- * Formula: 0.6*Recency + 0.4*RelevanceToNiche
- */
-export function calculateUGCTrendScore(
-  asset: UGCAsset,
-  relevanceToNiche: number // 0-1, from semantic analysis
-): number {
-  // Recency
-  let recency = 0;
-  if (asset.posted_at) {
-    const postedAt = new Date(asset.posted_at);
-    const now = new Date();
-    const ageInDays = (now.getTime() - postedAt.getTime()) / (1000 * 60 * 60 * 24);
-    recency = Math.max(0, Math.min(1, 1 - ageInDays / 30)) * 100; // Normalize to 30 days
-  }
-
-  // Relevance (provided as input)
-  const relevance = Math.min(Math.max(relevanceToNiche, 0), 1) * 100;
-
-  // Weighted score
-  const score = 0.6 * recency + 0.4 * relevance;
-
-  return Math.round(score * 10) / 10;
-}
-
-/**
- * Connected performance UGC score
- * Formula: 0.4*SharesRate + 0.3*CommentRate + 0.2*LikeRate + 0.1*ViewVelocity
- */
-export function calculateUGCConnectedScore(
-  metrics: UGCMetrics,
-  asset: UGCAsset
-): number {
-  const views = metrics.views || 1; // Avoid division by zero
-
-  // Shares rate
-  const sharesRate = Math.min((metrics.shares || 0) / views, 0.1) * 1000; // Normalize to 10% share rate
-
-  // Comment rate
-  const commentRate = Math.min((metrics.comments || 0) / views, 0.05) * 2000; // Normalize to 5% comment rate
-
-  // Like rate
-  const likeRate = Math.min((metrics.likes || 0) / views, 0.15) * 667; // Normalize to 15% like rate
-
-  // View velocity (views per day)
-  let viewVelocity = 0;
-  if (asset.posted_at) {
-    const postedAt = new Date(asset.posted_at);
-    const now = new Date();
-    const ageInDays = Math.max(
-      (now.getTime() - postedAt.getTime()) / (1000 * 60 * 60 * 24),
-      1
-    );
-    const viewsPerDay = views / ageInDays;
-    viewVelocity = Math.min(viewsPerDay / 10000, 1) * 100; // Normalize to 10k views/day
-  }
-
-  // Weighted score
-  const score =
-    0.4 * sharesRate +
-    0.3 * commentRate +
-    0.2 * likeRate +
-    0.1 * viewVelocity;
-
-  return Math.round(Math.min(score, 100) * 10) / 10;
-}
+// UGC Scoring functions are now in ./ugc.ts and re-exported above

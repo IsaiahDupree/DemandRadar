@@ -218,6 +218,15 @@ export interface Report {
   createdAt: Date;
 }
 
+export interface SavedGap {
+  id: string;
+  userId: string;
+  gapId: string;
+  savedAt: Date;
+  notes?: string;
+  gap?: GapOpportunity;
+}
+
 export interface PlatformPresence {
   platform: AppPlatform;
   exists: boolean;

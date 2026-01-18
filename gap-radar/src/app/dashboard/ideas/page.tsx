@@ -92,15 +92,15 @@ function formatCurrency(value: number) {
 
 export default function IdeasPage() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Product Ideas</h1>
-        <p className="text-muted-foreground">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Product Ideas</h1>
+        <p className="text-sm sm:text-base text-muted-foreground">
           Vetted product concepts with market validation and build estimates
         </p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-4">
+      <div className="grid gap-4 grid-cols-2 md:grid-cols-4">
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium">Total Ideas</CardTitle>
@@ -141,18 +141,46 @@ export default function IdeasPage() {
         </Card>
       </div>
 
-      <Tabs defaultValue="cards" className="space-y-6">
-        <TabsList>
-          <TabsTrigger value="cards">Idea Cards</TabsTrigger>
-          <TabsTrigger value="comparison">Comparison</TabsTrigger>
-          <TabsTrigger value="platforms">Platform Analysis</TabsTrigger>
+      <Tabs defaultValue="cards" className="space-y-4 sm:space-y-6">
+        <TabsList className="grid w-full grid-cols-3">
+          <TabsTrigger value="cards" className="text-xs sm:text-sm">Idea Cards</TabsTrigger>
+          <TabsTrigger value="comparison" className="text-xs sm:text-sm">Comparison</TabsTrigger>
+          <TabsTrigger value="platforms" className="text-xs sm:text-sm">Platform Analysis</TabsTrigger>
         </TabsList>
 
         <TabsContent value="cards" className="space-y-6">
           {mockConceptIdeas.map((idea, index) => (
             <Card key={idea.id} className="overflow-hidden">
               <CardHeader className="bg-muted/30">
-                <div className="flex items-start justify-between">
+                {/* Mobile Layout */}
+                <div className="md:hidden space-y-3">
+                  <div className="flex items-start gap-3">
+                    <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary text-primary-foreground font-bold text-sm flex-shrink-0">
+                      {index + 1}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <CardTitle className="text-base sm:text-lg leading-tight mb-2">{idea.name}</CardTitle>
+                      <CardDescription className="text-sm">
+                        {idea.oneLiner}
+                      </CardDescription>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between pl-11">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      {getPlatformBadge(idea.platformRecommendation)}
+                      {getBusinessModelBadge(idea.businessModel)}
+                    </div>
+                    <div className="text-right">
+                      <div className="text-2xl font-bold text-primary">
+                        {idea.metrics?.opportunityScore}
+                      </div>
+                    </div>
+                  </div>
+                  <Badge variant="outline" className="ml-11 w-fit text-xs">{idea.industry}</Badge>
+                </div>
+
+                {/* Desktop Layout */}
+                <div className="hidden md:flex items-start justify-between">
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
                       <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary text-primary-foreground font-bold text-sm">

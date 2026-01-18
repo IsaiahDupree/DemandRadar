@@ -1,8 +1,16 @@
 /**
  * Jest Test Setup
- * 
+ *
  * Global test configuration and mocks
  */
+
+// Import jest-dom matchers
+import '@testing-library/jest-dom';
+
+// Polyfill Next.js Web APIs for testing
+import { TextEncoder, TextDecoder } from 'util';
+global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder as typeof global.TextDecoder;
 
 // Mock environment variables
 process.env.OPENAI_API_KEY = 'test-openai-key';
@@ -10,11 +18,22 @@ process.env.NEXT_PUBLIC_SUPABASE_URL = 'http://localhost:54321';
 process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = 'test-anon-key';
 process.env.RAPIDAPI_KEY = 'test-rapidapi-key';
 
+// Setup default fetch mock (returns empty response)
+global.fetch = jest.fn(() =>
+  Promise.resolve({
+    ok: true,
+    status: 200,
+    json: () => Promise.resolve({}),
+    text: () => Promise.resolve('{}'),
+    headers: new Headers(),
+  } as Response)
+);
+
 // Global fetch mock helper
 global.mockFetch = (response: unknown, options?: { ok?: boolean; status?: number }) => {
   const ok = options?.ok ?? true;
   const status = options?.status ?? 200;
-  
+
   global.fetch = jest.fn(() =>
     Promise.resolve({
       ok,

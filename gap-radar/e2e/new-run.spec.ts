@@ -25,60 +25,45 @@ test.describe('New Run Creation', () => {
 
     if (await newRunButton.isVisible()) {
       await newRunButton.click();
-      await page.waitForURL(/\/dashboard\/(new|runs\/new)/i);
+      await page.waitForURL(/\/dashboard\/new-run/i);
     } else {
       // Try navigating directly
-      await page.goto('/dashboard/new');
+      await page.goto('/dashboard/new-run');
     }
 
     // Verify form is visible
-    await expect(page.getByLabel(/niche|query|market/i)).toBeVisible();
+    await expect(page.getByLabel(/niche query/i)).toBeVisible();
   });
 
   test('should create a new run successfully', async ({ page }) => {
     // Navigate to new run page
-    await page.goto('/dashboard/new');
+    await page.goto('/dashboard/new-run');
 
     // Fill in the form
     const nicheQuery = `Test Niche ${Date.now()}`;
-    await page.getByLabel(/niche query|market niche|what niche/i).fill(nicheQuery);
+    await page.getByLabel(/niche query/i).fill(nicheQuery);
 
-    // Fill seed terms
-    const seedTermsInput = page.getByLabel(/seed terms|keywords/i);
-    if (await seedTermsInput.isVisible()) {
-      await seedTermsInput.fill('keyword1, keyword2, keyword3');
-    }
+    // Submit the form (seed terms and competitors are optional on advanced tab)
+    await page.getByRole('button', { name: /start analysis/i }).click();
 
-    // Fill competitors
-    const competitorsInput = page.getByLabel(/competitors/i);
-    if (await competitorsInput.isVisible()) {
-      await competitorsInput.fill('competitor1, competitor2');
-    }
+    // Wait for redirect to runs page
+    await page.waitForURL(/\/dashboard\/runs/i, { timeout: 10000 });
 
-    // Submit the form
-    await page.getByRole('button', { name: /create|start|analyze|run analysis/i }).click();
-
-    // Wait for redirect to dashboard or run detail
-    await page.waitForURL(/\/dashboard\/(runs)?/i, { timeout: 10000 });
-
-    // Should show success message or new run
-    const hasSuccessMessage = await page.getByText(/created|started|running|queued/i).isVisible();
-    const hasRunCard = await page.getByText(nicheQuery).isVisible();
-
-    expect(hasSuccessMessage || hasRunCard).toBeTruthy();
+    // Should show success toast message
+    await expect(page.getByText(/analysis started/i).first()).toBeVisible({ timeout: 5000 });
   });
 
   test('should show validation error for empty niche query', async ({ page }) => {
-    await page.goto('/dashboard/new');
+    await page.goto('/dashboard/new-run');
 
     // Leave niche query empty and submit
-    await page.getByRole('button', { name: /create|start|analyze/i }).click();
+    await page.getByRole('button', { name: /start analysis/i }).click();
 
-    // Should show validation error
-    await expect(page.getByText(/required|enter a niche|provide a niche/i)).toBeVisible();
+    // Should show validation error toast
+    await expect(page.getByText(/please enter a niche/i).first()).toBeVisible({ timeout: 3000 });
 
     // Should still be on the same page
-    await expect(page).toHaveURL(/\/dashboard\/(new|runs\/new)/i);
+    await expect(page).toHaveURL(/\/dashboard\/new-run/i);
   });
 
   test('should display run in progress indicator', async ({ page }) => {
@@ -97,14 +82,14 @@ test.describe('New Run Creation', () => {
       expect(hasProgress || hasSpinner || hasStatus).toBeTruthy();
     } else {
       // Create a new run to test progress
-      await page.goto('/dashboard/new');
+      await page.goto('/dashboard/new-run');
 
       const nicheQuery = `Progress Test ${Date.now()}`;
-      await page.getByLabel(/niche query|market niche/i).fill(nicheQuery);
-      await page.getByRole('button', { name: /create|start|analyze/i }).click();
+      await page.getByLabel(/niche query/i).fill(nicheQuery);
+      await page.getByRole('button', { name: /start analysis/i }).click();
 
       // Wait for redirect
-      await page.waitForURL(/\/dashboard/i, { timeout: 10000 });
+      await page.waitForURL(/\/dashboard\/runs/i, { timeout: 10000 });
 
       // Check for progress indicator within 5 seconds
       await page.waitForSelector('.progress, [role="progressbar"], .animate-spin', {

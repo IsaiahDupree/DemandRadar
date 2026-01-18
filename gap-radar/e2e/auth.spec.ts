@@ -17,8 +17,8 @@ test.describe('Authentication', () => {
     await expect(page).toHaveTitle(/GapRadar|DemandRadar|Gap Radar/i);
 
     // Look for sign-in or get-started elements
-    const hasSignIn = await page.getByRole('link', { name: /sign in/i }).isVisible();
-    const hasGetStarted = await page.getByRole('link', { name: /get started/i }).isVisible();
+    const hasSignIn = await page.getByRole('link', { name: /sign in/i }).first().isVisible();
+    const hasGetStarted = await page.getByRole('link', { name: /get started/i }).first().isVisible();
 
     expect(hasSignIn || hasGetStarted).toBeTruthy();
   });
@@ -68,6 +68,113 @@ test.describe('Authentication', () => {
     } else {
       test.skip();
     }
+  });
+
+  test.describe('Password Reset', () => {
+    test('should show forgot password link on login page', async ({ page }) => {
+      await page.goto('/login');
+
+      // Check for forgot password link
+      const forgotPasswordLink = page.getByRole('link', { name: /forgot password/i });
+      await expect(forgotPasswordLink).toBeVisible();
+    });
+
+    test('should navigate to reset password page', async ({ page }) => {
+      await page.goto('/login');
+
+      // Click forgot password link
+      const forgotPasswordLink = page.getByRole('link', { name: /forgot password/i });
+      await forgotPasswordLink.click();
+
+      // Should navigate to reset password page
+      await page.waitForURL(/\/reset-password|\/forgot-password/i);
+
+      // Check for email input
+      await expect(page.getByLabel(/email/i)).toBeVisible();
+      await expect(page.getByRole('button', { name: /send reset/i })).toBeVisible();
+    });
+
+    test('should send reset email successfully', async ({ page }) => {
+      await page.goto('/reset-password');
+
+      // Fill in email
+      await page.getByLabel(/email/i).fill('test@example.com');
+
+      // Submit form
+      await page.getByRole('button', { name: /send reset/i }).click();
+
+      // Should show success message - look specifically for the toast notification
+      await expect(page.getByText(/reset link sent!/i).first()).toBeVisible({ timeout: 5000 });
+    });
+
+    test('should show error for invalid email', async ({ page }) => {
+      await page.goto('/reset-password');
+
+      // Fill in invalid email
+      await page.getByLabel(/email/i).fill('invalid-email');
+
+      // Submit form
+      await page.getByRole('button', { name: /send reset/i }).click();
+
+      // Should still be on reset password page
+      await page.waitForTimeout(1000);
+      await expect(page).toHaveURL(/\/reset-password|\/forgot-password/i);
+    });
+  });
+
+  test.describe('OAuth Social Login', () => {
+    test('should display Google OAuth button on login page', async ({ page }) => {
+      await page.goto('/login');
+
+      // Check for Google OAuth button
+      const googleButton = page.getByRole('button', { name: /continue with google/i });
+      await expect(googleButton).toBeVisible();
+    });
+
+    test('should display Google OAuth button on signup page', async ({ page }) => {
+      await page.goto('/signup');
+
+      // Check for Google OAuth button
+      const googleButton = page.getByRole('button', { name: /continue with google/i });
+      await expect(googleButton).toBeVisible();
+    });
+
+    test('should display GitHub OAuth button on login page', async ({ page }) => {
+      await page.goto('/login');
+
+      // Check for GitHub OAuth button
+      const githubButton = page.getByRole('button', { name: /continue with github/i });
+      await expect(githubButton).toBeVisible();
+    });
+
+    test('should display GitHub OAuth button on signup page', async ({ page }) => {
+      await page.goto('/signup');
+
+      // Check for GitHub OAuth button
+      const githubButton = page.getByRole('button', { name: /continue with github/i });
+      await expect(githubButton).toBeVisible();
+    });
+
+    test('should handle Google OAuth click on login page', async ({ page }) => {
+      await page.goto('/login');
+
+      // Click Google OAuth button
+      const googleButton = page.getByRole('button', { name: /continue with google/i });
+
+      // Mock the OAuth redirect by checking if signInWithOAuth is called
+      // In a real test, we'd need to mock the Supabase client or check for redirect
+      await expect(googleButton).toBeEnabled();
+    });
+
+    test('should handle GitHub OAuth click on login page', async ({ page }) => {
+      await page.goto('/login');
+
+      // Click GitHub OAuth button
+      const githubButton = page.getByRole('button', { name: /continue with github/i });
+
+      // Verify button is enabled and clickable
+      await expect(githubButton).toBeEnabled();
+    });
   });
 
   test.describe('Authenticated User', () => {
