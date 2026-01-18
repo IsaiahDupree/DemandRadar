@@ -1,8 +1,24 @@
 import Stripe from 'stripe';
 
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  typescript: true,
-});
+// Lazy initialization to avoid build-time errors when env vars aren't set
+let _stripe: Stripe | null = null;
+
+export function getStripe(): Stripe {
+  if (!_stripe) {
+    if (!process.env.STRIPE_SECRET_KEY) {
+      throw new Error('STRIPE_SECRET_KEY is not configured');
+    }
+    _stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+      typescript: true,
+    });
+  }
+  return _stripe;
+}
+
+// For backward compatibility - will throw at runtime if not configured
+export const stripe = process.env.STRIPE_SECRET_KEY 
+  ? new Stripe(process.env.STRIPE_SECRET_KEY, { typescript: true })
+  : (null as unknown as Stripe);
 
 export const PLANS = {
   free: {
@@ -55,3 +71,30 @@ export function getPlanByPriceId(priceId: string): PlanKey | null {
 export function getRunsLimit(plan: PlanKey): number {
   return PLANS[plan].runsLimit;
 }
+
+// Credit packages for one-off purchases
+export const CREDIT_PACKAGES = {
+  light: {
+    name: 'Light Run',
+    description: 'Vetted Idea Pack - light run with fewer ads/mentions',
+    price: 49,
+    credits: 1,
+    priceId: process.env.STRIPE_CREDIT_LIGHT_PRICE_ID,
+  },
+  full: {
+    name: 'Full Dossier',
+    description: 'Deep run + 3 ad concepts + MVP spec + TAM/CAC model',
+    price: 149,
+    credits: 3,
+    priceId: process.env.STRIPE_CREDIT_FULL_PRICE_ID,
+  },
+  agency: {
+    name: 'Agency-ready',
+    description: 'Deep run + landing page + 10 ad angles + objection handling + backlog',
+    price: 399,
+    credits: 10,
+    priceId: process.env.STRIPE_CREDIT_AGENCY_PRICE_ID,
+  },
+} as const;
+
+export type CreditPackageKey = keyof typeof CREDIT_PACKAGES;

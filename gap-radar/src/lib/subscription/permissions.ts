@@ -20,6 +20,7 @@ export interface UserSubscription {
   runsRemaining: number;
   stripeCustomerId?: string;
   stripeSubscriptionId?: string;
+  status?: 'active' | 'trialing' | 'past_due' | 'canceled' | 'unpaid';
 }
 
 /**
