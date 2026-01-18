@@ -236,6 +236,33 @@ test.describe('Mobile Responsive Polish (UI-003)', () => {
       expect(hasTruncation).toBe(true);
     }
   });
+
+  test('should display mobile-optimized cards on reports page', async ({ page }) => {
+    await page.goto('/dashboard/reports');
+
+    // Desktop table should be hidden on mobile
+    const desktopTable = page.locator('table').first();
+    await expect(desktopTable).toBeHidden();
+
+    // Mobile card view should be visible
+    const mobileCards = page.locator('.md\\:hidden').first();
+    await expect(mobileCards).toBeVisible();
+
+    // Mobile cards should have action buttons
+    const viewButton = page.getByRole('button', { name: /View/i }).first();
+    const exportButton = page.getByRole('button', { name: /Export/i }).first();
+    const shareButton = page.getByRole('button', { name: /Share/i }).first();
+
+    await expect(viewButton).toBeVisible();
+    await expect(exportButton).toBeVisible();
+    await expect(shareButton).toBeVisible();
+
+    // Buttons should be touch-friendly
+    const viewButtonBox = await viewButton.boundingBox();
+    if (viewButtonBox) {
+      expect(viewButtonBox.height).toBeGreaterThanOrEqual(32);
+    }
+  });
 });
 
 test.describe('Tablet Responsive Tests (UI-003)', () => {

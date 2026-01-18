@@ -9,8 +9,13 @@ import '@testing-library/jest-dom';
 
 // Polyfill Next.js Web APIs for testing
 import { TextEncoder, TextDecoder } from 'util';
+import { Request, Response, Headers } from 'node-fetch';
+
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder as typeof global.TextDecoder;
+global.Request = Request as any;
+global.Response = Response as any;
+global.Headers = Headers as any;
 
 // Mock environment variables
 process.env.OPENAI_API_KEY = 'test-openai-key';

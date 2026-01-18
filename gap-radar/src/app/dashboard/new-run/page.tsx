@@ -26,11 +26,14 @@ import {
   MessageSquare,
   ShoppingBag,
   Video,
-  Play
+  Play,
+  Star
 } from "lucide-react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { trackFirstRunStarted, hasCompletedStage, markStageCompleted } from "@/lib/analytics/funnel";
+import { FavoriteSearches } from "@/components/FavoriteSearches";
+import { addFavoriteSearch, removeFavoriteSearch, getFavoriteSearchByQuery } from "@/lib/favorites";
 
 const dataSources = [
   { id: "meta", name: "Meta Ads Library", icon: ShoppingBag, description: "Facebook & Instagram ads" },
@@ -53,11 +56,37 @@ export default function NewRunPage() {
   const [runType, setRunType] = useState("deep");
   const [geo, setGeo] = useState("us");
   const [isFirstRun, setIsFirstRun] = useState(false);
+  const [isFavorited, setIsFavorited] = useState(false);
+  const [favoriteId, setFavoriteId] = useState<string | null>(null);
+  const [isFavoritingPending, setIsFavoritingPending] = useState(false);
 
   // Check if this is the user's first run
   useEffect(() => {
     setIsFirstRun(!hasCompletedStage('first_run_started'));
   }, []);
+
+  // Check if current query is favorited
+  useEffect(() => {
+    const checkFavoriteStatus = async () => {
+      if (!nicheQuery.trim()) {
+        setIsFavorited(false);
+        setFavoriteId(null);
+        return;
+      }
+
+      try {
+        const favorite = await getFavoriteSearchByQuery(nicheQuery.trim());
+        setIsFavorited(!!favorite);
+        setFavoriteId(favorite?.id || null);
+      } catch (error) {
+        // Silently fail - not critical
+        console.error('Error checking favorite status:', error);
+      }
+    };
+
+    const debounce = setTimeout(checkFavoriteStatus, 300);
+    return () => clearTimeout(debounce);
+  }, [nicheQuery]);
 
   const addSeedTerm = () => {
     if (newSeedTerm && !seedTerms.includes(newSeedTerm)) {
@@ -89,6 +118,38 @@ export default function NewRunPage() {
     }
   };
 
+  const handleToggleFavorite = async () => {
+    if (!nicheQuery.trim()) {
+      toast.error("Enter a search query first");
+      return;
+    }
+
+    setIsFavoritingPending(true);
+
+    try {
+      if (isFavorited && favoriteId) {
+        await removeFavoriteSearch(favoriteId);
+        setIsFavorited(false);
+        setFavoriteId(null);
+        toast.success("Removed from favorites");
+      } else {
+        const favorite = await addFavoriteSearch(nicheQuery.trim());
+        setIsFavorited(true);
+        setFavoriteId(favorite.id);
+        toast.success("Added to favorites");
+      }
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Failed to update favorites');
+    } finally {
+      setIsFavoritingPending(false);
+    }
+  };
+
+  const handleSelectFavorite = (query: string) => {
+    setNicheQuery(query);
+    toast.info(`Loaded: "${query}"`);
+  };
+
   const handleSubmit = async () => {
     if (!nicheQuery) {
       toast.error("Please enter a niche to analyze");
@@ -96,7 +157,7 @@ export default function NewRunPage() {
     }
 
     setIsSubmitting(true);
-    
+
     try {
       const response = await fetch('/api/runs', {
         method: 'POST',
@@ -168,13 +229,32 @@ export default function NewRunPage() {
               <div className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="niche">Niche Query</Label>
-                  <Input
-                    id="niche"
-                    placeholder="e.g., AI watermark remover, personal CRM app, meditation app..."
-                    value={nicheQuery}
-                    onChange={(e) => setNicheQuery(e.target.value)}
-                    className="text-lg"
-                  />
+                  <div className="flex gap-2">
+                    <Input
+                      id="niche"
+                      placeholder="e.g., AI watermark remover, personal CRM app, meditation app..."
+                      value={nicheQuery}
+                      onChange={(e) => setNicheQuery(e.target.value)}
+                      className="text-lg flex-1"
+                    />
+                    <Button
+                      variant={isFavorited ? "default" : "outline"}
+                      size="icon"
+                      onClick={handleToggleFavorite}
+                      disabled={isFavoritingPending || !nicheQuery.trim()}
+                      title={isFavorited ? "Remove from favorites" : "Add to favorites"}
+                      data-testid="favorite-button"
+                    >
+                      <Star
+                        className={`h-5 w-5 ${isFavorited ? 'fill-current' : ''}`}
+                      />
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Favorite Searches Dropdown */}
+                <div className="border rounded-lg p-4 bg-muted/30">
+                  <FavoriteSearches onSelectSearch={handleSelectFavorite} />
                 </div>
               </div>
             </CardContent>
