@@ -27,7 +27,7 @@
 **Action:** Filter for ads running 30+ days in software/SaaS category
 
 ### Strategy 2: Performance Metrics
-Look for these signals in ad libraries:
+Look for these signals in ad libracanw eries:
 - **High engagement** (likes, comments, shares)
 - **Multiple ad variations** (indicates scaling)
 - **Consistent messaging** across variants

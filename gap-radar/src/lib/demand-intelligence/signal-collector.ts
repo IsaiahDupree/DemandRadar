@@ -7,6 +7,8 @@
 import { createClient } from '@supabase/supabase-js';
 import { collectRedditMentions, RedditMention } from '../collectors/reddit';
 import { collectMetaAds, MetaAd } from '../collectors/meta';
+import { collectGoogleTrends } from '../collectors/google-trends';
+import { calculateSearchScore } from '../scoring/search-score';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -129,6 +131,36 @@ export async function collectAdSpendSignals(niche: string): Promise<DemandSignal
     console.error(`Error collecting ad signals for ${niche}:`, error);
   }
   
+  return signals;
+}
+
+/**
+ * Collect search demand signals from Google Trends
+ */
+export async function collectSearchSignals(niche: string): Promise<DemandSignal[]> {
+  const signals: DemandSignal[] = [];
+
+  try {
+    const trendsData = await collectGoogleTrends(niche);
+    const score = calculateSearchScore(trendsData);
+
+    signals.push({
+      niche,
+      signal_type: 'search',
+      source: 'google',
+      title: `${trendsData.searchVolume.toLocaleString()} monthly searches`,
+      content: `Growth: ${(trendsData.growthRate * 100).toFixed(0)}%, Top queries: ${trendsData.relatedQueries.slice(0, 5).join(', ')}`,
+      score,
+      raw_data: {
+        searchVolume: trendsData.searchVolume,
+        growthRate: trendsData.growthRate,
+        relatedQueries: trendsData.relatedQueries,
+      },
+    });
+  } catch (error) {
+    console.error(`Error collecting search signals for ${niche}:`, error);
+  }
+
   return signals;
 }
 

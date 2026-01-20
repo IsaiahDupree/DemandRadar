@@ -282,3 +282,84 @@ export interface WebhookPayload {
   timestamp: string;
   data: Record<string, any>;
 }
+
+export type ProductType = 'saas' | 'tool' | 'api' | 'marketplace' | 'mobile_app' | 'chrome_extension';
+export type BuildComplexity = 'weekend' | 'month' | 'quarter';
+export type RecommendationStatus = 'new' | 'saved' | 'in_progress' | 'completed' | 'dismissed';
+
+export interface BuildRecommendation {
+  id: string;
+  runId: string | null;
+  nicheId: string | null;
+  userId: string;
+  productIdea: string;
+  productType: ProductType | null;
+  oneLiner: string | null;
+  targetAudience: string | null;
+  painPoints: Array<{ text: string; source: string }> | null;
+  competitorGaps: Array<{ competitor: string; gap: string }> | null;
+  searchQueries: Array<{ query: string; volume: number }> | null;
+  recommendedHooks: string[] | null;
+  recommendedChannels: string[] | null;
+  sampleAdCopy: {
+    headline: string;
+    body: string;
+    cta: string;
+  } | null;
+  landingPageAngle: string | null;
+  buildComplexity: BuildComplexity | null;
+  techStackSuggestion: string[] | null;
+  estimatedTimeToMvp: string | null;
+  estimatedCacRange: string | null;
+  confidenceScore: number;
+  reasoning: string | null;
+  supportingSignals: number;
+  status: RecommendationStatus;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface RecommendationInput {
+  niche: string;
+  painPoints?: Array<{ text: string; upvotes: number; source: string }>;
+  winningAds?: Array<{ headline: string; hook: string; runDays: number }>;
+  searchQueries?: Array<{ query: string; volume: number }>;
+  competitorGaps?: Array<{ competitor: string; gap: string }>;
+  demandScore?: number;
+  runId?: string;
+  nicheId?: string;
+}
+
+export interface GeneratedRecommendation {
+  product_idea: string;
+  product_type: ProductType;
+  one_liner: string;
+  target_audience: string;
+  why_now: string;
+  build_complexity: BuildComplexity;
+  tech_stack: string[];
+  recommended_hooks: string[];
+  recommended_channels: string[];
+  sample_ad_copy: {
+    headline: string;
+    body: string;
+    cta: string;
+  };
+  confidence_score: number;
+  reasoning: string;
+}
+
+export type AlertType = 'new_campaign' | 'ad_spike' | 'pricing_change' | 'new_feature' | 'campaign_ended' | 'creative_shift';
+
+export interface CompetitorAlert {
+  id: string;
+  user_id: string;
+  competitor_id: string;
+  alert_type: AlertType;
+  title: string;
+  description: string | null;
+  data: Record<string, any> | null;
+  is_read: boolean;
+  is_dismissed: boolean;
+  created_at: Date;
+}

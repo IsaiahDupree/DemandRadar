@@ -2,8 +2,8 @@
   "project": "DemandRadar (GapRadar)",
   "description": "Market gap analysis platform - enter a niche, get ranked market gaps backed by Meta/Google ads, Reddit sentiment, app store data, and UGC patterns with actionable recommendations",
   "version": "3.0",
-  "totalFeatures": 287,
-  "completedFeatures": 287,
+  "totalFeatures": 300,
+  "completedFeatures": 277,
   "phases": {
     "phase1_landing": "Landing page with NLP search and live trends",
     "phase2_collectors": "Data collectors (Meta, Reddit, Google, App Stores, TikTok, Instagram)",
@@ -12,7 +12,10 @@
     "phase5_ugc": "UGC Winners Pack (hooks, scripts, patterns)",
     "phase6_billing": "Pricing, subscriptions, credits, and invoicing",
     "phase7_testing": "Unit tests, integration tests, E2E tests",
-    "phase8_infrastructure": "Deployment, monitoring, logging, error tracking"
+    "phase8_infrastructure": "Deployment, monitoring, logging, error tracking",
+    "phase9_unified_demand": "5-signal unified demand scoring system",
+    "phase10_build_recs": "AI-powered build recommendations engine",
+    "phase11_competitive_intel": "Competitor tracking, alerts, change detection"
   },
   "features": [
     {
@@ -3220,26 +3223,6 @@
       ]
     },
     {
-      "id": "ONBOARD-001",
-      "name": "Onboarding Checklist Component",
-      "description": "Progress-based onboarding checklist with completion tracking",
-      "priority": "P1",
-      "phase": 2,
-      "effort": "4h",
-      "passes": true,
-      "category": "onboarding",
-      "files": [
-        "src/components/onboarding/Checklist.tsx",
-        "src/lib/onboarding.ts"
-      ],
-      "acceptance": [
-        "Step-by-step checklist",
-        "Progress percentage",
-        "Dismiss option",
-        "Persists state"
-      ]
-    },
-    {
       "id": "ONBOARD-002",
       "name": "First Run Wizard",
       "description": "Guided wizard for user's first analysis run with example queries",
@@ -4230,97 +4213,6 @@
       ]
     },
     {
-      "id": "TEST-003",
-      "name": "Collector Unit Tests",
-      "description": "Unit tests for all data collectors (Meta, Reddit, App Store, etc.)",
-      "priority": "P1",
-      "phase": 7,
-      "effort": "4h",
-      "passes": true,
-      "category": "testing",
-      "files": [
-        "__tests__/collectors/"
-      ],
-      "acceptance": [
-        "All collectors tested",
-        "Mock API responses",
-        ">80% coverage"
-      ]
-    },
-    {
-      "id": "TEST-004",
-      "name": "AI Module Unit Tests",
-      "description": "Unit tests for AI extraction, clustering, and generation modules",
-      "priority": "P1",
-      "phase": 7,
-      "effort": "4h",
-      "passes": true,
-      "category": "testing",
-      "files": [
-        "__tests__/ai/"
-      ],
-      "acceptance": [
-        "All AI modules tested",
-        "Mock OpenAI responses",
-        "Edge cases covered"
-      ]
-    },
-    {
-      "id": "TEST-005",
-      "name": "API Integration Tests",
-      "description": "Integration tests for all API routes",
-      "priority": "P1",
-      "phase": 7,
-      "effort": "4h",
-      "passes": true,
-      "category": "testing",
-      "files": [
-        "__tests__/api/"
-      ],
-      "acceptance": [
-        "All routes tested",
-        "Auth scenarios",
-        "Error responses"
-      ]
-    },
-    {
-      "id": "TEST-006",
-      "name": "E2E Tests (Playwright)",
-      "description": "End-to-end tests for critical user flows",
-      "priority": "P2",
-      "phase": 7,
-      "effort": "8h",
-      "passes": true,
-      "category": "testing",
-      "files": [
-        "e2e/"
-      ],
-      "acceptance": [
-        "Signup flow",
-        "Create run flow",
-        "View report flow",
-        "Checkout flow"
-      ]
-    },
-    {
-      "id": "TEST-007",
-      "name": "CI/CD Integration",
-      "description": "GitHub Actions for automated testing and deployment",
-      "priority": "P1",
-      "phase": 7,
-      "effort": "2h",
-      "passes": true,
-      "category": "testing",
-      "files": [
-        ".github/workflows/"
-      ],
-      "acceptance": [
-        "Tests run on PR",
-        "Lint checks",
-        "Build verification"
-      ]
-    },
-    {
       "id": "INTEG-001",
       "name": "Slack Notifications",
       "description": "Send run completion and gap alerts to Slack",
@@ -4555,194 +4447,6 @@
         "Feature documentation",
         "Video embeds",
         "Best practices"
-      ]
-    },
-    {
-      "id": "BRIEF-001",
-      "name": "Demand Brief Onboarding Flow",
-      "description": "Single-input onboarding that auto-extracts niche, category, competitors, keywords",
-      "priority": "P1",
-      "phase": 9,
-      "effort": "8h",
-      "passes": true,
-      "category": "demand_brief",
-      "files": [
-        "src/app/onboarding/page.tsx",
-        "src/lib/ai/niche-extractor.ts"
-      ],
-      "acceptance": [
-        "Single text input",
-        "AI auto-extraction",
-        "Preview screen",
-        "Editable fields"
-      ]
-    },
-    {
-      "id": "BRIEF-002",
-      "name": "User Niche Configuration Storage",
-      "description": "Store user's tracked niches with keywords, competitors, and settings",
-      "priority": "P1",
-      "phase": 9,
-      "effort": "4h",
-      "passes": true,
-      "category": "demand_brief",
-      "files": [
-        "supabase/migrations/user_niches.sql",
-        "src/lib/niches.ts"
-      ],
-      "acceptance": [
-        "user_niches table",
-        "CRUD operations",
-        "Multiple niches per user"
-      ]
-    },
-    {
-      "id": "BRIEF-003",
-      "name": "Weekly Demand Score Calculation",
-      "description": "Calculate demand score: 30% ads + 25% intent + 20% velocity + 15% pain + 10% competition",
-      "priority": "P0",
-      "phase": 9,
-      "effort": "6h",
-      "passes": true,
-      "category": "demand_brief",
-      "files": [
-        "src/lib/scoring/demand-score.ts"
-      ],
-      "acceptance": [
-        "Formula implemented",
-        "0-100 score",
-        "Trend tracking",
-        "Companion metrics"
-      ]
-    },
-    {
-      "id": "BRIEF-004",
-      "name": "Weekly Signal Collection Pipeline",
-      "description": "Cron job to collect weekly signals (ads, search, UGC, forums, competitors)",
-      "priority": "P0",
-      "phase": 9,
-      "effort": "8h",
-      "passes": true,
-      "category": "demand_brief",
-      "files": [
-        "src/app/api/cron/weekly-briefs/route.ts"
-      ],
-      "acceptance": [
-        "Collects all signal types",
-        "Deduplication",
-        "Error handling",
-        "Rate limiting"
-      ]
-    },
-    {
-      "id": "BRIEF-005",
-      "name": "Demand Snapshot Storage",
-      "description": "Store weekly snapshots with scores, signals, and generated content",
-      "priority": "P0",
-      "phase": 9,
-      "effort": "3h",
-      "passes": true,
-      "category": "demand_brief",
-      "files": [
-        "supabase/migrations/demand_snapshots.sql"
-      ],
-      "acceptance": [
-        "demand_snapshots table",
-        "JSONB signal storage",
-        "Historical queries"
-      ]
-    },
-    {
-      "id": "BRIEF-006",
-      "name": "AI Play Generator",
-      "description": "Generate 3 actionable plays (product, offer, distribution) from weekly signals",
-      "priority": "P0",
-      "phase": 9,
-      "effort": "4h",
-      "passes": true,
-      "category": "demand_brief",
-      "files": [
-        "src/lib/ai/play-generator.ts"
-      ],
-      "acceptance": [
-        "3 plays per brief",
-        "Evidence-backed",
-        "Priority ordered"
-      ]
-    },
-    {
-      "id": "BRIEF-007",
-      "name": "AI Copy Generator for Briefs",
-      "description": "Generate ad hooks, subject lines, and landing page copy from signals",
-      "priority": "P1",
-      "phase": 9,
-      "effort": "4h",
-      "passes": true,
-      "category": "demand_brief",
-      "files": [
-        "src/lib/ai/brief-copy-generator.ts"
-      ],
-      "acceptance": [
-        "3 ad hooks",
-        "3 subject lines",
-        "1 landing paragraph"
-      ]
-    },
-    {
-      "id": "BRIEF-008",
-      "name": "Demand Brief Email Template",
-      "description": "React Email template for weekly demand brief with all sections",
-      "priority": "P0",
-      "phase": 9,
-      "effort": "6h",
-      "passes": true,
-      "category": "demand_brief",
-      "files": [
-        "src/lib/email/templates/demand-brief.tsx"
-      ],
-      "acceptance": [
-        "Score section",
-        "What Changed section",
-        "Plays section",
-        "Copy section"
-      ]
-    },
-    {
-      "id": "BRIEF-009",
-      "name": "Resend Email Integration",
-      "description": "Send weekly demand briefs via Resend email service",
-      "priority": "P0",
-      "phase": 9,
-      "effort": "3h",
-      "passes": true,
-      "category": "demand_brief",
-      "files": [
-        "src/lib/email/resend.ts"
-      ],
-      "acceptance": [
-        "Resend SDK setup",
-        "Send function",
-        "Error handling",
-        "Delivery tracking"
-      ]
-    },
-    {
-      "id": "BRIEF-010",
-      "name": "Between-Brief Alerts",
-      "description": "Real-time alerts for significant events (price drops, trend spikes, new angles)",
-      "priority": "P1",
-      "phase": 9,
-      "effort": "6h",
-      "passes": true,
-      "category": "demand_brief",
-      "files": [
-        "src/lib/alerts/trigger.ts",
-        "src/app/api/alerts/route.ts"
-      ],
-      "acceptance": [
-        "Alert types defined",
-        "Urgency levels",
-        "Email delivery"
       ]
     },
     {
@@ -4982,42 +4686,6 @@
       ]
     },
     {
-      "id": "EXPORT-001",
-      "name": "CSV Export",
-      "description": "Export run data and reports as CSV files",
-      "priority": "P1",
-      "phase": 4,
-      "effort": "3h",
-      "passes": true,
-      "category": "reports",
-      "files": [
-        "src/app/api/exports/[runId]/csv/route.ts"
-      ],
-      "acceptance": [
-        "All data tables",
-        "Proper formatting",
-        "Download headers"
-      ]
-    },
-    {
-      "id": "EXPORT-002",
-      "name": "JSON Export",
-      "description": "Export run data and reports as JSON files",
-      "priority": "P1",
-      "phase": 4,
-      "effort": "2h",
-      "passes": true,
-      "category": "reports",
-      "files": [
-        "src/app/api/exports/[runId]/json/route.ts"
-      ],
-      "acceptance": [
-        "Full data structure",
-        "Proper typing",
-        "Download headers"
-      ]
-    },
-    {
       "id": "CHROME-001",
       "name": "Chrome Extension - Core",
       "description": "Chrome extension for saving gaps/opportunities while browsing",
@@ -5236,6 +4904,569 @@
         "Theme toggle",
         "System preference detection",
         "Consistent colors"
+      ]
+    },
+    {
+      "id": "UDS-001",
+      "name": "Google Trends Integration",
+      "description": "Integrate Google Trends data into demand scoring",
+      "priority": "P1",
+      "phase": 9,
+      "effort": "8h",
+      "passes": true,
+      "category": "scoring",
+      "files": [
+        "src/app/api/demand/google/route.ts",
+        "src/lib/scoring/search-score.ts"
+      ],
+      "acceptance": [
+        "Google Trends API called",
+        "Search score calculated",
+        "Integrated in UI"
+      ]
+    },
+    {
+      "id": "UDS-002",
+      "name": "YouTube Content Score",
+      "description": "Calculate content gap score from YouTube data",
+      "priority": "P1",
+      "phase": 9,
+      "effort": "8h",
+      "passes": true,
+      "category": "scoring",
+      "files": [
+        "src/app/api/demand/youtube/route.ts",
+        "src/lib/scoring/content-score.ts"
+      ],
+      "acceptance": [
+        "YouTube API integrated",
+        "Content gaps identified",
+        "Score calculated"
+      ]
+    },
+    {
+      "id": "UDS-003",
+      "name": "App Store Score",
+      "description": "Calculate app market score from App Store data",
+      "priority": "P1",
+      "phase": 9,
+      "effort": "8h",
+      "passes": true,
+      "category": "scoring",
+      "files": [
+        "src/app/api/demand/appstore/route.ts",
+        "src/lib/scoring/app-score.ts"
+      ],
+      "acceptance": [
+        "App Store data collected",
+        "Review analysis done",
+        "Score calculated"
+      ]
+    },
+    {
+      "id": "UDS-004",
+      "name": "Unified Demand Score Calculator",
+      "description": "Weighted 5-signal demand score formula",
+      "priority": "P0",
+      "phase": 9,
+      "effort": "4h",
+      "passes": true,
+      "category": "scoring",
+      "files": [
+        "src/lib/scoring/unified-score.ts"
+      ],
+      "acceptance": [
+        "5 signals weighted",
+        "Formula implemented",
+        "Tests pass"
+      ]
+    },
+    {
+      "id": "UDS-005",
+      "name": "Score Breakdown UI",
+      "description": "Visual breakdown showing contribution from each signal",
+      "priority": "P1",
+      "phase": 9,
+      "effort": "6h",
+      "passes": true,
+      "category": "ui",
+      "files": [
+        "src/components/ScoreBreakdown.tsx"
+      ],
+      "acceptance": [
+        "Bar chart for each signal",
+        "Weights shown",
+        "Drill-down available"
+      ]
+    },
+    {
+      "id": "UDS-006",
+      "name": "Signal Deep Dive Modal",
+      "description": "Modal showing supporting data for each signal",
+      "priority": "P2",
+      "phase": 9,
+      "effort": "4h",
+      "passes": true,
+      "category": "ui",
+      "files": [
+        "src/components/SignalDeepDive.tsx"
+      ],
+      "acceptance": [
+        "Click signal shows data",
+        "Sources listed",
+        "Evidence displayed"
+      ]
+    },
+    {
+      "id": "UDS-007",
+      "name": "Trend Velocity Calculation",
+      "description": "Calculate and display trend direction and velocity",
+      "priority": "P2",
+      "phase": 9,
+      "effort": "4h",
+      "passes": true,
+      "category": "scoring",
+      "files": [
+        "src/lib/scoring/trend-velocity.ts"
+      ],
+      "acceptance": [
+        "Rising/stable/declining",
+        "Velocity percentage",
+        "Visual indicator"
+      ]
+    },
+    {
+      "id": "UDS-008",
+      "name": "Database Schema Updates",
+      "description": "Add search_score, content_score, app_score columns",
+      "priority": "P0",
+      "phase": 9,
+      "effort": "2h",
+      "passes": true,
+      "category": "database",
+      "files": [
+        "supabase/migrations/unified_scores.sql"
+      ],
+      "acceptance": [
+        "Migration runs",
+        "Columns added",
+        "JSONB breakdown stored"
+      ]
+    },
+    {
+      "id": "BUILD-001",
+      "name": "Build Recommendations Table",
+      "description": "Database schema for storing build recommendations",
+      "priority": "P0",
+      "phase": 10,
+      "effort": "2h",
+      "passes": true,
+      "category": "database",
+      "files": [
+        "supabase/migrations/build_recommendations.sql"
+      ],
+      "acceptance": [
+        "Table created",
+        "Indexes added",
+        "RLS policies set"
+      ]
+    },
+    {
+      "id": "BUILD-002",
+      "name": "Recommendation Generator",
+      "description": "AI-powered product idea generation from market signals",
+      "priority": "P0",
+      "phase": 10,
+      "effort": "8h",
+      "passes": true,
+      "category": "ai",
+      "files": [
+        "src/lib/recommendations/generator.ts"
+      ],
+      "acceptance": [
+        "GPT-4o integration",
+        "3-5 ideas generated",
+        "Structured output"
+      ]
+    },
+    {
+      "id": "BUILD-003",
+      "name": "Hook Generation from Ads",
+      "description": "Generate ad hooks based on winning ad patterns",
+      "priority": "P1",
+      "phase": 10,
+      "effort": "4h",
+      "passes": true,
+      "category": "ai",
+      "files": [
+        "src/lib/recommendations/hooks.ts"
+      ],
+      "acceptance": [
+        "Pattern extraction",
+        "5 hooks per idea",
+        "Hook types categorized"
+      ]
+    },
+    {
+      "id": "BUILD-004",
+      "name": "Recommendations API",
+      "description": "CRUD API for build recommendations",
+      "priority": "P0",
+      "phase": 10,
+      "effort": "4h",
+      "passes": true,
+      "category": "api",
+      "files": [
+        "src/app/api/recommendations/route.ts",
+        "src/app/api/recommendations/[id]/route.ts"
+      ],
+      "acceptance": [
+        "Generate endpoint",
+        "List endpoint",
+        "Update status"
+      ]
+    },
+    {
+      "id": "BUILD-005",
+      "name": "Build Queue Page",
+      "description": "Dashboard page showing recommendation queue",
+      "priority": "P0",
+      "phase": 10,
+      "effort": "8h",
+      "passes": true,
+      "category": "ui",
+      "files": [
+        "src/app/dashboard/build-queue/page.tsx"
+      ],
+      "acceptance": [
+        "Cards display",
+        "Status management",
+        "Sorting works"
+      ]
+    },
+    {
+      "id": "BUILD-006",
+      "name": "Recommendation Detail Modal",
+      "description": "Full detail view with hooks, channels, ad copy",
+      "priority": "P1",
+      "phase": 10,
+      "effort": "6h",
+      "passes": true,
+      "category": "ui",
+      "files": [
+        "src/components/RecommendationDetail.tsx"
+      ],
+      "acceptance": [
+        "All fields shown",
+        "Sample ad copy",
+        "Export option"
+      ]
+    },
+    {
+      "id": "BUILD-007",
+      "name": "Channel Recommendation Logic",
+      "description": "Suggest best marketing channels for each idea",
+      "priority": "P2",
+      "phase": 10,
+      "effort": "4h",
+      "passes": true,
+      "category": "ai",
+      "files": [
+        "src/lib/recommendations/channels.ts"
+      ],
+      "acceptance": [
+        "3 channels per idea",
+        "Reasoning provided",
+        "Based on niche data"
+      ]
+    },
+    {
+      "id": "BUILD-008",
+      "name": "Export Brief Feature",
+      "description": "Export recommendation as PDF/Markdown brief",
+      "priority": "P2",
+      "phase": 10,
+      "effort": "4h",
+      "passes": true,
+      "category": "export",
+      "files": [
+        "src/lib/recommendations/export.ts"
+      ],
+      "acceptance": [
+        "PDF generation",
+        "Markdown option",
+        "Download works"
+      ]
+    },
+    {
+      "id": "INTEL-001",
+      "name": "Competitor Watchlist Table",
+      "description": "Database tables for watchlists and tracked competitors",
+      "priority": "P0",
+      "phase": 11,
+      "effort": "2h",
+      "passes": true,
+      "category": "database",
+      "files": [
+        "supabase/migrations/competitor_watchlists.sql"
+      ],
+      "acceptance": [
+        "Tables created",
+        "Relationships set",
+        "RLS policies"
+      ]
+    },
+    {
+      "id": "INTEL-002",
+      "name": "Competitor Snapshots Table",
+      "description": "Store historical competitor data for change detection",
+      "priority": "P0",
+      "phase": 11,
+      "effort": "2h",
+      "passes": true,
+      "category": "database",
+      "files": [
+        "supabase/migrations/competitor_snapshots.sql"
+      ],
+      "acceptance": [
+        "Daily snapshots stored",
+        "Ad data JSONB",
+        "Changes tracked"
+      ]
+    },
+    {
+      "id": "INTEL-003",
+      "name": "Competitor Tracking API",
+      "description": "CRUD endpoints for competitor management",
+      "priority": "P0",
+      "phase": 11,
+      "effort": "4h",
+      "passes": true,
+      "category": "api",
+      "files": [
+        "src/app/api/competitors/route.ts",
+        "src/app/api/competitors/[id]/route.ts"
+      ],
+      "acceptance": [
+        "Add competitor",
+        "List competitors",
+        "Delete competitor"
+      ]
+    },
+    {
+      "id": "INTEL-004",
+      "name": "Snapshot Collector",
+      "description": "Collect and store competitor ad data snapshots",
+      "priority": "P0",
+      "phase": 11,
+      "effort": "6h",
+      "passes": true,
+      "category": "collector",
+      "files": [
+        "src/lib/competitors/snapshot-collector.ts"
+      ],
+      "acceptance": [
+        "Meta API called",
+        "Ads counted",
+        "Data stored"
+      ]
+    },
+    {
+      "id": "INTEL-005",
+      "name": "Change Detection Engine",
+      "description": "Detect new campaigns, stopped ads, ad spikes",
+      "priority": "P0",
+      "phase": 11,
+      "effort": "8h",
+      "passes": true,
+      "category": "analysis",
+      "files": [
+        "src/lib/competitors/change-detector.ts"
+      ],
+      "acceptance": [
+        "New ads detected",
+        "Stopped ads detected",
+        "Spikes flagged"
+      ]
+    },
+    {
+      "id": "INTEL-006",
+      "name": "Creative Shift Analysis",
+      "description": "LLM analysis of messaging/creative changes",
+      "priority": "P1",
+      "phase": 11,
+      "effort": "4h",
+      "passes": true,
+      "category": "ai",
+      "files": [
+        "src/lib/competitors/creative-analysis.ts"
+      ],
+      "acceptance": [
+        "Pattern detection",
+        "Shift summary",
+        "Significance rating"
+      ]
+    },
+    {
+      "id": "INTEL-007",
+      "name": "Competitor Alerts Table",
+      "description": "Store and manage competitor alerts",
+      "priority": "P0",
+      "phase": 11,
+      "effort": "2h",
+      "passes": true,
+      "category": "database",
+      "files": [
+        "supabase/migrations/competitor_alerts.sql"
+      ],
+      "acceptance": [
+        "Alerts stored",
+        "Read/dismiss status",
+        "Alert types"
+      ]
+    },
+    {
+      "id": "INTEL-008",
+      "name": "Daily Monitoring Cron",
+      "description": "Scheduled job for daily competitor monitoring",
+      "priority": "P0",
+      "phase": 11,
+      "effort": "4h",
+      "passes": true,
+      "category": "infrastructure",
+      "files": [
+        "src/app/api/cron/competitor-monitor/route.ts"
+      ],
+      "acceptance": [
+        "Cron runs daily",
+        "All competitors checked",
+        "Alerts created"
+      ]
+    },
+    {
+      "id": "INTEL-009",
+      "name": "Competitor Dashboard Page",
+      "description": "Main competitive intelligence dashboard",
+      "priority": "P0",
+      "phase": 11,
+      "effort": "8h",
+      "passes": true,
+      "category": "ui",
+      "files": [
+        "src/app/dashboard/competitors/page.tsx"
+      ],
+      "acceptance": [
+        "Alerts shown",
+        "Watchlist displayed",
+        "Chart renders"
+      ]
+    },
+    {
+      "id": "INTEL-010",
+      "name": "Competitor Detail View",
+      "description": "Detailed view of single competitor with history",
+      "priority": "P1",
+      "phase": 11,
+      "effort": "6h",
+      "passes": true,
+      "category": "ui",
+      "files": [
+        "src/app/dashboard/competitors/[id]/page.tsx"
+      ],
+      "acceptance": [
+        "Ad activity shown",
+        "New/stopped ads",
+        "Patterns detected"
+      ]
+    },
+    {
+      "id": "INTEL-011",
+      "name": "Alerts API",
+      "description": "API for fetching and managing alerts",
+      "priority": "P1",
+      "phase": 11,
+      "effort": "3h",
+      "passes": true,
+      "category": "api",
+      "files": [
+        "src/app/api/competitors/alerts/route.ts"
+      ],
+      "acceptance": [
+        "List alerts",
+        "Mark read",
+        "Dismiss alert"
+      ]
+    },
+    {
+      "id": "INTEL-012",
+      "name": "Alert Notification UI",
+      "description": "Alert badges and notification dropdown",
+      "priority": "P1",
+      "phase": 11,
+      "effort": "4h",
+      "passes": true,
+      "category": "ui",
+      "files": [
+        "src/components/AlertNotifications.tsx"
+      ],
+      "acceptance": [
+        "Badge count",
+        "Dropdown list",
+        "Click to view"
+      ]
+    },
+    {
+      "id": "TEST-NEW-001",
+      "name": "Unified Score Unit Tests",
+      "description": "Vitest tests for scoring functions",
+      "priority": "P1",
+      "phase": 9,
+      "effort": "4h",
+      "passes": true,
+      "category": "testing",
+      "files": [
+        "__tests__/scoring/unified-score.test.ts"
+      ],
+      "acceptance": [
+        "All formulas tested",
+        "Edge cases covered",
+        "100% coverage"
+      ]
+    },
+    {
+      "id": "TEST-NEW-002",
+      "name": "Recommendations E2E Tests",
+      "description": "Playwright tests for build queue flow",
+      "priority": "P1",
+      "phase": 10,
+      "effort": "4h",
+      "passes": true,
+      "category": "testing",
+      "files": [
+        "e2e/build-queue.spec.ts"
+      ],
+      "acceptance": [
+        "Generate flow",
+        "Status updates",
+        "Export works"
+      ]
+    },
+    {
+      "id": "TEST-NEW-003",
+      "name": "Competitor Intel E2E Tests",
+      "description": "Playwright tests for competitor tracking",
+      "priority": "P1",
+      "phase": 11,
+      "effort": "4h",
+      "passes": true,
+      "category": "testing",
+      "files": [
+        "e2e/competitor-tracking.spec.ts"
+      ],
+      "acceptance": [
+        "Add competitor",
+        "View alerts",
+        "Detail page"
       ]
     }
   ],
