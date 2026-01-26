@@ -150,7 +150,7 @@
     },
     {
       "id": "LAND-008",
-      "name": "Trend Card Click → Prefill Search",
+      "name": "Trend Card Click \u2192 Prefill Search",
       "description": "Clicking a trend card prefills the NLP search input",
       "priority": "P1",
       "phase": 1,
@@ -684,7 +684,7 @@
     {
       "id": "RUN-003",
       "name": "Run Execution Worker",
-      "description": "Background worker to execute runs (collectors → extraction → scoring)",
+      "description": "Background worker to execute runs (collectors \u2192 extraction \u2192 scoring)",
       "priority": "P0",
       "phase": 2,
       "effort": "6h",
@@ -909,7 +909,7 @@
     {
       "id": "SCORE-007",
       "name": "Build-to-Profit Score",
-      "description": "Implement Score = (Opportunity × TAM × Margin × TimeToValue) / (CAC × Complexity × Touch)",
+      "description": "Implement Score = (Opportunity \u00d7 TAM \u00d7 Margin \u00d7 TimeToValue) / (CAC \u00d7 Complexity \u00d7 Touch)",
       "priority": "P1",
       "phase": 3,
       "effort": "3h",
@@ -2318,7 +2318,7 @@
     {
       "id": "BRIEF-001",
       "name": "Demand Brief Onboarding",
-      "description": "Single input → structured data extraction for niche tracking setup",
+      "description": "Single input \u2192 structured data extraction for niche tracking setup",
       "priority": "P2",
       "phase": 9,
       "effort": "6h",
@@ -3046,7 +3046,7 @@
     {
       "id": "ANALYTICS-002",
       "name": "Conversion Funnel",
-      "description": "Track signup started → completed → first run → paid conversion",
+      "description": "Track signup started \u2192 completed \u2192 first run \u2192 paid conversion",
       "priority": "P1",
       "phase": 1,
       "effort": "2h",
@@ -3604,7 +3604,7 @@
     {
       "id": "SC-007",
       "name": "Build-to-Profit Score",
-      "description": "Score = (Opportunity × TAM × Margin × TimeToValue) / (CAC × Complexity × Touch)",
+      "description": "Score = (Opportunity \u00d7 TAM \u00d7 Margin \u00d7 TimeToValue) / (CAC \u00d7 Complexity \u00d7 Touch)",
       "priority": "P1",
       "phase": 3,
       "effort": "4h",
@@ -5468,6 +5468,70 @@
         "View alerts",
         "Detail page"
       ]
+    },
+    {
+      "id": "TRACK-001",
+      "name": "Tracking SDK Integration",
+      "description": "Install and initialize user event tracking SDK from ACD",
+      "category": "tracking",
+      "priority": "P1",
+      "passes": false
+    },
+    {
+      "id": "TRACK-002",
+      "name": "Acquisition Event Tracking",
+      "description": "Track landing_view, cta_click, pricing_view with UTM params",
+      "category": "tracking",
+      "priority": "P1",
+      "passes": false
+    },
+    {
+      "id": "TRACK-003",
+      "name": "Activation Event Tracking",
+      "description": "Track signup_start, login_success, activation_complete",
+      "category": "tracking",
+      "priority": "P1",
+      "passes": false
+    },
+    {
+      "id": "TRACK-004",
+      "name": "Core Value Event Tracking",
+      "description": "Track product-specific value events (created, completed, downloaded)",
+      "category": "tracking",
+      "priority": "P1",
+      "passes": false
+    },
+    {
+      "id": "TRACK-005",
+      "name": "Monetization Event Tracking",
+      "description": "Track checkout_started, purchase_completed, subscription events",
+      "category": "tracking",
+      "priority": "P1",
+      "passes": false
+    },
+    {
+      "id": "TRACK-006",
+      "name": "Retention Event Tracking",
+      "description": "Track return_session, returning_user product events",
+      "category": "tracking",
+      "priority": "P2",
+      "passes": false
+    },
+    {
+      "id": "TRACK-007",
+      "name": "Error & Performance Tracking",
+      "description": "Track errors, API failures, and Core Web Vitals",
+      "category": "tracking",
+      "priority": "P2",
+      "passes": false
+    },
+    {
+      "id": "TRACK-008",
+      "name": "User Identification",
+      "description": "Identify users on login with traits (email, plan, etc.)",
+      "category": "tracking",
+      "priority": "P1",
+      "passes": false
     }
   ],
   "phases_extended": {
@@ -5476,10 +5540,10 @@
   "lastUpdated": "2026-01-17T19:05:00.000Z",
   "currentPhase": "Phase 4: Reports - COMPLETE",
   "nextSteps": [
-    "✅ Phase 1 Complete! All 15 landing page features implemented and tested",
-    "✅ Phase 2 Complete! All 8 database and collector features implemented",
-    "✅ Phase 3 Complete! All 6 analysis engine features implemented",
-    "✅ Phase 4 Complete! All 28 report features implemented",
-    "🎉 GapRadar MVP Complete! Ready for deployment and user testing"
+    "\u2705 Phase 1 Complete! All 15 landing page features implemented and tested",
+    "\u2705 Phase 2 Complete! All 8 database and collector features implemented",
+    "\u2705 Phase 3 Complete! All 6 analysis engine features implemented",
+    "\u2705 Phase 4 Complete! All 28 report features implemented",
+    "\ud83c\udf89 GapRadar MVP Complete! Ready for deployment and user testing"
   ]
 }
