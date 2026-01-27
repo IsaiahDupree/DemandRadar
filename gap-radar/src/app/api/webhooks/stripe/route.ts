@@ -5,6 +5,12 @@ import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { sendEmail } from '@/lib/email';
 import { SubscriptionConfirmationEmail } from '@/lib/email-templates';
+import {
+  handleCheckoutCompleted,
+  handleSubscriptionUpdated,
+  handleSubscriptionDeleted,
+  handlePaymentSucceeded,
+} from '@/lib/gdp/stripe-integration';
 
 export async function POST(request: Request) {
   const body = await request.text();
@@ -76,6 +82,13 @@ export async function POST(request: Request) {
           }
         }
 
+        // GDP-007: Integrate with Growth Data Plane
+        try {
+          await handleCheckoutCompleted(session, subscription);
+        } catch (gdpError) {
+          console.error('⚠️ GDP integration error:', gdpError);
+        }
+
         break;
       }
 
@@ -118,6 +131,13 @@ export async function POST(request: Request) {
           }
         }
 
+        // GDP-007: Integrate with Growth Data Plane
+        try {
+          await handleSubscriptionUpdated(subscription);
+        } catch (gdpError) {
+          console.error('⚠️ GDP integration error:', gdpError);
+        }
+
         break;
       }
 
@@ -134,6 +154,13 @@ export async function POST(request: Request) {
           })
           .eq('stripe_customer_id', customerId);
 
+        // GDP-007: Integrate with Growth Data Plane
+        try {
+          await handleSubscriptionDeleted(subscription);
+        } catch (gdpError) {
+          console.error('⚠️ GDP integration error:', gdpError);
+        }
+
         break;
       }
 
@@ -147,6 +174,13 @@ export async function POST(request: Request) {
             .from('users')
             .update({ runs_used: 0 })
             .eq('stripe_customer_id', customerId);
+        }
+
+        // GDP-007: Integrate with Growth Data Plane
+        try {
+          await handlePaymentSucceeded(invoice);
+        } catch (gdpError) {
+          console.error('⚠️ GDP integration error:', gdpError);
         }
 
         break;

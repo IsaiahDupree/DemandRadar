@@ -177,9 +177,7 @@ CREATE TABLE IF NOT EXISTS winning_ads (
   -- Performance signals
   first_seen TIMESTAMPTZ,
   last_seen TIMESTAMPTZ,
-  run_days INT GENERATED ALWAYS AS (
-    EXTRACT(DAY FROM COALESCE(last_seen, NOW()) - COALESCE(first_seen, NOW()))
-  ) STORED,
+  run_days INT, -- Calculated via trigger instead of generated column
   is_active BOOLEAN DEFAULT TRUE,
   estimated_spend VARCHAR(50),
   

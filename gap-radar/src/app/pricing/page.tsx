@@ -1,19 +1,28 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { PLANS, PlanKey } from '@/lib/stripe';
 import { Check, BarChart3 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
+import { trackPricingView, trackCTAClick } from '@/lib/tracking/acquisition';
 
 export default function PricingPage() {
   const router = useRouter();
   const [loading, setLoading] = useState<PlanKey | null>(null);
 
+  // Track pricing page view on mount
+  useEffect(() => {
+    trackPricingView();
+  }, []);
+
   const handleSubscribe = async (planKey: PlanKey) => {
     setLoading(planKey);
+
+    // Track CTA click
+    trackCTAClick('select_plan', 'pricing_card');
 
     try {
       // Check if user is authenticated
@@ -89,11 +98,14 @@ export default function PricingPage() {
               <Link
                 href="/login"
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                onClick={() => trackCTAClick('sign_in', 'pricing_nav')}
               >
                 Sign In
               </Link>
               <Link href="/signup">
-                <Button size="sm">Get Started</Button>
+                <Button size="sm" onClick={() => trackCTAClick('get_started', 'pricing_nav')}>
+                  Get Started
+                </Button>
               </Link>
             </div>
           </div>

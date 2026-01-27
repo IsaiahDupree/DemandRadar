@@ -32,6 +32,7 @@ import {
   TrendingUp,
   Target,
   Crosshair,
+  Users,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -64,6 +65,11 @@ const analysisNavItems = [
     title: "Gap Opportunities",
     url: "/dashboard/gaps",
     icon: Target,
+  },
+  {
+    title: "ICP Discovery",
+    url: "/dashboard/icp-discovery",
+    icon: Users,
   },
   {
     title: "Product Ideas",

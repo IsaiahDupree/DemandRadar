@@ -9,7 +9,7 @@ import { TrendingTopics } from "@/components/landing/TrendingTopics";
 import { Features } from "@/components/landing/Features";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Sparkles, ArrowRight, BarChart3, Users, Zap } from "lucide-react";
-import { trackLandingView, trackCTAClick } from "@/lib/analytics/landing";
+import { trackLandingView, trackCTAClick } from "@/lib/tracking/acquisition";
 import { isAuthenticated, buildSignupURL, buildCreateRunURL, storePendingQuery } from "@/lib/auth/redirect";
 
 export default function Home() {

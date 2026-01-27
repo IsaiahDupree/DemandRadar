@@ -10,7 +10,7 @@
 
 CREATE TABLE IF NOT EXISTS competitor_watchlists (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID REFERENCES profiles(id) NOT NULL,
+  user_id UUID REFERENCES users(id) NOT NULL,
   name VARCHAR(255) NOT NULL, -- "Main Competitors", "Enterprise Players", etc.
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
@@ -28,7 +28,7 @@ DROP TABLE IF EXISTS tracked_competitors CASCADE;
 CREATE TABLE tracked_competitors (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   watchlist_id UUID REFERENCES competitor_watchlists(id) ON DELETE CASCADE,
-  user_id UUID REFERENCES profiles(id) NOT NULL,
+  user_id UUID REFERENCES users(id) NOT NULL,
 
   -- Competitor info
   competitor_name VARCHAR(255) NOT NULL,
@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS competitor_snapshots (
 
 CREATE TABLE IF NOT EXISTS competitor_alerts (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID REFERENCES profiles(id) NOT NULL,
+  user_id UUID REFERENCES users(id) NOT NULL,
   competitor_id UUID REFERENCES tracked_competitors(id) ON DELETE CASCADE,
 
   -- Alert details

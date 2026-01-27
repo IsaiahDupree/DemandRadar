@@ -32,7 +32,7 @@ const config = {
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   testPathIgnorePatterns: ['/node_modules/', '/.next/'],
-  transformIgnorePatterns: ['/node_modules/(?!(@supabase|pptxgenjs)/)'],
+  transformIgnorePatterns: ['/node_modules/(?!(@supabase|pptxgenjs|svix)/)'],
   globals: {
     'ts-jest': {
       isolatedModules: true,

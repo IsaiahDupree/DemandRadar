@@ -100,9 +100,9 @@ CREATE TABLE IF NOT EXISTS winning_ads_library (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE INDEX idx_winning_ads_niche ON winning_ads_library(niche);
-CREATE INDEX idx_winning_ads_format ON winning_ads_library(ad_format);
-CREATE INDEX idx_winning_ads_featured ON winning_ads_library(is_featured, created_at DESC);
+CREATE INDEX idx_winning_ads_library_niche ON winning_ads_library(niche);
+CREATE INDEX idx_winning_ads_library_format ON winning_ads_library(ad_format);
+CREATE INDEX idx_winning_ads_library_featured ON winning_ads_library(is_featured, created_at DESC);
 
 -- ============================================
 -- 3. NICHE PLAYBOOKS TABLE

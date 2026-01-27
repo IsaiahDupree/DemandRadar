@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/theme-provider";
+import { TrackingProvider } from "@/components/tracking-provider";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -153,13 +154,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider
-          defaultTheme="system"
-          storageKey="demandradar-theme"
-        >
-          {children}
-          <Toaster />
-        </ThemeProvider>
+        <TrackingProvider>
+          <ThemeProvider
+            defaultTheme="system"
+            storageKey="demandradar-theme"
+          >
+            {children}
+            <Toaster />
+          </ThemeProvider>
+        </TrackingProvider>
       </body>
     </html>
   );

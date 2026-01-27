@@ -1,6 +1,9 @@
 -- Performance Indexes for Common Query Patterns
 -- PERF-003: Database Query Optimization
 
+-- Enable pg_trgm extension for full-text search
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+
 -- ==============================================================================
 -- FOREIGN KEY INDEXES
 -- PostgreSQL doesn't automatically index foreign keys, so we need to create them
